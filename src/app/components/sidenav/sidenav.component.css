@@ -1,0 +1,48 @@
+.example-container {
+    width: 500px;
+    height: 300px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+  }
+
+  a{
+    color: white;
+}
+
+a:hover, a:active{
+    color: lightgray;
+}
+
+.nav-caption{
+    display: inline-block;
+    padding-left: 6px;
+}
+
+.menu-header{
+  padding: 10px 50px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mat-divider{
+  margin-top: 20px;
+  border-color: white;
+}
+
+.menu{
+  text-align: center;
+  /* margin: 3vh; */
+  padding:10px;
+  border-bottom: 1px solid;
+}
