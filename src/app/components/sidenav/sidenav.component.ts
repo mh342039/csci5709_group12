@@ -8,15 +8,10 @@ import { Routes, RouterModule } from '@angular/router';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-  @Output() sidenavClose = new EventEmitter();
-  showFiller = false;
+
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  public onSidenavClose = () => {
-    this.sidenavClose.emit();
   }
 
 }
