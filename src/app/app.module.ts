@@ -32,6 +32,13 @@ import { GroupFormationComponent } from './components/group-formation/group-form
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
 import { MainComponent } from './components/main/main.component';
 
+import { FormsModule, ReactiveFormsModule, } from '@angular/forms'
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +73,12 @@ import { MainComponent } from './components/main/main.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatStepperModule,
+    MatInputModule,
+    MatButtonModule,
+    FormsModule, ReactiveFormsModule,
     BrowserAnimationsModule
   ],
   providers: [],

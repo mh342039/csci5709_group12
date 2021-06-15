@@ -1,1 +1,59 @@
-<p>sign-in works!</p>
+<mat-card style="width: 50%;
+margin: 3% 26%;
+padding: 108px;">
+
+<h1 style="    text-align: center;
+color: #36a5e1;
+font-weight: 900;
+font-size: xxx-large;">Dal Student HandBook</h1>
+
+<br>
+
+<h5 style="text-align: center;">Don't miss your opportunity to connect with your fellow mates and learn new things.</h5>
+
+    <form [formGroup]="SigninForm">
+
+        <div class="example-container">
+            <div class="extra">
+                <mat-form-field appearance="fill" class="form-field" style = "width: 380px;">
+                    <mat-label>Email</mat-label>
+                    <input matInput [(ngModel)]="Email" formControlName="Email" placeholder="Email" type="email">
+                    <mat-error *ngIf="SigninForm?.controls['Email']?.errors?.required">Email is required</mat-error>
+                    <mat-error *ngIf="SigninForm?.controls['Email']?.errors?.email">Please Enter valid Email</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="extra">
+                <mat-form-field appearance="fill" class="form-field" style = "width: 380px;">
+                    <mat-label>Password</mat-label>
+                    <input matInput [(ngModel)]="Password" formControlName="Password" type="Password"
+                        placeholder="Password">
+                    <mat-error *ngIf="SigninForm?.controls['Password']?.errors?.required">Password is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="extra">
+                <button mat-raised-button type="submit" [disabled]="!SigninForm?.valid" color="primary" style = "    width: 380px;
+                background-color: #36a5e1;
+                text-align: center;
+                color: white;" (click)="gotoProfile()" >Sign in</button>
+            </div>
+        </div>
+    </form>
+
+    <div style="margin:4% 14%; text-align: center; ">
+        <a href = "#"><mat-label>Forgot Password? &nbsp;</mat-label></a>
+    </div>
+    <div class="division" style="margin:4% 21%;">
+        <mat-label>New to Dal Student Handbook? &nbsp;</mat-label>
+        <span class="link" style="color: blue; text-decoration: underline; cursor: pointer;" mat-label
+            (click)="gotoRegister()">
+            <button mat-raised-button (click)="gotoRegister()" style = "    width: 28%;
+            background-color: white;
+            color: #36a5e1;
+            text-align: center;">Join Now</button>
+        </span>
+    </div>
+
+</mat-card>
