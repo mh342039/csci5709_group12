@@ -47,6 +47,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { RequesterDetailsModalComponent } from './components/request-list/requester-details-modal/requester-details-modal.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +83,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     GroupFormationComponent,
     MentorChatComponent,
     MainComponent,
-    MessageComponent
+    MessageComponent,
+    RequesterDetailsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +105,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatAutocompleteModule,
     MatStepperModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
