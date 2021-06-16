@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UtilityserviceService } from '../../services/utilityservice.service';
+import { UtilityService } from '../../services/utilityservice.service';
 import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
@@ -9,13 +9,11 @@ import { MatAccordion } from '@angular/material/expansion';
 })
 export class SidenavComponent implements OnInit {
 
-  constructor(public util: UtilityserviceService) { }
+  constructor(public util: UtilityService) { }
 
   ngOnInit(): void {
   }
 
-  public pin(){
-    this.util.open();
-  }
+
   @ViewChild(MatAccordion) accordion: MatAccordion;
 }

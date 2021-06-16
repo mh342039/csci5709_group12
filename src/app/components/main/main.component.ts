@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilityService } from 'src/app/services/utilityservice.service';
 
 @Component({
   selector: 'app-main',
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-
-  constructor() { }
+  announcementAccod: any
+  constructor(public utilityservice: UtilityService) { }
 
   ngOnInit(): void {
   }

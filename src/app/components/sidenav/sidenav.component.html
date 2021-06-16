@@ -1,7 +1,9 @@
-<mat-nav-list>
-  <div (click)="util.pin()" class="pinSidenavBtn">
-    <mat-icon *ngIf="!util.pinned" class="material-icons-outlined pinSidenav">push_pin</mat-icon>
-    <mat-icon *ngIf="util.pinned" class="pinSidenav">push_pin</mat-icon>
+<mat-nav-list (mouseleave)="!util.pinned ? util.close() : null">
+  <div class="pinSidenavBtn">
+    <!-- <mat-icon *ngIf="!util.pinned" class="material-icons-outlined pinSidenav">push_pin</mat-icon>
+    <mat-icon *ngIf="util.pinned" class="pinSidenav">push_pin</mat-icon> -->
+    <img *ngIf="util.pinned" class="pinSidenav" src="../../../assets/images/fill_push_pin.png" (click)="util.pin(false)">
+    <img *ngIf="!util.pinned" class="pinSidenav" src="../../../assets/images/outline_push_pin.png" (click)="util.pin(true)">
   </div>
   <div>
   <mat-accordion>
@@ -50,21 +52,11 @@
       </ul>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-accordion>
-    <mat-expansion-panel hideToggle #mep4="matExpansionPanel" (mouseleave)="!util.pinned ? mep4.expanded=false : null">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon class="sideNavItemComponent">notes</mat-icon>
-          <span matline>Notes</span>
-          <mat-icon style="margin-left: 90px;">keyboard_arrow_down</mat-icon>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ul style="list-style-type:none;">
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep4.expanded = !mep4.expanded">Work with notes</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep4.expanded = !mep4.expanded">View notes</a></li>
-      </ul>
-    </mat-expansion-panel>
-  </mat-accordion>
+  <section class="section-accordion" [routerLink]="'/main/notes'">
+    <mat-icon class="sideNavItemComponent">notes</mat-icon>
+    <span matline>Notes</span>
+  </section>
+
   <mat-accordion>
     <mat-expansion-panel hideToggle #mep5="matExpansionPanel" (mouseleave)="!util.pinned ? mep5.expanded=false : null">
       <mat-expansion-panel-header>

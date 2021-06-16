@@ -10,6 +10,7 @@
 .pinSidenav{
   cursor:pointer;
   margin-left: 220px;
+  height: 100%;
 }
 
 #sidenav.menu-close{
@@ -45,4 +46,28 @@
 
 .mat-expansion-panel-header-title{
   color: #00008B !important;
+}
+
+mat-nav-list{
+  height: 100%;
+}
+
+.pinSidenavBtn{
+  height: 5%;
+}
+
+.section-accordion{
+  
+  height: 48px;
+  padding: 0 24px;
+  display: table-cell;
+  vertical-align: middle;
+  cursor: pointer;
+  width: 260px;
+
+}
+
+.section-accordion:hover{
+  background-color: #f5f5f5;
+
 }
