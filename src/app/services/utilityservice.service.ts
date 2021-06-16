@@ -10,14 +10,14 @@ export class UtilityService {
   accordionDetails : any ={};
   opened :boolean = true
   getaccordionDetails(){
-   return this.accordionDetails 
+   return this.accordionDetails;
   }
   setaccordionDetails(obj:any){
     this.accordionDetails = obj;
   }
   sidenavWidth = 5;
   sidenavMargin = 70;
-   pinned: boolean = false;
+  pinned: boolean = false;
   mouseenter: boolean = false;
   isDefaultSized: boolean = true;
   toggleshowIcon(){
@@ -25,13 +25,13 @@ export class UtilityService {
   }
   open() {
 		this.sidenavWidth = 19;
-    this.sidenavMargin = 24.3;
+    this.sidenavMargin = 270;
     this.opened = true
 	 }
 	 close() {
     if(!this.pinned){
   		this.sidenavWidth = 5;
-      this.sidenavMargin = 6.4;
+      this.sidenavMargin = 70;
     }
     this.opened = false
 }

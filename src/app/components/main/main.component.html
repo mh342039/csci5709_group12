@@ -6,16 +6,12 @@
                 <app-nav></app-nav>
             </mat-drawer>
             <!--   -->
-            <mat-drawer-content class="main-content" [ngStyle]="{'margin-left':utilityservice.sidenavMargin + '%'}">
-                <section #contentHeader style="display: flex; background-color: #DCDCDC; color: #00008B; height: 8%; padding: 5px 20px;">
+            <mat-drawer-content class="main-content" [ngStyle]="{'margin-left.px':utilityservice.sidenavMargin}">
+                <section #contentHeader style="" class="section-content">
 
-                    <h2 class="content-header">{{utilityservice.sectionTitle}}</h2>
+                    <h2 class="content-header" style="padding: 5px 0;">{{utilityservice.sectionTitle}}</h2>
                 </section>
-                <section style="
-                height: 92%;
-                overflow: auto;
-                background-color: #c3d2ca;
-            ">
+                <section style="height: 92%;overflow: auto;">
                     <router-outlet></router-outlet>
                 </section>
 

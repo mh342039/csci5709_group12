@@ -46,6 +46,7 @@
 
 .mat-expansion-panel-header-title{
   color: #00008B !important;
+  align-items: center !important;
 }
 
 mat-nav-list{
@@ -57,7 +58,7 @@ mat-nav-list{
 }
 
 .section-accordion{
-  
+
   height: 48px;
   padding: 0 24px;
   display: table-cell;
