@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-announcement',
@@ -11,5 +12,5 @@ export class AnnouncementComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
+
