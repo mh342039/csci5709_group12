@@ -1,6 +1,6 @@
-import { EventEmitter, Output } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { UtilityService } from '../../services/utilityservice.service';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-nav',
@@ -9,9 +9,11 @@ import { Routes, RouterModule } from '@angular/router';
 })
 export class SidenavComponent implements OnInit {
 
-  constructor() { }
+  constructor(public util: UtilityService) { }
 
   ngOnInit(): void {
   }
 
+
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 }

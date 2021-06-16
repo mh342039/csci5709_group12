@@ -9,6 +9,7 @@ import { GroupFormationComponent } from './components/group-formation/group-form
 import { HomeComponent } from './components/home/home.component';
 import { MainComponent } from './components/main/main.component';
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
+import { NotesDetailsComponent } from './components/notes-details/notes-details.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
@@ -34,6 +35,7 @@ const routes: Routes = [
     { path: 'announcement-details', component: AnnouncementDetailsComponent },
     { path: 'scheduler', component: SchedulerComponent },
     { path: 'notes', component: NotesComponent },
+    { path: 'notes-detail', component: NotesDetailsComponent },
     { path: 'support', component: SupportComponent },
     { path: 'faq', component: FaqComponent },
     { path: 'contactus', component: ContactusComponent },
