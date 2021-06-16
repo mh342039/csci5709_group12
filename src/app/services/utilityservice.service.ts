@@ -8,33 +8,31 @@ export class UtilityService {
   constructor() { }
   sectionTitle:any;
   accordionDetails : any ={};
-  opened :boolean = false
+  opened :boolean = true
   getaccordionDetails(){
    return this.accordionDetails 
   }
   setaccordionDetails(obj:any){
     this.accordionDetails = obj;
   }
-  // sidenavWidth = 5;
-  // sidenavMargin = 70;
+  sidenavWidth = 5;
+  sidenavMargin = 70;
    pinned: boolean = false;
-  // mouseenter: boolean = false;
-  // isDefaultSized: boolean = true;
+  mouseenter: boolean = false;
+  isDefaultSized: boolean = true;
   toggleshowIcon(){
     this.opened = !this.opened
   }
   open() {
-	// 	this.sidenavWidth = 19;
-  //   this.sidenavMargin = 270;
-  //   console.log(this.mouseenter);
+		this.sidenavWidth = 19;
+    this.sidenavMargin = 24.3;
     this.opened = true
 	 }
 	 close() {
-  //   if(!this.pinned){
-  // 		this.sidenavWidth = 5;
-  //     this.sidenavMargin = 70;
-  //   }
-  //   console.log(this.mouseenter);
+    if(!this.pinned){
+  		this.sidenavWidth = 5;
+      this.sidenavMargin = 6.4;
+    }
     this.opened = false
 }
   pin(status:boolean){
