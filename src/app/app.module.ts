@@ -32,7 +32,6 @@ import { GroupFormationComponent } from './components/group-formation/group-form
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
 import { MainComponent } from './components/main/main.component';
 import { MessageComponent } from './components/message/message.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -46,7 +45,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
-
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -97,8 +97,10 @@ import {MatStepperModule} from '@angular/material/stepper';
     ReactiveFormsModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatStepperModule
-    ],
+    MatStepperModule,
+    MatListModule,
+    MatExpansionModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

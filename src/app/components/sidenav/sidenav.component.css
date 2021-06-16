@@ -1,0 +1,48 @@
+.mat-list-item-content {
+  padding:10px;
+}
+
+.sideNavItemComponent{
+  vertical-align: middle;
+  margin-right: 15px;
+}
+
+.pinSidenav{
+  cursor:pointer;
+  margin-left: 220px;
+}
+
+#sidenav.menu-close{
+  width: 70px;
+}
+
+#sidenav.menu-open{
+  width: 240px;
+}
+
+.mat-expansion-panel{
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-shadow: 0px 0px 0px 0px;
+}
+
+.mat-nav-list a{
+  color: #00008B;
+}
+
+.mat-icon{
+  color: #00008B;
+}
+
+.innerNav{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.mat-expansion-panel-body{
+  padding-bottom: 10px !important;
+}
+
+.mat-expansion-panel-header-title{
+  color: #00008B !important;
+}
