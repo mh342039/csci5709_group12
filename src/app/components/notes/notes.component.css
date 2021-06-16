@@ -1,7 +1,7 @@
 .note-container{
     display: flex;
     flex-flow: row wrap;
-    background-color: aliceblue;
+    background-color: transparent;
 }
 
 .note-card{
