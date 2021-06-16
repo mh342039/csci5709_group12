@@ -31,6 +31,22 @@ import { RequestDetailsComponent } from './components/request-details/request-de
 import { GroupFormationComponent } from './components/group-formation/group-formation.component';
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
 import { MainComponent } from './components/main/main.component';
+import { MessageComponent } from './components/message/message.component';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatStepperModule} from '@angular/material/stepper';
+
 
 @NgModule({
   declarations: [
@@ -61,13 +77,28 @@ import { MainComponent } from './components/main/main.component';
     RequestDetailsComponent,
     GroupFormationComponent,
     MentorChatComponent,
-    MainComponent
+    MainComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
-  ],
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatMenuModule,
+    MatChipsModule,
+    MatCardModule,
+    MatRippleModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatStepperModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
