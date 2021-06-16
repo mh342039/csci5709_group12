@@ -1,1 +1,71 @@
-<p>announcement works!</p>
+<div class="example-container">
+  
+<div class="addAnnButtonDiv">
+<button mat-raised-button class="addAnnButton" color="primary" routerLink="/main/announcement-details">
+    <mat-icon>add</mat-icon>
+    <span>Add Announcement</span>
+</button> 
+</div>
+<div class="cardDiv">
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>account_circle</mat-icon>
+      <mat-card-title>Consectetur Adipiscing Elit.....</mat-card-title>
+      <mat-card-subtitle>Posted by Ipsum Dolor on June 7, 2021 </mat-card-subtitle>
+      <span class="example-spacer"></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/main/announcement-details">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item routerLink="/main/announcement-details">
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a class="link" routerLink="/main/notes">Click here to read full content and the associated comments.</a>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>account_circle</mat-icon>
+      <mat-card-title>Tempor Incididunt Ut Labore Et</mat-card-title>
+      <mat-card-subtitle>Posted by Duis Aute on June 5, 2021 </mat-card-subtitle>
+      <span class="example-spacer"></span>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a class="link" routerLink="/main/notes">Click here to read full content and the associated comments.</a>
+    </mat-card-actions>
+  </mat-card>
+</div>
+  </div>
