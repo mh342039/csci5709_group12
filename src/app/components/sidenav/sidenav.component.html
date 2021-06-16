@@ -10,14 +10,14 @@
     <mat-expansion-panel hideToggle #mep1="matExpansionPanel" openedPanelId="mep1" (mouseleave)="!util.pinned ? mep1.expanded=false : null">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <mat-icon class="sideNavItemComponent">announcement</mat-icon>
+          <mat-icon class="sideNavItemComponent">Announcement</mat-icon>
           <span matline>Announcements</span>
           <mat-icon style="margin-left: 20px;">keyboard_arrow_down</mat-icon>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ul style="list-style-type:none;">
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep1.expanded = !mep1.expanded">Create an announcement</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep1.expanded = !mep1.expanded">View announcements</a></li>
+        <li class="innerNav"><a [routerLink]="'/main/announcement'" class="sideNavItemComponent" (click)="mep1.expanded = !mep1.expanded">View All Announcement</a></li>
+        <li class="innerNav"><a [routerLink]="'/main/announcement'" class="sideNavItemComponent" (click)="mep1.expanded = !mep1.expanded">View My Announcements</a></li>
       </ul>
     </mat-expansion-panel>
   </mat-accordion>
@@ -31,31 +31,25 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ul style="list-style-type:none;">
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep2.expanded = !mep2.expanded">Create a feed</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep2.expanded = !mep2.expanded">View feed</a></li>
+        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep2.expanded = !mep2.expanded">View All Feed</a></li>
+        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep2.expanded = !mep2.expanded">View My Feed</a></li>
       </ul>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-accordion>
-    <mat-expansion-panel hideToggle #mep3="matExpansionPanel" (mouseleave)="!util.pinned ? mep3.expanded=false : null">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <mat-icon class="sideNavItemComponent">edit_calendar</mat-icon>
-          <span matline>Scheduler</span>
-          <mat-icon style="margin-left: 63px;">keyboard_arrow_down</mat-icon>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <ul style="list-style-type:none;">
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep3.expanded = !mep3.expanded">Create a plan</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep3.expanded = !mep3.expanded">View plans</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep3.expanded = !mep3.expanded">Collaborate</a></li>
-      </ul>
-    </mat-expansion-panel>
-  </mat-accordion>
+  <section>
+     <section class="section-accordion" [routerLink]="'/main/notes'">
+    <mat-icon class="sideNavItemComponent">edit_calendar</mat-icon>
+    <span matline>Scheduler</span>
+</section>
+ 
+  </section>
+<section>
   <section class="section-accordion" [routerLink]="'/main/notes'">
     <mat-icon class="sideNavItemComponent">notes</mat-icon>
     <span matline>Notes</span>
   </section>
+
+</section>
 
   <mat-accordion>
     <mat-expansion-panel hideToggle #mep5="matExpansionPanel" (mouseleave)="!util.pinned ? mep5.expanded=false : null">

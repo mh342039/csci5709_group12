@@ -31,23 +31,20 @@
 
 
     </div>
-    <div class="dvSideNav" style="padding: 0;">
+    <div class="dvSideNav" style="padding: 0; width: 94%;" [ngStyle]="{'width': !utilityservice.opened ? '94%' : '100%'}">
         <mat-drawer-container class="side-nav-container" hasBackdrop="false">
             <mat-drawer class="side-nav-drawer" #sideNav mode="side" [opened]="utilityservice.opened">
                 <app-nav></app-nav>
             </mat-drawer>
             <mat-drawer-content class="main-content">
-                <section #contentHeader style="display: flex; background-color: #2da7a2; color: white; height: 8vh;">
-                    <button mat-icon-button class="side-nav-button" >
-                        <mat-icon>menu</mat-icon>
-                    </button>
+                <section #contentHeader style="display: flex; background-color: #2da7a2; color: white; height: 8%;">
 
                     <h2 class="content-header">{{utilityservice.sectionTitle}}</h2>
                 </section>
                 <section style="
-                height: 70vh;
+                height: 92%;
                 overflow: auto;
-                background-color: aliceblue;
+                background-color: red;
             ">
                     <router-outlet></router-outlet>
                 </section>
