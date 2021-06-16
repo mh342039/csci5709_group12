@@ -14,7 +14,6 @@ import { NotesComponent } from './components/notes/notes.component';
 import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { RateItComponent } from './components/rate-it/rate-it.component';
 import { RequestDetailsComponent } from './components/request-details/request-details.component';
 import { RequestListComponent } from './components/request-list/request-list.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
@@ -22,7 +21,6 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
-
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -32,7 +30,7 @@ const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'announcement', component: AnnouncementComponent },
-    { path: 'announcement-details', component: AnnouncementDetailsComponent },
+    { path: 'announcementdetails', component: AnnouncementDetailsComponent },
     { path: 'scheduler', component: SchedulerComponent },
     { path: 'notes', component: NotesComponent },
     { path: 'notes-detail', component: NotesDetailsComponent },
@@ -40,7 +38,7 @@ const routes: Routes = [
     { path: 'faq', component: FaqComponent },
     { path: 'contactus', component: ContactusComponent },
     { path: 'feedback', component: FeedbackComponent },
-    { path: 'rate-it', component: RateItComponent },
+    { path: 'rate-it', component: NotesComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'resetpassword', component: ResetPasswordComponent },
     { path: 'peermentorship', component: PeerMentorshipComponent },
