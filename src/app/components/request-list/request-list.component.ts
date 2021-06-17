@@ -42,7 +42,7 @@ export class RequestListComponent implements OnInit, AfterViewInit {
       data: {
         requesterName: this.requestData[index].requesterName,
         requestStatus: this.requestData[index].requestStatus,
-      }
+      }, width: '400px'
     });
     dialogRef.afterClosed().subscribe(result => {
       this.dialogValue = result.data;
