@@ -10,8 +10,8 @@
   <div>
     <mat-accordion>
       <mat-expansion-panel hideToggle #mep1="matExpansionPanel" openedPanelId="mep1"
-        (mouseleave)="!util.pinned ? mep1.expanded=false : null">
-        <mat-expansion-panel-header>
+        (mouseleave)="!util.opened ? mep1.expanded=false : null">
+        <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
           <mat-panel-title>
             <mat-icon class="sideNavItemComponent">announcement</mat-icon>
             <span matline>Announcements</span>
@@ -28,8 +28,8 @@
     </mat-accordion>
     <mat-accordion>
       <mat-expansion-panel hideToggle #mep2="matExpansionPanel"
-        (mouseleave)="!util.pinned ? mep2.expanded=false : null">
-        <mat-expansion-panel-header>
+        (mouseleave)="!util.opened ? mep2.expanded=false : null">
+        <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
           <mat-panel-title>
             <mat-icon class="sideNavItemComponent">feed</mat-icon>
             <span matline>Student Wall</span>
@@ -46,8 +46,8 @@
     </mat-accordion>
     <mat-accordion [routerLink]="'/main/#'">
       <mat-expansion-panel hideToggle #mep2="matExpansionPanel"
-        (mouseleave)="!util.pinned ? mep2.expanded=false : null" disabled>
-        <mat-expansion-panel-header>
+        (mouseleave)="!util.opened ? mep2.expanded=false : null" disabled>
+        <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
           <mat-panel-title>
             <mat-icon class="sideNavItemComponent">edit_calendar</mat-icon>
             <span matline>Scheduler</span>
@@ -57,8 +57,8 @@
     </mat-accordion>
     <mat-accordion [routerLink]="'/main/notes'">
       <mat-expansion-panel hideToggle #mep2="matExpansionPanel"
-        (mouseleave)="!util.pinned ? mep2.expanded=false : null" disabled>
-        <mat-expansion-panel-header>
+        (mouseleave)="!util.opened ? mep2.expanded=false : null" disabled>
+        <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
           <mat-panel-title>
             <mat-icon class="sideNavItemComponent">notes</mat-icon>
             <span matline>Notes</span>
@@ -69,8 +69,8 @@
 
 
   <mat-accordion>
-    <mat-expansion-panel hideToggle #mep5="matExpansionPanel" (mouseleave)="!util.pinned ? mep5.expanded=false : null">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel hideToggle #mep5="matExpansionPanel" (mouseleave)="!util.opened ? mep5.expanded=false : null">
+      <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
         <mat-panel-title>
           <mat-icon class="sideNavItemComponent">groups</mat-icon>
           <span matline>Peer Mentorship</span>
@@ -84,8 +84,8 @@
     </mat-expansion-panel>
   </mat-accordion>
   <mat-accordion>
-    <mat-expansion-panel hideToggle #mep6="matExpansionPanel" (mouseleave)="!util.pinned ? mep6.expanded=false : null">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel hideToggle #mep6="matExpansionPanel" (mouseleave)="!util.opened ? mep6.expanded=false : null">
+      <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
         <mat-panel-title>
           <mat-icon class="sideNavItemComponent">accessibility</mat-icon>
           <span matline>Accessibility</span>
@@ -101,8 +101,8 @@
     </mat-expansion-panel>
   </mat-accordion>
   <mat-accordion>
-    <mat-expansion-panel hideToggle #mep7="matExpansionPanel" (mouseleave)="!util.pinned ? mep7.expanded=false : null">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel hideToggle #mep7="matExpansionPanel" (mouseleave)="!util.opened ? mep7.expanded=false : null">
+      <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
         <mat-panel-title>
           <mat-icon class="sideNavItemComponent">contact_support</mat-icon>
           <span matline>Support</span>
@@ -117,8 +117,8 @@
     </mat-expansion-panel>
   </mat-accordion>
   <mat-accordion>
-    <mat-expansion-panel hideToggle #mep8="matExpansionPanel" (mouseleave)="!util.pinned ? mep8.expanded=false : null">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel hideToggle #mep8="matExpansionPanel" (mouseleave)="!util.opened ? mep8.expanded=false : null">
+      <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
         <mat-panel-title>
           <mat-icon class="sideNavItemComponent">edit_note</mat-icon>
           <span matline>Feedback</span>
@@ -131,6 +131,6 @@
       </ul>
     </mat-expansion-panel>
   </mat-accordion>
-    
+
   </div>
 </mat-nav-list>
