@@ -1,55 +1,20 @@
 <app-header #header></app-header>
 
 <div class="row" style="margin: 0; height: 90%; display: flex;">
-    <!-- *ngIf = "!utilityservice.opened"  -->
-    <div class="dvSideNav dvSideNavIcon" *ngIf = "!utilityservice.opened" (mouseenter)="sideNav.toggle(); utilityservice.open()">
-        <section style="height: 9%;"></section>
-        <section class="icon-section" style="height: 45px; padding-left: 25px;" >
-            <mat-icon class="sideNavItemComponent">announcement</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">feed</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">edit_calendar</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">notes</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">groups</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">accessibility</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">contact_support</mat-icon>
-        </section>
-        <section class="icon-section">
-            <mat-icon class="sideNavItemComponent">edit_note</mat-icon>
-        </section>
-
-
-    </div>
-    <div class="dvSideNav" style="padding: 0; width: 94%;" [ngStyle]="{'width': !utilityservice.opened ? '94%' : '100%'}">
-        <mat-drawer-container class="side-nav-container" hasBackdrop="false">
-            <mat-drawer class="side-nav-drawer" #sideNav mode="side" [opened]="utilityservice.opened">
+        <mat-drawer-container class="side-nav-container" hasBackdrop="false" style="width: 100%;">
+            <mat-drawer class="side-nav-drawer" [ngStyle]="{'width.em':utilityservice.sidenavWidth}" #sideNav mode="side" [opened]="true">
                 <app-nav></app-nav>
             </mat-drawer>
-            <mat-drawer-content class="main-content">
-                <section #contentHeader style="display: flex; background-color: #DCDCDC; color: #00008B; height: 8%; padding: 5px 20px;">
+            <!--   -->
+            <mat-drawer-content class="main-content" [ngStyle]="{'margin-left.px':utilityservice.sidenavMargin}">
+                <section #contentHeader style="" class="section-content">
 
-                    <h2 class="content-header">{{utilityservice.sectionTitle}}</h2>
+                    <h2 class="content-header" style="padding: 5px 0;">{{utilityservice.sectionTitle}}</h2>
                 </section>
-                <section style="
-                height: 92%;
-                overflow: auto;
-                background-color: #c3d2ca;
-            ">
+                <section style="height: 92%;overflow: auto;">
                     <router-outlet></router-outlet>
                 </section>
 
             </mat-drawer-content>
         </mat-drawer-container>
-    </div>
 </div>

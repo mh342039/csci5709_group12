@@ -51,6 +51,10 @@ import { RateMentorComponent } from './components/rate-mentor/rate-mentor.compon
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { RateApplicationComponent } from './components/rate-application/rate-application.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { RequesterDetailsModalComponent } from './components/request-list/requester-details-modal/requester-details-modal.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +86,8 @@ import { RateApplicationComponent } from './components/rate-application/rate-app
     MainComponent,
     MessageComponent,
     RateMentorComponent,
-    RateApplicationComponent
+    RateApplicationComponent,
+    RequesterDetailsModalComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +112,12 @@ import { RateApplicationComponent } from './components/rate-application/rate-app
     MatSnackBarModule,
     MatTabsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
