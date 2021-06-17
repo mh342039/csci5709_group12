@@ -7,6 +7,7 @@ export class UtilityService {
 
   constructor() { }
   sectionTitle:any;
+  modalTitle:any;
   accordionDetails : any ={};
   opened :boolean = false;
   getaccordionDetails(){

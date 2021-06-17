@@ -1,52 +1,57 @@
 <h1 mat-dialog-title>
-  Requester's Details
+  {{util.modalTitle}}
   <mat-icon (click)="close()" style="float:right;cursor:pointer;">close</mat-icon>
 </h1>
 <div mat-dialog-content>
   <p>
   <mat-form-field appearance="outline">
-    <mat-label>Requester's Name</mat-label>
-    <input matInput [(ngModel)]="data.requesterName" disabled>
+    <mat-label>Member's Name</mat-label>
+    <input matInput [(ngModel)]="data.name" disabled>
   </mat-form-field>
   </p>
   <p>
   <mat-form-field appearance="outline">
-    <mat-label>Requester's Email Address</mat-label>
-    <input matInput value="jdoe@dal.ca" disabled>
+    <mat-label>Member's Email Address</mat-label>
+    <input matInput [(ngModel)]="data.email" disabled>
   </mat-form-field>
   </p>
   <p>
-  <mat-form-field appearance="outline">
-    <mat-label>Request Type</mat-label>
-    <input matInput value="Role Change" disabled>
-  </mat-form-field>
-  </p>
-  <p>
-  <mat-form-field appearance="outline">
-    <mat-label>Request Date</mat-label>
-    <input matInput value="2021-06-06 15:00:00" disabled>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="selected" #role [disabled]="data.mode == 'V' ? true: false" (ngModelChange)="enableConfirm(role.value)">
+        <mat-option [value]="role" *ngFor="let role of roles">{{ role }}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </p>
   <p>
   <mat-form-field appearance="outline">
     <mat-label>Faculty</mat-label>
-    <input matInput value="Computer Science" disabled>
+    <input matInput [(ngModel)]="data.faculty" disabled>
   </mat-form-field>
   </p>
   <p>
   <mat-form-field appearance="outline">
     <mat-label>Program</mat-label>
-    <input matInput value="MACS" disabled>
+    <input matInput [(ngModel)]="data.program" disabled>
   </mat-form-field>
   </p>
   <p>
   <mat-form-field appearance="outline">
     <mat-label>Program Start Date</mat-label>
-    <input matInput value="Winter 2021" disabled>
+    <input matInput [(ngModel)]="data.programStartDate" disabled>
   </mat-form-field>
   </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Program End Date</mat-label>
+      <input matInput [(ngModel)]="data.programEndDate" disabled>
+    </mat-form-field>
+  </p>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions *ngIf="data.mode == 'V'">
   <button mat-button mat-dialog-close *ngIf="data.requestStatus==='Pending'" (click)="accepted=true; close();">Accept</button>
   <button mat-button mat-dialog-close *ngIf="data.requestStatus==='Pending'" (click)="accepted=false; close();">Reject</button>
+</div>
+<div mat-dialog-actions *ngIf="data.mode == 'C'">
+  <button mat-button mat-dialog-close *ngIf="data.requestStatus==='Pending'" (click)="confirmed=true; close();" [disabled]="!enableConfirmBtn">Confirm</button>
 </div>

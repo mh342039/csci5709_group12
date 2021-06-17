@@ -5,7 +5,7 @@ import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { RequesterDetailsModalComponent } from './requester-details-modal/requester-details-modal.component';
 import { UtilityService } from 'src/app/services/utilityservice.service';
-import { Requests } from './requests';
+import { MemberProfile } from 'src/app/models/member-profile';
 
 @Component({
   selector: 'app-request-list',
@@ -18,12 +18,44 @@ export class RequestListComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['requesterName', 'requestType', 'requestModificationDate', 'requestStatus'];
 
-  requestData: Requests[] = [
-    {requesterName: 'John Doe', requestType:'Role Change', requestModificationDate:'2021-06-06 15:00:00', requestStatus:'Pending'},
-    {requesterName: 'John Doe', requestType:'Role Change', requestModificationDate:'2021-06-06 15:00:00', requestStatus:'Pending'}
+  requestData: MemberProfile[] = [
+    {
+      name: 'John Doe',
+      email: 'jdoe@dal.ca',
+      faculty: 'Computer Science',
+      program: 'MACS',
+      programStartDate: 'Winter 21',
+      programEndDate: 'Summer 22',
+      role: 'Mentee',
+      requestType:'Role Change',
+      requestDate:'2021-06-06 15:00:00',
+      requestStatus:'Pending',
+      accessModificationType: '0000-00-00',
+      accessModificationDate: '0000-00-00',
+      accessStatus: '',
+      roleModificationDate: '0000-00-00',
+      mode: 'V'
+    },
+    {
+      name: 'John Doe',
+      email: 'jdoe1@dal.ca',
+      faculty: 'Computer Science',
+      program: 'MACS',
+      programStartDate: 'Winter 21',
+      programEndDate: 'Summer 22',
+      role: 'Mentee',
+      requestType:'Role Change',
+      requestDate:'2021-06-06 15:00:00',
+      requestStatus:'Pending',
+      accessModificationType: '0000-00-00',
+      accessModificationDate: '0000-00-00',
+      accessStatus: '',
+      roleModificationDate: '0000-00-00',
+      mode: 'V'
+    }
   ];
 
-  dataSource = new MatTableDataSource<Requests>(this.requestData);
+  dataSource = new MatTableDataSource<MemberProfile>(this.requestData);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -40,12 +72,25 @@ export class RequestListComponent implements OnInit, AfterViewInit {
   openDialog(index: number) {
     const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
       data: {
-        requesterName: this.requestData[index].requesterName,
+        name: this.requestData[index].name,
+        email: this.requestData[index].email,
+        faculty: this.requestData[index].faculty,
+        program: this.requestData[index].program,
+        programStartDate: this.requestData[index].programStartDate,
+        programEndDate: this.requestData[index].programEndDate,
+        role: this.requestData[index].role,
+        requestType: this.requestData[index].requestType,
+        requestDate: this.requestData[index].requestDate,
         requestStatus: this.requestData[index].requestStatus,
+        accessModificationType: this.requestData[index].accessModificationType,
+        accessModificationDate: this.requestData[index].accessModificationDate,
+        accessStatus: this.requestData[index].accessStatus,
+        roleModificationDate: this.requestData[index].roleModificationDate,
+        mode: this.requestData[index].mode,
       }, width: '400px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.dialogValue = result.data;
+      this.dialogValue = result.data.accepted;
       if(this.dialogValue !== undefined)
         this.requestData[index].requestStatus = this.dialogValue ? "Accepted" : "Rejected";
     });
