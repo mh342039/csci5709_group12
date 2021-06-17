@@ -1,4 +1,4 @@
-<mat-nav-list><!--"!util.pinned ? util.close() : null" (mouseenter)="!util.pinned ? util.open() : null">-->
+<mat-nav-list style="overflow-y: auto; overflow-x: hidden;"><!--"!util.pinned ? util.close() : null" (mouseenter)="!util.pinned ? util.open() : null">-->
   <div>
     <mat-icon *ngIf="!util.opened" class="sidenav-right" (click)="util.open()" matTooltip="Open" matTooltipPosition="right">arrow_right</mat-icon>
     <mat-icon *ngIf="util.opened" class="sidenav-left" (click)="util.close()" matTooltip="Close" matTooltipPosition="right">arrow_left</mat-icon>

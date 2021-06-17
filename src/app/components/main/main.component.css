@@ -24,6 +24,7 @@ mat-icon{
 
   .main-content{
     padding:5px;
+    overflow: hidden;
   }
 
   .section-content{
