@@ -3,10 +3,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-<<<<<<< HEAD
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-=======
+
 body::-webkit-scrollbar{
   display: none;
   overflow: hidden;
@@ -44,4 +44,3 @@ main {
 .mat-sidenav-container{
   margin-left: 0px !important;
 }
->>>>>>> 740bc2ac9e5fc3e096c764b7badbeecf474a6a9e

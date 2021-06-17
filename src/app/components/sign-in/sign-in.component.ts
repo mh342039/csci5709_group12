@@ -32,6 +32,11 @@ export class SignInComponent implements OnInit {
   gotoProfile(){
     this.router.navigate(['/profile'])
   }
+
+  gotoForgotPassword()
+  {
+    this.router.navigate(['/forgotPassword'])
+  }
  
 
 }

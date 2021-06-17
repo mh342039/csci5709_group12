@@ -30,25 +30,20 @@ import { GroupFormationComponent } from './components/group-formation/group-form
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
 import { MainComponent } from './components/main/main.component';
 import { MessageComponent } from './components/message/message.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatStepperModule} from '@angular/material/stepper';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import { RateMentorComponent } from './components/rate-mentor/rate-mentor.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { RateApplicationComponent } from './components/rate-application/rate-application.component';
 import { MatTableModule } from '@angular/material/table';
@@ -62,6 +57,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -94,20 +90,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MessageComponent,
     RateMentorComponent,
     RateApplicationComponent,
-    RequesterDetailsModalComponent
+    RequesterDetailsModalComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-<<<<<<< HEAD
     MatFormFieldModule,
     MatCardModule,
     MatStepperModule,
     MatInputModule,
     MatButtonModule,
     FormsModule, ReactiveFormsModule,
-    BrowserAnimationsModule
-=======
+    BrowserAnimationsModule,
     BrowserAnimationsModule,
     MatSidenavModule,
     MatIconModule,
@@ -134,7 +129,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule
->>>>>>> 740bc2ac9e5fc3e096c764b7badbeecf474a6a9e
   ],
   providers: [],
   bootstrap: [AppComponent]
