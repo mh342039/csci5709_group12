@@ -11,9 +11,7 @@
     width: 90%;
     height: 500px;
     margin: auto;
-    padding: 15px;
-    /* border: 1px; */
-    background-color: white;
+    border: 1px;
 }
 
 .form-field{
@@ -26,16 +24,7 @@
   color: navy;
 }
 
-.mat-toolbar-single-row {
-  height: auto !important;
-  background: transparent;
-}
-
-.mat-toolbar-single-row button {
-  width: 200px;
-}
-
-.annDetailsHeader{
+.FeedbackHeader{
   text-align: center;
   color: brown;
 }

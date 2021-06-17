@@ -21,8 +21,6 @@ import { ContactusComponent } from './components/contactus/contactus.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { FeedbackComponent } from './components/feedback/feedback.component';
-import { RateItComponent } from './components/rate-it/rate-it.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
 import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
@@ -47,6 +45,12 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+import { RateMentorComponent } from './components/rate-mentor/rate-mentor.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { RateApplicationComponent } from './components/rate-application/rate-application.component';
 
 @NgModule({
   declarations: [
@@ -68,8 +72,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SignInComponent,
     SignUpComponent,
     ResetPasswordComponent,
-    FeedbackComponent,
-    RateItComponent,
     ProfileComponent,
     PeerMentorshipComponent,
     PeerMentorshipRegistarationComponent,
@@ -78,7 +80,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     GroupFormationComponent,
     MentorChatComponent,
     MainComponent,
-    MessageComponent
+    MessageComponent,
+    RateMentorComponent,
+    RateApplicationComponent
   ],
   imports: [
     BrowserModule,
@@ -99,7 +103,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatAutocompleteModule,
     MatStepperModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

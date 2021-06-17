@@ -1,1 +1,45 @@
-<p>announcement-details works!</p>
+<section class="row" style="margin: 0px;">
+  <section class="col-md-4">
+      <button mat-button [routerLink]="['/main/announcement']"><mat-icon>chevron_left</mat-icon> Back to Announcement</button>
+  </section>
+  <section class="col-md-8" style="text-align: end;" > 
+      <button mat-button (click)="onSaveAnnouncement()"><mat-icon>check</mat-icon> Save </button> |
+      <button mat-button  (click)="onDeleteAnnouncement()"><mat-icon>delete_outline</mat-icon> Delete</button>
+  </section>
+</section>
+
+<section>
+  <!-- <mat-card class="card"> -->
+<!-- <h2 class="annDetailsHeader">Add Announcement Details</h2> -->
+  <div class="add-container">
+  <!-- <form [formGroup]="addAnnouncementForm" (submit)="onSubmit()"> -->
+
+    <mat-form-field class="form-field">
+      <mat-label>Title</mat-label>
+      <input matInput [formControl]="TitleFormControl" [(ngModel)]="announcement.title" placeholder="Title" type="text">
+      <mat-error *ngIf="TitleFormControl?.errors?.required">Title is required </mat-error>
+      <mat-error *ngIf="TitleFormControl?.errors?.maxlength">Title should be maximum 20 characters </mat-error>
+    </mat-form-field>
+
+    <!-- <mat-form-field class="form-field">
+      <mat-label>Category</mat-label>
+      <mat-select name="Category" [formControl]="CategoryFormControl" [(ngModel)]="announcement.category" value="announcement.category" placeholder="Category">
+        <mat-option *ngFor="let category of categories" [value]="category.viewValue">
+          {{category.viewValue}}
+        </mat-option>
+      </mat-select>
+    <mat-error *ngIf="addAnnouncementForm?.controls['Category']?.errors?.required">Please choose a category</mat-error> 
+    </mat-form-field> -->
+
+    <mat-form-field class="form-field">
+        <mat-label>Description</mat-label>
+        <textarea matInput #message [formControl]="DescriptionFormControl" [(ngModel)]="announcement.description" placeholder="Description" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
+        <mat-hint align="end">{{message.value.length}} characters</mat-hint>
+        <mat-error *ngIf="DescriptionFormControl?.errors?.required">Description is required</mat-error>
+    </mat-form-field>
+
+    <!-- <button mat-raised-button type="submit" [disabled]="!addAnnouncementForm?.valid" color="primary" (click)="openSnackBar()">Submit changes</button> -->
+  <!-- </form> -->
+</div>
+<!-- </mat-card> -->
+</section>

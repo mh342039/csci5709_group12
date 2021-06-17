@@ -4,7 +4,6 @@ import { AnnouncementDetailsComponent } from './components/announcement-details/
 import { AnnouncementComponent } from './components/announcement/announcement.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { FaqComponent } from './components/faq/faq.component';
-import { FeedbackComponent } from './components/feedback/feedback.component';
 import { GroupFormationComponent } from './components/group-formation/group-formation.component';
 import { HomeComponent } from './components/home/home.component';
 import { MainComponent } from './components/main/main.component';
@@ -14,6 +13,8 @@ import { NotesComponent } from './components/notes/notes.component';
 import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { RateApplicationComponent } from './components/rate-application/rate-application.component';
+import { RateMentorComponent } from './components/rate-mentor/rate-mentor.component';
 import { RequestDetailsComponent } from './components/request-details/request-details.component';
 import { RequestListComponent } from './components/request-list/request-list.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
@@ -37,8 +38,8 @@ const routes: Routes = [
     { path: 'support', component: SupportComponent },
     { path: 'faq', component: FaqComponent },
     { path: 'contactus', component: ContactusComponent },
-    { path: 'feedback', component: FeedbackComponent },
-    { path: 'rate-it', component: NotesComponent },
+    { path: 'rate-mentor', component: RateMentorComponent },
+    { path: 'rate-application', component: RateApplicationComponent},
     { path: 'profile', component: ProfileComponent },
     { path: 'resetpassword', component: ResetPasswordComponent },
     { path: 'peermentorship', component: PeerMentorshipComponent },
