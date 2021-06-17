@@ -7,10 +7,18 @@
   margin-right: 15px;
 }
 
-.pinSidenav{
+.sidenav-left{
   cursor:pointer;
   margin-left: 220px;
   height: 100%;
+  font-size: 36px;
+}
+
+.sidenav-right{
+  cursor:pointer;
+  margin-left: 18px;
+  height: 100%;
+  font-size: 36px;
 }
 
 #sidenav.menu-close{
@@ -53,8 +61,8 @@ mat-nav-list{
   height: 100%;
 }
 
-.pinSidenavBtn{
-  height: 5%;
+.sideNavBtn{
+  margin-left: 220px;
 }
 
 .section-accordion{

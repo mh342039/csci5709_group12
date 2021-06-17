@@ -1,11 +1,11 @@
-<mat-nav-list (mouseleave)="!util.pinned ? util.close() : null" (mouseenter)="!util.pinned ? util.open() : null">
-  <div class="pinSidenavBtn">
-    <!-- <mat-icon *ngIf="!util.pinned" class="material-icons-outlined pinSidenav">push_pin</mat-icon>
-    <mat-icon *ngIf="util.pinned" class="pinSidenav">push_pin</mat-icon> -->
-    <img *ngIf="util.pinned" class="pinSidenav" src="../../../assets/images/fill_push_pin.png"
+<mat-nav-list><!--"!util.pinned ? util.close() : null" (mouseenter)="!util.pinned ? util.open() : null">-->
+  <div>
+    <mat-icon *ngIf="!util.opened" class="sidenav-right" (click)="util.open()" matTooltip="Open" matTooltipPosition="right">arrow_right</mat-icon>
+    <mat-icon *ngIf="util.opened" class="sidenav-left" (click)="util.close()" matTooltip="Close" matTooltipPosition="right">arrow_left</mat-icon>
+    <!--<img *ngIf="util.pinned" class="pinSidenav" src="../../../assets/images/fill_push_pin.png"
       (click)="util.pin(false)">
     <img *ngIf="!util.pinned" class="pinSidenav" src="../../../assets/images/outline_push_pin.png"
-      (click)="util.pin(true)">
+      (click)="util.pin(true)">-->
   </div>
   <div>
     <mat-accordion>
