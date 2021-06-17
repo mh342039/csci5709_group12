@@ -55,6 +55,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { RequesterDetailsModalComponent } from './components/request-list/requester-details-modal/requester-details-modal.component';
+import { AddmemberComponent } from './components/add-member/addmember.component';
+import { ModifymemberComponent } from './components/modify-member/modifymember.component';
+
 
 @NgModule({
   declarations: [
@@ -87,7 +90,9 @@ import { RequesterDetailsModalComponent } from './components/request-list/reques
     MessageComponent,
     RateMentorComponent,
     RateApplicationComponent,
-    RequesterDetailsModalComponent
+    RequesterDetailsModalComponent,
+    AddmemberComponent,
+    ModifymemberComponent
   ],
   imports: [
     BrowserModule,

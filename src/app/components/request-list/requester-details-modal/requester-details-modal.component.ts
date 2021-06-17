@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Inject, EventEmitter, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Requests } from '../requests';
+import { UtilityService } from '../../../services/utilityservice.service';
 
 @Component({
   selector: 'app-requester-details-modal',
@@ -11,24 +11,41 @@ export class RequesterDetailsModalComponent implements OnInit {
 
   accepted: boolean;
 
+  confirmed: boolean;
+
+  originalValue: string;
+
+  enableConfirmBtn: boolean = false;
+
+  requestType: string;
+
   ngOnInit(): void {
   }
 
   constructor(
     public dialogRef: MatDialogRef<RequesterDetailsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public util: UtilityService) {
       dialogRef.disableClose = true;
+      util.modalTitle="Member Details";
+      this.originalValue = data.requestType;
     }
 
   close(): void {
-    this.dialogRef.close({event: 'close', data: this.accepted});
+    this.dialogRef.close({event: 'close', accepted: this.accepted, requestType: this.requestType, confirmed: this.confirmed});
   }
 
-  onNoClick(): void {
-    this.dialogRef.close({event: 'close', data: this.accepted});
-  }
+  roles = ['Role Change', 'Remove Member', 'Deactivate Account'];
 
-  /*updateRequests(){
-    this.requestData.emit();
-  }*/
+  selected = this.roles[0];
+
+  enableConfirm(value: string){
+    if(this.originalValue != value){
+      this.requestType = value;
+      this.enableConfirmBtn = true;
+    }
+    else{
+      this.requestType = data.requestType;
+      this.enableConfirmBtn = false;
+    }
+  }
 }
