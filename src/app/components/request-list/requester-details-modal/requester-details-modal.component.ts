@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Output, Inject, EventEmitter, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Requests } from '../requests';
 
 @Component({
   selector: 'app-requester-details-modal',
@@ -8,17 +9,26 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class RequesterDetailsModalComponent implements OnInit {
 
+  accepted: boolean;
+
   ngOnInit(): void {
   }
 
-  food: string;
-
   constructor(
     public dialogRef: MatDialogRef<RequesterDetailsModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+      dialogRef.disableClose = true;
+    }
+
+  close(): void {
+    this.dialogRef.close({event: 'close', data: this.accepted});
+  }
 
   onNoClick(): void {
-    this.dialogRef.close({
-    });
+    this.dialogRef.close({event: 'close', data: this.accepted});
   }
+
+  /*updateRequests(){
+    this.requestData.emit();
+  }*/
 }

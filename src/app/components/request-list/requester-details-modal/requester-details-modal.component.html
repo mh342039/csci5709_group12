@@ -1,9 +1,12 @@
-<h1 mat-dialog-title>Requester's Details</h1>
+<h1 mat-dialog-title>
+  Requester's Details
+  <mat-icon (click)="close()" style="float:right;cursor:pointer;">close</mat-icon>
+</h1>
 <div mat-dialog-content>
   <p>
   <mat-form-field appearance="outline">
     <mat-label>Requester's Name</mat-label>
-    <input matInput value="John Doe" disabled>
+    <input matInput [(ngModel)]="data.requesterName" disabled>
   </mat-form-field>
   </p>
   <p>
@@ -44,6 +47,6 @@
   </p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Accept</button>
-  <button mat-button mat-dialog-close>Reject</button>
+  <button mat-button mat-dialog-close *ngIf="data.requestStatus==='Pending'" (click)="accepted=true; close();">Accept</button>
+  <button mat-button mat-dialog-close *ngIf="data.requestStatus==='Pending'" (click)="accepted=false; close();">Reject</button>
 </div>
