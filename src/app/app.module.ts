@@ -21,8 +21,6 @@ import { ContactusComponent } from './components/contactus/contactus.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { FeedbackComponent } from './components/feedback/feedback.component';
-import { RateItComponent } from './components/rate-it/rate-it.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
 import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
@@ -31,6 +29,32 @@ import { RequestDetailsComponent } from './components/request-details/request-de
 import { GroupFormationComponent } from './components/group-formation/group-formation.component';
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
 import { MainComponent } from './components/main/main.component';
+import { MessageComponent } from './components/message/message.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatStepperModule} from '@angular/material/stepper';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+import { RateMentorComponent } from './components/rate-mentor/rate-mentor.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { RateApplicationComponent } from './components/rate-application/rate-application.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { RequesterDetailsModalComponent } from './components/request-list/requester-details-modal/requester-details-modal.component';
 
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button';
@@ -59,8 +83,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     SignInComponent,
     SignUpComponent,
     ResetPasswordComponent,
-    FeedbackComponent,
-    RateItComponent,
     ProfileComponent,
     PeerMentorshipComponent,
     PeerMentorshipRegistarationComponent,
@@ -68,11 +90,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     RequestDetailsComponent,
     GroupFormationComponent,
     MentorChatComponent,
-    MainComponent
+    MainComponent,
+    MessageComponent,
+    RateMentorComponent,
+    RateApplicationComponent,
+    RequesterDetailsModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+<<<<<<< HEAD
     MatFormFieldModule,
     MatCardModule,
     MatStepperModule,
@@ -80,6 +107,34 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     FormsModule, ReactiveFormsModule,
     BrowserAnimationsModule
+=======
+    BrowserAnimationsModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatMenuModule,
+    MatChipsModule,
+    MatCardModule,
+    MatRippleModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatStepperModule,
+    MatListModule,
+    MatExpansionModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule
+>>>>>>> 740bc2ac9e5fc3e096c764b7badbeecf474a6a9e
   ],
   providers: [],
   bootstrap: [AppComponent]

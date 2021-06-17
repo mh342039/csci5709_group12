@@ -1,0 +1,36 @@
+mat-icon{
+    color: #00008B;
+  }
+
+  .dvSideNav{
+      height: 100%;
+  }
+
+  .side-nav-container{
+      height: 100%;
+  }
+
+  .dvSideNavIcon{
+    width: 6%;
+    max-width: 6%;
+    min-width: 55px;
+  }
+
+  .icon-section{
+      min-height: 48px;
+      height: 45px;
+      padding-left: 24px;
+  }
+
+  .main-content{
+    padding:5px;
+    overflow: hidden;
+  }
+
+  .section-content{
+    display: flex;
+    background-color: #DCDCDC;
+    color: #00008B;
+    height: 50px;
+    padding: 5px 20px;
+  }
