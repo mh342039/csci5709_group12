@@ -36,3 +36,15 @@
     .example-spacer {
       flex: 1 1 auto;
     }
+
+    .line-clamp{
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        -webkit-box-orient: vertical;  
+    }
+
+    .limitTextHeight {
+      height: 40px;
+      overflow: hidden;
+  }

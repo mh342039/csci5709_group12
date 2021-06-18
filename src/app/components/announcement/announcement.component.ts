@@ -12,6 +12,8 @@ import { UtilityService } from 'src/app/services/utilityservice.service';
 export class AnnouncementComponent implements OnInit {
 
   Announcements:any;
+  showMore:any;
+  isReadMore: boolean= true;
 
   constructor(private router: Router, public utilityService: UtilityService ,public announcementService: AnnouncementService) { }
 
@@ -28,6 +30,10 @@ export class AnnouncementComponent implements OnInit {
     this.announcementService.setAnnouncement(this.Announcements[index]);
     this.router.navigate(['/main/announcementdetails']);
   } 
+
+  showText() {
+    this.isReadMore = !this.isReadMore
+ }
 
 }
 
