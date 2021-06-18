@@ -93,10 +93,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ul style="list-style-type:none;">
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep6.expanded = !mep6.expanded">Add a member</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep6.expanded = !mep6.expanded">Remove a member</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent" (click)="mep6.expanded = !mep6.expanded">Change Role</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/disableaccount'" class="sideNavItemComponent" (click)="mep6.expanded = !mep6.expanded">Deactivate Account</a></li>
+        <li class="innerNav"><a [routerLink]="'/main/addmember'" class="sideNavItemComponent" (click)="mep6.expanded = !mep6.expanded">Add a member</a></li>
+        <li class="innerNav"><a [routerLink]="'/main/modifymember'" class="sideNavItemComponent" (click)="mep6.expanded = !mep6.expanded">Modify Member Access</a></li>
       </ul>
     </mat-expansion-panel>
   </mat-accordion>
