@@ -44,7 +44,7 @@ export class RequesterDetailsModalComponent implements OnInit {
       this.enableConfirmBtn = true;
     }
     else{
-      this.requestType = data.requestType;
+      this.requestType = this.data.requestType;
       this.enableConfirmBtn = false;
     }
   }
