@@ -7,8 +7,11 @@ export class UtilityService {
 
   constructor() { }
   sectionTitle:any;
+  modalTitle:any;
   accordionDetails : any ={};
   opened :boolean = false;
+  annOperationFlag: boolean= false;
+
   getaccordionDetails(){
    return this.accordionDetails;
   }
@@ -40,7 +43,12 @@ export class UtilityService {
     this.opened = true;
     }
     else{
-
     }
   }
+ 
+  setViewMyAnnouncement(){
+
+
+  }
+
 }

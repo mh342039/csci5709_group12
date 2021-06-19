@@ -21,7 +21,7 @@
       <mat-error *ngIf="TitleFormControl?.errors?.maxlength">Title should be maximum 20 characters </mat-error>
     </mat-form-field>
 
-    <!-- <mat-form-field class="form-field">
+    <mat-form-field class="form-field">
       <mat-label>Category</mat-label>
       <mat-select name="Category" [formControl]="CategoryFormControl" [(ngModel)]="announcement.category" value="announcement.category" placeholder="Category">
         <mat-option *ngFor="let category of categories" [value]="category.viewValue">
@@ -29,7 +29,7 @@
         </mat-option>
       </mat-select>
     <mat-error *ngIf="addAnnouncementForm?.controls['Category']?.errors?.required">Please choose a category</mat-error> 
-    </mat-form-field> -->
+    </mat-form-field>
 
     <mat-form-field class="form-field">
         <mat-label>Description</mat-label>

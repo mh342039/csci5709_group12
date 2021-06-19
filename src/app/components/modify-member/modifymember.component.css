@@ -1,0 +1,44 @@
+table{
+  width: 100%;
+}
+th.mat-sort-header-sorted {
+  color: black;
+}
+.modalLink{
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.tableHeader{
+  font-weight: bold !important;
+}
+
+h3, h4{
+    margin: 0 0 0px !important;
+}
+
+.heading{
+  color: #00008B;
+  padding: 10px 10px;
+  background-color: #DCDCDC;
+}
+
+.mat-divider{
+  color: #00008B !important;
+}
+
+a{
+  color: #00008B !important;
+}
+
+.mat-raised-button{
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-left: 15px;
+  margin-top: -50px;
+  color: #00008B;
+}
+
+.parentDiv, .childDiv{
+  padding: 10px 5px;
+}
