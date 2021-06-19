@@ -22,6 +22,7 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component'; 
 import { AddmemberComponent } from './components/add-member/addmember.component';
 import { ModifymemberComponent } from './components/modify-member/modifymember.component';
 
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
   { path: 'signin', component: SignInComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'forgotPassword', component: ForgotPasswordComponent},
   { path: 'main', component: MainComponent, children:[
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
@@ -49,6 +51,7 @@ const routes: Routes = [
     { path: 'requestlist', component: RequestListComponent },
     { path: 'requestdetails', component: RequestDetailsComponent },
     { path: 'groupformation', component: GroupFormationComponent },
+    { path: 'mentorchat', component: MentorChatComponent }, 
     { path: 'mentorchat', component: MentorChatComponent },
     { path: 'addmember', component: AddmemberComponent },
     { path: 'modifymember', component: ModifymemberComponent }

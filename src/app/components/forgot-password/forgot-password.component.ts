@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit {
   isLinear = true;
   ProfileFormGroup!: FormGroup;
   SecurityQFormGroup!: FormGroup;
@@ -54,6 +54,12 @@ export class ResetPasswordComponent implements OnInit {
         confirmPassword.setErrors({ mismatch: true });
       }
     }
+  }
+
+  
+  gotoSignin()
+  {
+    this.router.navigate(['/signin'])
   }
 
 }
