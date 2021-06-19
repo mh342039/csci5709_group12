@@ -12,6 +12,14 @@ export class SignUpComponent implements OnInit {
   ProfileFormGroup!: FormGroup;
   SecurityQFormGroup!: FormGroup;
   
+  FirstName: "";
+  LastName: "";
+  Email: "";
+  Password: "";
+  ConfirmPassword: "";
+
+  firstCtrl: "";
+  secondCtrl: "";
   constructor(private _formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {

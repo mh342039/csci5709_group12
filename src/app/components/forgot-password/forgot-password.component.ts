@@ -11,18 +11,27 @@ export class ForgotPasswordComponent implements OnInit {
   isLinear = true;
   ProfileFormGroup!: FormGroup;
   SecurityQFormGroup!: FormGroup;
+  EmailFormGroup!: FormGroup;
 
+  Email: "";
+  Password: "";
+  ConfirmPassword: "";
+
+  firstCtrl: "";
+  secondCtrl: "";
+  
   constructor(private _formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {
 
+    this.EmailFormGroup = this._formBuilder.group({
+      Email: ['', [Validators.required, Validators.pattern("([a-zA-Z0-9-_.]+[@]+[a-zA-Z0-9-_.]+[.]+[a-zA-Z0-9]+[a-zA-Z0-9]+)")]],
+    });
+
     this.ProfileFormGroup = this._formBuilder.group({
-
       Password: ['', [Validators.required, Validators.minLength(8)]],
-
       ConfirmPassword: ['', Validators.required]
-   },
-   {
+   },{
         validator: this.checkPassword()
    });
 
@@ -31,7 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
     secondCtrl: ['', Validators.required]
   });
 
-  }
+ }
 
   checkPassword() {
     return (group: FormGroup) => {
