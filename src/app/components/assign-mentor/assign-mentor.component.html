@@ -1,0 +1,65 @@
+<section class="search-section">
+    <mat-form-field class="search-mat-form-field">
+        <mat-label id="search-label">Search</mat-label>
+        <mat-icon matPrefix class="serach-icon">search</mat-icon>
+        <input matInput placeholder="Search Group Name" [(ngModel)]="searchKeyword" class="input-search">
+        <button *ngIf="searchKeyword" matSuffix mat-icon-button (click)="searchKeyword=''">
+            <mat-icon>close</mat-icon>
+          </button>
+      </mat-form-field>
+</section>
+<section>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 group-table">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef style="width: 25%;"> name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+        <ng-container matColumnDef="GroupName">
+          <th mat-header-cell *matHeaderCellDef style="width: 20%;"> Group Name </th>
+          <td mat-cell *matCellDef="let element" > 
+              <span *ngIf="!element.edit">{{element.GroupName}}</span> 
+              <span *ngIf="element.edit">
+                  <mat-form-field id="select-group-name" appearance="fill" style="height: 35px;">
+                      <!-- <mat-label>Assign Group</mat-label> -->
+                      <mat-select [(ngModel)]="element.GroupName">
+                        <mat-option *ngFor="let group of groups" [value]="group.name">
+                          {{group.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+              </span>
+
+            </td>
+        </ng-container>
+            
+        <ng-container matColumnDef="Stream">
+          <th mat-header-cell *matHeaderCellDef style="width: 20%;"> Stream </th>
+          <td mat-cell *matCellDef="let element"> {{element.Stream}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="location" style="width: 20%;">
+            <th mat-header-cell *matHeaderCellDef> Location </th>
+            <td mat-cell *matCellDef="let element"> 
+                <span>{{element.location}}</span> 
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="width: 15%;"></th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon *ngIf="!element.edit" (click)="element.edit = true">edit</mat-icon>
+                <mat-icon *ngIf="element.edit" (click)="element.edit = false">close</mat-icon>
+                <mat-icon *ngIf="element.edit" (click)="element.edit = false">check</mat-icon>
+            </td>
+          </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+</section>
+<section>
+    <mat-paginator [pageSize]="4" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</section>      
+

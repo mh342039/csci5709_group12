@@ -25,6 +25,7 @@ import { SupportComponent } from './components/support/support.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component'; 
 import { AddmemberComponent } from './components/add-member/addmember.component';
 import { ModifymemberComponent } from './components/modify-member/modifymember.component';
+import { GroupManagementComponent } from './components/group-management/group-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -50,8 +51,7 @@ const routes: Routes = [
     { path: 'peermentorshipregistration', component: PeerMentorshipRegistarationComponent },
     { path: 'requestlist', component: RequestListComponent },
     { path: 'requestdetails', component: RequestDetailsComponent },
-    { path: 'groupformation', component: GroupFormationComponent },
-    { path: 'mentorchat', component: MentorChatComponent }, 
+    { path: 'group-management', component: GroupManagementComponent },
     { path: 'mentorchat', component: MentorChatComponent },
     { path: 'addmember', component: AddmemberComponent },
     { path: 'modifymember', component: ModifymemberComponent }

@@ -52,7 +52,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { RequesterDetailsModalComponent } from './components/request-list/requester-details-modal/requester-details-modal.component';
 import { AddmemberComponent } from './components/add-member/addmember.component';
 import { ModifymemberComponent } from './components/modify-member/modifymember.component';
-
+import { GroupManagementComponent } from './components/group-management/group-management.component';
+import { AssignMentorComponent } from './components/assign-mentor/assign-mentor.component';
 
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms'
 import { MatButtonModule } from '@angular/material/button';
@@ -96,7 +97,9 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     RequesterDetailsModalComponent,
     ForgotPasswordComponent,
     AddmemberComponent,
-    ModifymemberComponent
+    ModifymemberComponent,
+    GroupManagementComponent,
+    AssignMentorComponent
   ],
   imports: [
     BrowserModule,

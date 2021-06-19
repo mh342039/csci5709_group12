@@ -26,3 +26,11 @@
 .groupName-link:hover{
     text-decoration: underline;
 }
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    padding: 0 !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 15px;
+}
