@@ -1,7 +1,7 @@
 <div class="example-container">
   
 <div class="addAnnButtonDiv">
-<button mat-raised-button class="addAnnButton" color="primary" (click)="onOpenAnnouncement(-1)">
+<button mat-raised-button class="addAnnButton" color="primary" *ngIf="utilityService.isViewMyAnnouncementControlsVisible" (click)="onOpenAnnouncement(-1)">
     <mat-icon>add</mat-icon>
     <span>Add Announcement</span>
 </button> 
@@ -17,7 +17,7 @@
       </mat-card-subtitle>
 
       <span class="example-spacer"></span>
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <button mat-icon-button [matMenuTriggerFor]="menu"  *ngIf="utilityService.isViewMyAnnouncementControlsVisible" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">

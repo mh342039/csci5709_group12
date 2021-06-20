@@ -10,7 +10,8 @@ export class UtilityService {
   modalTitle:any;
   accordionDetails : any ={};
   opened :boolean = false;
-  annOperationFlag: boolean= false;
+
+  isViewMyAnnouncementControlsVisible: boolean= false;
 
   getaccordionDetails(){
    return this.accordionDetails;
@@ -46,9 +47,8 @@ export class UtilityService {
     }
   }
  
-  setViewMyAnnouncement(){
-
-
+  setViewMyAnnouncementPage(){
+    this.isViewMyAnnouncementControlsVisible = ! this.isViewMyAnnouncementControlsVisible; 
   }
 
 }
