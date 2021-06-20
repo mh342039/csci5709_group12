@@ -34,14 +34,27 @@ export class AssignMentorComponent implements OnInit {
 
   }
 
+  cancel(name: any){
+    console.log(this.dataSource)
+    var index = this.dataSource.filteredData.findIndex((o: any) => o.name == name)
+    this.dataSource.filteredData[index].oldGroupName = this.dataSource.filteredData[index].GroupName
+  }
+
+  save(name:any){
+    var index = this.dataSource.filteredData.findIndex((o: any) => o.name == name)
+    this.dataSource.filteredData[index].GroupName = this.dataSource.filteredData[index].oldGroupName
+
+    //save http call
+  }
+
   getGroupData(){
     return [
-      {GroupName: 'Group1', Stream: "Science", location: 'Halifax', name: 'Manish', edit: false},
-      {GroupName: 'Group2', Stream: "Science", location: 'Halifax', name: 'Hamza', edit: false},
-      {GroupName: 'Group3', Stream: "Science", location: 'Halifax', name: 'Misbah', edit: false},
-      {GroupName: 'Group4', Stream: "Science", location: 'Halifax', name: 'Gurleen', edit: false},
-      {GroupName: 'Group5', Stream: "Science", location: 'Halifax', name: 'Mansi', edit: false},
-      {GroupName: 'Un-assigned', Stream: "Science", location: 'Halifax', name: 'Divyansh', edit: false} 
+      {GroupName: 'Group1',oldGroupName: 'Group1', Stream: "Science", location: 'Halifax', name: 'Manish', edit: false},
+      {GroupName: 'Group2',oldGroupName: 'Group2', Stream: "Science", location: 'Halifax', name: 'Hamza', edit: false},
+      {GroupName: 'Group3',oldGroupName: 'Group3', Stream: "Science", location: 'Halifax', name: 'Misbah', edit: false},
+      {GroupName: 'Group4',oldGroupName: 'Group4', Stream: "Science", location: 'Halifax', name: 'Gurleen', edit: false},
+      {GroupName: 'Group5',oldGroupName: 'Group5', Stream: "Science", location: 'Halifax', name: 'Mansi', edit: false},
+      {GroupName: 'Un-assigned',oldGroupName: 'Un-assigned', Stream: "Science", location: 'Halifax', name: 'Divyansh', edit: false} 
     ];
   }
 
