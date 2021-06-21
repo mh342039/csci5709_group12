@@ -3,18 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeerMentorshipRegistarationComponent } from './peer-mentorship-registaration.component';
 
 describe('PeerMentorshipRegistarationComponent', () => {
-  let component: PeerMentorshipRegistarationComponent;
-  let fixture: ComponentFixture<PeerMentorshipRegistarationComponent>;
+  let component: PeerMentorshipRegistrationComponent;
+  let fixture: ComponentFixture<PeerMentorshipRegistrationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PeerMentorshipRegistarationComponent ]
+      declarations: [ PeerMentorshipRegistrationComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PeerMentorshipRegistarationComponent);
+    fixture = TestBed.createComponent(PeerMentorshipRegistrationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
