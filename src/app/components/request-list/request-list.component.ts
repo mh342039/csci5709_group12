@@ -90,9 +90,9 @@ export class RequestListComponent implements OnInit, AfterViewInit {
       }, width: '400px'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.dialogValue = result.data.accepted;
-      if(this.dialogValue !== undefined)
-        this.requestData[index].requestStatus = this.dialogValue ? "Accepted" : "Rejected";
+      if(result.accepted !== undefined){
+        this.requestData[index].requestStatus = result.accepted ? "Accepted" : "Rejected";
+      }
     });
   }
 
