@@ -10,7 +10,7 @@ import { MainComponent } from './components/main/main.component';
 import { MentorChatComponent } from './components/mentor-chat/mentor-chat.component';
 import { NotesDetailsComponent } from './components/notes-details/notes-details.component';
 import { NotesComponent } from './components/notes/notes.component';
-import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
+import { PeerMentorshipRegistrationComponent } from './components/peer-mentorship-registration/peer-mentorship-registration.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RateApplicationComponent } from './components/rate-application/rate-application.component';
@@ -22,7 +22,7 @@ import { SchedulerComponent } from './components/scheduler/scheduler.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component'; 
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { AddmemberComponent } from './components/add-member/addmember.component';
 import { ModifymemberComponent } from './components/modify-member/modifymember.component';
 import { GroupManagementComponent } from './components/group-management/group-management.component';
@@ -48,7 +48,7 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent },
     { path: 'resetpassword', component: ResetPasswordComponent },
     { path: 'peermentorship', component: PeerMentorshipComponent },
-    { path: 'peermentorshipregistration', component: PeerMentorshipRegistarationComponent },
+    { path: 'peermentorshipregistration', component: PeerMentorshipRegistrationComponent },
     { path: 'requestlist', component: RequestListComponent },
     { path: 'requestdetails', component: RequestDetailsComponent },
     { path: 'group-management', component: GroupManagementComponent },
