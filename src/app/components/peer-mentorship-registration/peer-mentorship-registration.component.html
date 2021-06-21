@@ -1,1 +1,79 @@
-<p>peer-mentorship-registaration works!</p>
+<div class="registrationForm">
+  <form [formGroup]="registrationForm">
+    <p>
+      <mat-radio-group aria-label="Select an option" required name="type" formControlName="type" [(ngModel)]="selectedType" [disabled]="submitted">
+      <mat-radio-button value="mentor" style="color: #00008B;">Mentor</mat-radio-button>
+      <mat-radio-button value="mentee" style="color: #00008B;">Mentee</mat-radio-button>
+      </mat-radio-group>
+    </p>
+    <p>
+    <mat-form-field appearance="outline" class="formFields">
+      <mat-label>Email Address</mat-label>
+      <input matInput id="email" name="email" formControlName="email" placeholder="jdoe@dalca" required [disabled]="submitted">
+    </mat-form-field>
+    </p>
+    <p>
+    <mat-form-field appearance="outline" class="formFields">
+      <mat-label>Name</mat-label>
+      <input matInput id="name" name="name" formControlName="name" required placeholder="Alphanumeric" [disabled]="submitted">
+    </mat-form-field>
+    </p>
+    <p>
+    <mat-form-field appearance="outline" class="formFields">
+      <mat-label>Faculty</mat-label>
+      <input matInput id="faculty" name="faculty" formControlName="faculty" required [disabled]="submitted">
+    </mat-form-field>
+    </p>
+    <p>
+    <mat-form-field appearance="outline" class="formFields">
+      <mat-label>Program</mat-label>
+      <input matInput id="program" name="program" formControlName="program" required [disabled]="submitted">
+    </mat-form-field>
+    </p>
+    <p>
+    <mat-form-field appearance="outline" class="formFields">
+      <mat-label>Program Start Date</mat-label>
+      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" id="startDate" name="startDate" required [min]="minDate" [max]="maxDate" [value]="minDate" [disabled]="submitted">
+      <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #startDatePicker
+                      startView="multi-year"
+                      (yearSelected)="chosenStartYearHandler($event)"
+                      (monthSelected)="chosenStartMonthHandler($event, startDatePicker)"
+                      panelClass="example-month-picker">
+      </mat-datepicker>
+      <mat-error *ngIf="registrationForm.controls['startDate'].errors?.match">Start Date and End Date cannot be same</mat-error>
+    </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" class="formFields">
+        <mat-label>Program End Date</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" id="endDate" name="endDate" required [min]="minDate" [max]="maxDate" [value]="minDate" [disabled]="submitted">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker
+                        startView="multi-year"
+                        (yearSelected)="chosenEndYearHandler($event)"
+                        (monthSelected)="chosenEndMonthHandler($event, endDatePicker)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+        <mat-error *ngIf="registrationForm.controls['endDate'].errors?.match">Start Date and End Date cannot be same</mat-error>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" class="formFields">
+        <mat-label>Current Location</mat-label>
+        <input matInput id="location" name="location" formControlName="location" required [disabled]="submitted">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline" class="formFields">
+        <mat-label>Gender Preference</mat-label>
+        <mat-select [(ngModel)]="selected" #preference id="preference" name="preference" formControlName="preference" [disabled]="submitted">
+          <mat-option [value]="preference" *ngFor="let preference of preferences">{{ preference }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <button mat-button class="register" [disabled]="!registrationForm.valid" (click)="openDialog();submitted=true;">Register</button>
+    </p>
+  </form>
+</div>

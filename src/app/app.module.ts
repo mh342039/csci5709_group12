@@ -62,6 +62,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -136,7 +138,9 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatRadioModule,
+    MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
