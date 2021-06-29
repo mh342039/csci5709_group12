@@ -3,8 +3,8 @@
         <button mat-button [routerLink]="['/main/notes']"><mat-icon>chevron_left</mat-icon> Back to Notes</button>
     </section>
     <section class="col-md-8" style="text-align: end;" > 
-        <button mat-button (click)="saveNote()"><mat-icon>check</mat-icon> Save </button> |
-        <button mat-button  (click)="deleteNote()"><mat-icon>delete_outline</mat-icon> Delete</button>
+        <button mat-button (click)="saveNote()"><mat-icon>check</mat-icon> Save </button> <span *ngIf="isCreate">|</span>
+        <button mat-button  (click)="deleteNote()" *ngIf="isCreate"><mat-icon>delete_outline</mat-icon> Delete</button>
     </section>
 </section>
 

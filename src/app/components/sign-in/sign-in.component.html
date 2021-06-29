@@ -4,7 +4,8 @@
 <h1 style="    text-align: center;
 color: #002b5c;
 font-weight: 900;
-font-size: xxx-large;">Dal Student HandBook</h1>
+font-size: xxx-large;
+line-height: 50px;">Dal Student HandBook</h1>
 
 <br>
 
@@ -14,7 +15,7 @@ font-size: xxx-large;">Dal Student HandBook</h1>
 
         <div class="example-container">
             <div class="extra">
-                <mat-form-field appearance="fill" class="form-field" style = "width: 380px;">
+                <mat-form-field appearance="fill" class="form-field" >
                     <mat-label>Email</mat-label>
                     <input matInput [(ngModel)]="Email" formControlName="Email" placeholder="Email" type="email">
                     <mat-error *ngIf="SigninForm?.controls['Email']?.errors?.required">Email is required</mat-error>
@@ -23,7 +24,7 @@ font-size: xxx-large;">Dal Student HandBook</h1>
             </div>
 
             <div class="extra">
-                <mat-form-field appearance="fill" class="form-field" style = "width: 380px;">
+                <mat-form-field appearance="fill" class="form-field" >
                     <mat-label>Password</mat-label>
                     <input matInput [(ngModel)]="Password" formControlName="Password" type="Password"
                         placeholder="Password">

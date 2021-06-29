@@ -17,7 +17,7 @@ export class NotesDetailsComponent implements OnInit {
   TitleFormControl = new FormControl();
   tagFormControl = new FormControl();
   tags: string[] = [];
-
+  isCreate : boolean=false; 
   @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
 
   constructor(private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
@@ -32,11 +32,12 @@ export class NotesDetailsComponent implements OnInit {
     let temp = this.dataservice.getNote();
     if (temp) {
       this.note = temp;
+      this.isCreate = true;
+
     }
     else {
       this.note = new Note();
     }
-
   }
 
   goBackToNotes() {
