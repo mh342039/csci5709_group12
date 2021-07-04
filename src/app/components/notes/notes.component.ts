@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/services/httpservice.service';
 import { NotesService } from 'src/app/services/notesdata.service';
 import { UtilityService } from 'src/app/services/utilityservice.service';
+import { NoteModel } from '../../models/notes.model';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-notes',
@@ -10,10 +14,10 @@ import { UtilityService } from 'src/app/services/utilityservice.service';
 })
 export class NotesComponent implements OnInit {
 
-  Notes: any;
+  Notes: NoteModel[];
   test: any = "test";
 
-  constructor(public dataservice: NotesService, private utilityService:  UtilityService, private router: Router) { }
+  constructor(private dialog: MatDialog, private httpservice: HttpService,public dataservice: NotesService, private utilityService:  UtilityService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNotes();
@@ -34,7 +38,34 @@ export class NotesComponent implements OnInit {
 
   
   getNotes() {
-    this.Notes = this.dataservice.getNotes()
+    this.httpservice.getServiceCall('/notes')
+    .subscribe( (result:any)=>{
+      if(result.status){
+      this.Notes = result.data;
+      this.dataservice.setAllNote(this.Notes)
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+  
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+          
+        }
+      });
+
+    })
     
   }
 

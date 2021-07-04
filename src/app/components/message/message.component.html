@@ -13,3 +13,9 @@
     <h1 mat-dialog-title>{{data.title}}</h1>
     <div mat-dialog-content>{{data.message}}</div>
 </section>
+
+<section class="message-section" *ngIf="data.type === 'E'">
+    <img class="message-icon-image" src="../../../assets/images/error_icon.png" alt="warning"/>
+    <h1 mat-dialog-title>{{data.title}}</h1>
+    <div mat-dialog-content>{{data.message}}</div>
+</section>

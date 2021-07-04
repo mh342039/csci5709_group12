@@ -16,7 +16,7 @@
             {{note?.title}}
                 
             </label>
-            <mat-icon class="card-delete-icon" aria-hidden="false" aria-label="delete icon" (click)="dataservice.deleteNote(i); $event.stopPropagation();">delete</mat-icon>
+            <mat-icon class="card-delete-icon" aria-hidden="false" aria-label="delete icon" (click)="dataservice.deleteNote(note._id); $event.stopPropagation();">delete</mat-icon>
         </section>
         <section class="note-card-content">
             {{note?.content}}

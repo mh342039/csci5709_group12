@@ -3,8 +3,11 @@ import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { FormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { Router } from '@angular/router';
-import { Note } from 'src/app/models/notes.model';
+import { NoteModel } from 'src/app/models/notes.model';
 import { NotesService } from 'src/app/services/notesdata.service';
+import { MessageComponent } from '../message/message.component';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpService } from 'src/app/services/httpservice.service';
 
 @Component({
   selector: 'app-notes-details',
@@ -12,7 +15,7 @@ import { NotesService } from 'src/app/services/notesdata.service';
   styleUrls: ['./notes-details.component.css']
 })
 export class NotesDetailsComponent implements OnInit {
-  note: Note = new Note();
+  note: NoteModel = new NoteModel();
   separatorKeysCodes: number[] = [ENTER, COMMA, SPACE];
   TitleFormControl = new FormControl();
   tagFormControl = new FormControl();
@@ -20,7 +23,7 @@ export class NotesDetailsComponent implements OnInit {
   isCreate : boolean=false; 
   @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
+  constructor(private httpservice: HttpService, private dialog: MatDialog, private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -36,7 +39,7 @@ export class NotesDetailsComponent implements OnInit {
 
     }
     else {
-      this.note = new Note();
+      this.note = new NoteModel();
     }
   }
 
@@ -64,17 +67,90 @@ export class NotesDetailsComponent implements OnInit {
 
   saveNote() {
     if (this.note._id == -1) {
-      // should be removed later
-      this.note._id = Math.floor(Math.random() * 10000);
-      this.dataservice.addNote(this.note);
-      this.router.navigate(['/main/notes']);
+      this.postNote()
     }
     else {
-      let index = this.dataservice.getNoteIndex(this.note._id);
-      if (index > -1) {
-        this.dataservice.saveNote(index, this.note);
-      }
+      this.putNote()
+      // let index = this.dataservice.getNoteIndex(this.note._id);
+      // if (index > -1) {
+        
+      // }
     }
+  }
+
+  postNote(){
+    this.httpservice.postServiceCall('/notes', this.note)
+    .subscribe( (result:any)=>{
+      console.log(result)
+      if(result.status){
+        this.router.navigate(['/main/notes']);
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title:'Added',
+            message: result.message,
+            duration:2000
+          }
+        });    
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+  
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Please Try Again.',
+        }
+      });
+
+    })
+  }
+
+  putNote(){
+    this.httpservice.putServiceCall('/notes/'+ this.note._id, this.note)
+    .subscribe( (result:any)=>{
+      console.log(result)
+      if(result.status){
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title:'Updated',
+            message: result.message,
+            duration:2000
+          }
+        });    
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+  
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+        }
+      });
+
+    })
   }
 
   deleteNote() {
