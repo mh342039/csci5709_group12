@@ -7,22 +7,27 @@ import { Injectable } from '@angular/core';
 export class HttpService {
   localURL = "http://localhost:3000/api";
   ProdURL = "https://g12-csci5709-backend.herokuapp.com/api"
-  constructor(private http: HttpClient) { }
+  isPROD :boolean = true;
+  URL:string 
+  constructor(private http: HttpClient) { 
+    console.log(window.location.hostname)
+    this.URL = window.location.hostname == 'localhost'?this.localURL:this.ProdURL
+  }
 
   getServiceCall(path: string){
-    return this.http.get(this.localURL + path);
+    return this.http.get(this.URL + path);
   }
 
   postServiceCall(path: string, data:any ){
-    return this.http.post(this.localURL + path, data);
+    return this.http.post(this.URL + path, data);
   }
 
   putServiceCall(path: string, data:any ){
-    return this.http.put(this.localURL + path, data);
+    return this.http.put(this.URL + path, data);
   }
 
   deleteServiceCall(path: string, data:any ){
-    return this.http.delete(this.localURL + path, data);
+    return this.http.delete(this.URL + path, data);
   }
 
 }
