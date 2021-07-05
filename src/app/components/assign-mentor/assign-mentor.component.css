@@ -34,3 +34,7 @@
 ::ng-deep .mat-form-field-wrapper {
     padding-bottom: 15px;
 }
+
+mat-icon{
+    cursor: pointer;
+}

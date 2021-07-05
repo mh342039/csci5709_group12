@@ -1,13 +1,12 @@
-<div style="width:100%; height: 100vh; background-color: lightgrey;">
-    <mat-card style="width: 52%;margin: 0% 24%;">
+<div style="width:100%; height: 100vh; background-color: #DCDCDC; padding-top: 5%;">
+    <mat-card style="width: 72%;margin: auto">
     
         <section class="row">
     
-            <section class="col-md-6" style="
-            height: 500px;
-            margin-top: 90px;
-            padding: 20px 90px;
-            text-align: center;
+            <section class="col-md-4" style="
+     margin-top: 90px;
+    padding: 0% 3% 0 6%;
+    text-align: center;
             
         ">
     
@@ -24,7 +23,7 @@
     
             </section>
     
-            <section class="col-md-6">
+            <section class="col-md-8">
     
                 <!-- Right Side -->
     
@@ -36,7 +35,7 @@
                         <form [formGroup]="ProfileFormGroup">
     
                             <ng-template matStepLabel>Profile details</ng-template>
-                            <mat-form-field>
+                            <mat-form-field style="margin-right: 15%;">
                                 <mat-label>First Name</mat-label>
                                 <input matInput [(ngModel)]="FirstName" formControlName="FirstName" placeholder="First Name"
                                     type="text">
@@ -69,8 +68,9 @@
                                 </mat-error>
                             </mat-form-field>
     
-    
-                            <mat-form-field>
+                            <br>
+
+                            <mat-form-field style="margin-right: 15%;">
                                 <mat-label>Password</mat-label>
                                 <input matInput [(ngModel)]="Password" formControlName="Password" type="Password"
                                     placeholder="Password">

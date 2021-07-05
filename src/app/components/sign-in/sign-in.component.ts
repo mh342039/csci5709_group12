@@ -30,7 +30,7 @@ export class SignInComponent implements OnInit {
  
 
   gotoProfile(){
-    this.router.navigate(['/profile'])
+    this.router.navigate(['/main/announcement'])
   }
 
   gotoForgotPassword()

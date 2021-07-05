@@ -12,12 +12,12 @@ export class MessageComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    if (this.data.type === 'C' && this.data.duration){
-    setTimeout(()=>{ this.messageDialogRef.close()}, this.data.duration)
+    if ((this.data.type === 'C' || this.data.type === 'E') && this.data.duration) {
+      setTimeout(() => { this.messageDialogRef.close() }, this.data.duration)
     }
   }
 
-  close(response:any){
+  close(response: any) {
     this.messageDialogRef.close({
       data: response
     });

@@ -22,6 +22,7 @@
     ],
     "strictPropertyInitialization": false,
     "strictNullChecks":false,
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

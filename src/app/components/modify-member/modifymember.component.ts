@@ -192,7 +192,6 @@ export class ModifymemberComponent implements OnInit {
             accessStatus: '',
             roleModificationDate: '0000-00-00',
             mode: 'C'
-            //name: 'John Doe', email: searchValue, date: new Date().toISOString().slice(0, 19).replace('T', ' ')
           });
           this.dataSource.data = this.memberData;
       }

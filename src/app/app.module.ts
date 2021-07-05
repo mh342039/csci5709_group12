@@ -23,7 +23,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PeerMentorshipComponent } from './components/peer-mentorship/peer-mentorship.component';
-import { PeerMentorshipRegistarationComponent } from './components/peer-mentorship-registaration/peer-mentorship-registaration.component';
+import { PeerMentorshipRegistrationComponent } from './components/peer-mentorship-registration/peer-mentorship-registration.component';
 import { RequestListComponent } from './components/request-list/request-list.component';
 import { RequestDetailsComponent } from './components/request-details/request-details.component';
 import { GroupFormationComponent } from './components/group-formation/group-formation.component';
@@ -62,6 +62,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     ResetPasswordComponent,
     ProfileComponent,
     PeerMentorshipComponent,
-    PeerMentorshipRegistarationComponent,
+    PeerMentorshipRegistrationComponent,
     RequestListComponent,
     RequestDetailsComponent,
     GroupFormationComponent,
@@ -136,7 +139,10 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
