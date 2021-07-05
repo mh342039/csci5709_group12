@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilityService } from 'src/app/services/utilityservice.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mentor-chat',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MentorChatComponent implements OnInit {
 
-  constructor() { }
+  constructor(private utilityService:  UtilityService, private router: Router) { }
+
 
   ngOnInit(): void {
+    this.utilityService.sectionTitle = "Contact the Mentors"
   }
 
 }

@@ -1,0 +1,13 @@
+.card-cont{
+    display: flex;
+    flex-flow: row wrap;
+    background-color: transparent;
+}
+
+.card-main{
+  margin: 15px;
+  height: 30vh;
+  width: 20vw;
+  cursor: pointer;
+}
+
