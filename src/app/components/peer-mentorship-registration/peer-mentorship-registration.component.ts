@@ -5,7 +5,7 @@ import {FormControl, FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatDatepicker} from '@angular/material/datepicker';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { PeerMentorshipRegistrationService } from '../../services/peer-mentorship-registration.service';
 
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
@@ -47,7 +47,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   maxDate = new Date(new Date().getFullYear() + 5, 0, 1);
   submitted = false;
 
-  constructor(public util: UtilityService, private fb: FormBuilder, public dialog: MatDialog) {
+  constructor(public util: UtilityService, private fb: FormBuilder, private dataservice: PeerMentorshipRegistrationService) {
     this.registrationForm = this.fb.group({
       type:[''],
       email:['', [Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)')]],
@@ -58,7 +58,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
       endDate:[moment(this.minDate)],
       location:[''],
       preference:['']
-    }, {validator: matchDates("startDate", "endDate")});
+    }, {validator: validateDates("startDate", "endDate")});
   }
 
   ngOnInit(): void {
@@ -92,20 +92,29 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   }
 
   openDialog() {
-    this.dialog.open(ConfirmationDialog, {
-      data: {
-        email: this.registrationForm.value.email
-      }
-    });
+    if(this.submitted){
+      this.registrationForm.get('type').disable();
+      this.registrationForm.get('email').disable();
+      this.registrationForm.get('name').disable();
+      this.registrationForm.get('faculty').disable();
+      this.registrationForm.get('program').disable();
+      this.registrationForm.get('startDate').disable();
+      this.registrationForm.get('endDate').disable();
+      this.registrationForm.get('location').disable();
+      this.registrationForm.get('preference').disable();
+    }
+    this.dataservice.saveUser();
   }
 }
 
-function matchDates(startDate: any, endDate: any) {
+function validateDates(startDate: any, endDate: any) {
   return (formGroup: FormGroup) => {
-    if (formGroup.controls[startDate]?.errors && !formGroup.controls[startDate].errors?.match) {
+    if ((formGroup.controls[startDate]?.errors && !formGroup.controls[startDate].errors?.match)
+          || (formGroup.controls[endDate]?.errors && !formGroup.controls[endDate].errors?.match)
+          || (formGroup.controls[endDate]?.invalid && !formGroup.controls[endDate].errors?.invalid)) {
       return;
     }
-    if(formGroup.controls[startDate].value._d.getYear() == formGroup.controls[endDate].value._d.getYear() && formGroup.controls[startDate].value._d.getMonth() == formGroup.controls[endDate].value._d.getMonth()){
+    if(formGroup.controls[startDate].value._d.getFullYear() == formGroup.controls[endDate].value._d.getFullYear() && formGroup.controls[startDate].value._d.getMonth() == formGroup.controls[endDate].value._d.getMonth()){
       formGroup.controls[startDate].setErrors({match: true});
       formGroup.controls[endDate].setErrors({match: true});
     }
@@ -113,17 +122,11 @@ function matchDates(startDate: any, endDate: any) {
       formGroup.controls[startDate].setErrors(null);
       formGroup.controls[endDate].setErrors(null);
     }
+    if(formGroup.controls[endDate].value._d.getFullYear() <= new Date().getFullYear() && formGroup.controls[endDate].value._d.getMonth() <= new Date().getMonth()){
+      formGroup.controls[endDate].setErrors({invalid: true});
+    }
+    else{
+      formGroup.controls[endDate].setErrors(null);
+    }
   };
-}
-
-export interface DialogData {
-  email: string;
-}
-
-@Component({
-  selector: 'confirmation-dialog',
-  templateUrl: 'confirmation-dialog.html',
-})
-export class ConfirmationDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 }

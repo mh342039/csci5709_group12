@@ -1,7 +1,7 @@
-<div class="registrationForm">
+<div class="registrationForm" *ngIf="!submitted">
   <form [formGroup]="registrationForm">
     <p>
-      <mat-radio-group aria-label="Select an option" required name="type" formControlName="type" [(ngModel)]="selectedType" [disabled]="submitted">
+      <mat-radio-group aria-label="Select an option" required name="type" formControlName="type" [(ngModel)]="selectedType">
       <mat-radio-button value="mentor" style="color: #00008B;">Mentor</mat-radio-button>
       <mat-radio-button value="mentee" style="color: #00008B;">Mentee</mat-radio-button>
       </mat-radio-group>
@@ -9,31 +9,31 @@
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Email Address</mat-label>
-      <input matInput id="email" name="email" formControlName="email" placeholder="jdoe@dalca" required [disabled]="submitted">
+      <input matInput id="email" name="email" formControlName="email" placeholder="jdoe@dalca" required>
     </mat-form-field>
     </p>
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Name</mat-label>
-      <input matInput id="name" name="name" formControlName="name" required placeholder="Alphanumeric" [disabled]="submitted">
+      <input matInput id="name" name="name" formControlName="name" required placeholder="Alphanumeric">
     </mat-form-field>
     </p>
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Faculty</mat-label>
-      <input matInput id="faculty" name="faculty" formControlName="faculty" required [disabled]="submitted">
+      <input matInput id="faculty" name="faculty" formControlName="faculty" required>
     </mat-form-field>
     </p>
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Program</mat-label>
-      <input matInput id="program" name="program" formControlName="program" required [disabled]="submitted">
+      <input matInput id="program" name="program" formControlName="program" required>
     </mat-form-field>
     </p>
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Program Start Date</mat-label>
-      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" id="startDate" name="startDate" required [min]="minDate" [max]="maxDate" [value]="minDate" [disabled]="submitted">
+      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" id="startDate" name="startDate" required [min]="minDate" [max]="maxDate" [value]="minDate">
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker
                       startView="multi-year"
@@ -47,7 +47,7 @@
     <p>
       <mat-form-field appearance="outline" class="formFields">
         <mat-label>Program End Date</mat-label>
-        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" id="endDate" name="endDate" required [min]="minDate" [max]="maxDate" [value]="minDate" [disabled]="submitted">
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" id="endDate" name="endDate" required [min]="minDate" [max]="maxDate" [value]="minDate">
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker
                         startView="multi-year"
@@ -56,6 +56,7 @@
                         panelClass="example-month-picker">
         </mat-datepicker>
         <mat-error *ngIf="registrationForm.controls['endDate'].errors?.match">Start Date and End Date cannot be same</mat-error>
+        <mat-error *ngIf="registrationForm.controls['endDate'].errors?.invalid">End Date cannot be less than today</mat-error>
       </mat-form-field>
     </p>
     <p>
@@ -67,13 +68,16 @@
     <p>
       <mat-form-field appearance="outline" class="formFields">
         <mat-label>Gender Preference</mat-label>
-        <mat-select [(ngModel)]="selected" #preference id="preference" name="preference" formControlName="preference" [disabled]="submitted">
+        <mat-select [(ngModel)]="selected" #preference id="preference" name="preference" formControlName="preference">
           <mat-option [value]="preference" *ngFor="let preference of preferences">{{ preference }}</mat-option>
         </mat-select>
       </mat-form-field>
     </p>
     <p>
-      <button mat-button class="register" [disabled]="!registrationForm.valid" (click)="openDialog();submitted=true;">Register</button>
+      <button mat-button class="register" [disabled]="!registrationForm.valid" (click)="submitted=true;openDialog();">Register</button>
     </p>
   </form>
+</div>
+<div *ngIf="submitted">
+  Your Request has already been submitted. You will be notified if there is a response.
 </div>
