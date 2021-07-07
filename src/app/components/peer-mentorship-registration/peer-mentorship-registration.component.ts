@@ -1,11 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MemberProfile } from 'src/app/models/member-profile';
 import { UtilityService } from '../../services/utilityservice.service';
-import {FormControl, FormBuilder, Validators, FormGroup} from '@angular/forms';
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MatDatepicker} from '@angular/material/datepicker';
-import { PeerMentorshipRegistrationService } from '../../services/peer-mentorship-registration.service';
+import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
+import { PeerMentorshipRegistrationModel } from 'src/app/models/peer-mentorship-registration.model';
+import { HttpService } from 'src/app/services/httpservice.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { MessageComponent } from '../message/message.component';
 
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
@@ -38,18 +41,20 @@ export const MY_FORMATS = {
   ],
 })
 export class PeerMentorshipRegistrationComponent implements OnInit {
-
+  registerUser: PeerMentorshipRegistrationModel = new PeerMentorshipRegistrationModel();
   registrationForm: any;
   preferences = ['Male', 'Female', 'No Preference'];
-  selected = this.preferences[2];
-  selectedType="mentee";
+  selectedRole="mentee";
+  programs = ['Bachelor of Computer Science', 'Bachelor of Commerce', 'Master of Applied Computer Science'];
+  faculties = ['Faculty of Computer Science', 'Faculty of Management'];
+  locations = ['Canada', 'India', 'US', 'Brazil', 'China'];
   minDate = new Date(new Date().getFullYear() - 5, 0, 1);
   maxDate = new Date(new Date().getFullYear() + 5, 0, 1);
   submitted = false;
 
-  constructor(public util: UtilityService, private fb: FormBuilder, private dataservice: PeerMentorshipRegistrationService) {
+  constructor(public util: UtilityService, private fb: FormBuilder, private httpservice: HttpService, private dialog: MatDialog, private router: Router) {
     this.registrationForm = this.fb.group({
-      type:[''],
+      role:[''],
       email:['', [Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)')]],
       name:['', [Validators.pattern('^[A-Za-z0-9 ]+$')]],
       faculty:[''],
@@ -63,6 +68,10 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.util.sectionTitle = "Peer Mentorship Registration";
+    //if(!this.checkRegistration()){
+      this.registerUser.role = "Mentee";
+      this.registerUser.preference = this.preferences[2];
+    //}
   }
 
   chosenStartYearHandler(normalizedYear: Moment) {
@@ -92,18 +101,69 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   }
 
   openDialog() {
-    if(this.submitted){
-      this.registrationForm.get('type').disable();
-      this.registrationForm.get('email').disable();
-      this.registrationForm.get('name').disable();
-      this.registrationForm.get('faculty').disable();
-      this.registrationForm.get('program').disable();
-      this.registrationForm.get('startDate').disable();
-      this.registrationForm.get('endDate').disable();
-      this.registrationForm.get('location').disable();
-      this.registrationForm.get('preference').disable();
+    if(this.registerUser._id == -1){
+      this.saveUser(this.registerUser);
     }
-    this.dataservice.saveUser();
+    else{}
+  }
+
+  saveUser(){
+    this.httpservice.postServiceCall('/peer-mentorship-registration', this.registerUser)
+    .subscribe((result:any)=>{
+      if(result.status){
+        this.disableForm();
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title:'Registration Successful',
+            message: 'Registration request raised. You will be notified once it is approved.',
+            duration:3000
+          }
+        });
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Please Try Again.',
+        }
+      });
+    });
+  }
+
+  disableForm(){
+    this.registrationForm.get('role').disable();
+    this.registrationForm.get('email').disable();
+    this.registrationForm.get('name').disable();
+    this.registrationForm.get('faculty').disable();
+    this.registrationForm.get('program').disable();
+    this.registrationForm.get('startDate').disable();
+    this.registrationForm.get('endDate').disable();
+    this.registrationForm.get('location').disable();
+    this.registrationForm.get('preference').disable();
+  }
+
+  checkRegistration(){
+    this.httpservice.getServiceCall('/peer-mentorship-registration')
+    .subscribe((result:any)=>{
+      if(result.status){
+        this.registerUser = result.data;
+      }
+    });
+    if(this.registerUser)
+      return true;
+    return false;
   }
 }
 

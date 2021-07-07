@@ -1,45 +1,63 @@
-<div class="registrationForm" *ngIf="!submitted">
+<!--<div *ngIf="submitted">
+  Your Request has already been submitted. You will be notified if there is a response.
+</div>-->
+<div class="registrationForm">
   <form [formGroup]="registrationForm">
     <p>
-      <mat-radio-group aria-label="Select an option" required name="type" formControlName="type" [(ngModel)]="selectedType">
-      <mat-radio-button value="mentor" style="color: #00008B;">Mentor</mat-radio-button>
-      <mat-radio-button value="mentee" style="color: #00008B;">Mentee</mat-radio-button>
+      <mat-radio-group aria-label="Select an option" required name="role" formControlName="role" [(ngModel)]="registerUser.role"><!--[(ngModel)]="selectedRole">-->
+      <mat-radio-button value="Mentor" style="color: #00008B;">Mentor</mat-radio-button>
+      <mat-radio-button value="Mentee" style="color: #00008B;">Mentee</mat-radio-button>
       </mat-radio-group>
     </p>
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Email Address</mat-label>
-      <input matInput id="email" name="email" formControlName="email" placeholder="jdoe@dalca" required>
+      <input matInput id="email" name="email" formControlName="email" placeholder="jdoe@dalca" required [(ngModel)]="registerUser.email">
     </mat-form-field>
     </p>
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Name</mat-label>
-      <input matInput id="name" name="name" formControlName="name" required placeholder="Alphanumeric">
+      <input matInput id="name" name="name" formControlName="name" required placeholder="Alphanumeric" [(ngModel)]="registerUser.name">
     </mat-form-field>
     </p>
     <p>
+      <mat-form-field appearance="outline" class="formFields">
+        <mat-label>Faculty</mat-label>
+        <mat-select #preference id="faculty" name="faculty" formControlName="faculty" required [(ngModel)]="registerUser.faculty">
+          <mat-option [value]="faculty" *ngFor="let faculty of faculties">{{ faculty }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <!--<p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Faculty</mat-label>
-      <input matInput id="faculty" name="faculty" formControlName="faculty" required>
+      <input matInput id="faculty" name="faculty" formControlName="faculty" required [(ngModel)]="registerUser.faculty">
     </mat-form-field>
-    </p>
+    </p>-->
     <p>
+      <mat-form-field appearance="outline" class="formFields">
+        <mat-label>Program</mat-label>
+        <mat-select #preference id="program" name="program" formControlName="program" required [(ngModel)]="registerUser.program">
+          <mat-option [value]="program" *ngFor="let program of programs">{{ program }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <!--<p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Program</mat-label>
-      <input matInput id="program" name="program" formControlName="program" required>
+      <input matInput id="program" name="program" formControlName="program" required [(ngModel)]="registerUser.program">
     </mat-form-field>
-    </p>
+    </p>-->
     <p>
     <mat-form-field appearance="outline" class="formFields">
       <mat-label>Program Start Date</mat-label>
-      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" id="startDate" name="startDate" required [min]="minDate" [max]="maxDate" [value]="minDate">
+      <input matInput [matDatepicker]="startDatePicker" formControlName="startDate" id="startDate" name="startDate" required [min]="minDate" [max]="maxDate" [value]="minDate" [(ngModel)]="registerUser.startDate">
       <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startDatePicker
                       startView="multi-year"
                       (yearSelected)="chosenStartYearHandler($event)"
-                      (monthSelected)="chosenStartMonthHandler($event, startDatePicker)"
-                      panelClass="example-month-picker">
+                      (monthSelected)="chosenStartMonthHandler($event, startDatePicker)">
       </mat-datepicker>
       <mat-error *ngIf="registrationForm.controls['startDate'].errors?.match">Start Date and End Date cannot be same</mat-error>
     </mat-form-field>
@@ -47,13 +65,12 @@
     <p>
       <mat-form-field appearance="outline" class="formFields">
         <mat-label>Program End Date</mat-label>
-        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" id="endDate" name="endDate" required [min]="minDate" [max]="maxDate" [value]="minDate">
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" id="endDate" name="endDate" required [min]="minDate" [max]="maxDate" [value]="minDate" [(ngModel)]="registerUser.endDate">
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker
                         startView="multi-year"
                         (yearSelected)="chosenEndYearHandler($event)"
-                        (monthSelected)="chosenEndMonthHandler($event, endDatePicker)"
-                        panelClass="example-month-picker">
+                        (monthSelected)="chosenEndMonthHandler($event, endDatePicker)">
         </mat-datepicker>
         <mat-error *ngIf="registrationForm.controls['endDate'].errors?.match">Start Date and End Date cannot be same</mat-error>
         <mat-error *ngIf="registrationForm.controls['endDate'].errors?.invalid">End Date cannot be less than today</mat-error>
@@ -62,13 +79,21 @@
     <p>
       <mat-form-field appearance="outline" class="formFields">
         <mat-label>Current Location</mat-label>
-        <input matInput id="location" name="location" formControlName="location" required [disabled]="submitted">
+        <mat-select #preference id="location" name="location" formControlName="location" required [(ngModel)]="registerUser.location">
+          <mat-option [value]="location" *ngFor="let location of locations">{{ location }}</mat-option>
+        </mat-select>
       </mat-form-field>
     </p>
+    <!--<p>
+      <mat-form-field appearance="outline" class="formFields">
+        <mat-label>Current Location</mat-label>
+        <input matInput id="location" name="location" formControlName="location" required [disabled]="submitted" [(ngModel)]="registerUser.location">
+      </mat-form-field>
+    </p>-->
     <p>
       <mat-form-field appearance="outline" class="formFields">
         <mat-label>Gender Preference</mat-label>
-        <mat-select [(ngModel)]="selected" #preference id="preference" name="preference" formControlName="preference">
+        <mat-select #preference id="preference" name="preference" formControlName="preference" [(ngModel)]="registerUser.preference">
           <mat-option [value]="preference" *ngFor="let preference of preferences">{{ preference }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -77,7 +102,4 @@
       <button mat-button class="register" [disabled]="!registrationForm.valid" (click)="submitted=true;openDialog();">Register</button>
     </p>
   </form>
-</div>
-<div *ngIf="submitted">
-  Your Request has already been submitted. You will be notified if there is a response.
 </div>

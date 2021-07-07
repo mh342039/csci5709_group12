@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { RequesterDetailsModalComponent } from '../components/request-list/requester-details-modal/requester-details-modal.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MemberProfile } from 'src/app/models/member-profile';
+import { MemberProfileModel } from 'src/app/models/member-profile.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModifymemberService {
 
-  memberData: MemberProfile[] = [
+  memberData: MemberProfileModel[] = [
     {
+      _id: -1,
       name: 'John Doe',
       email: 'jdoe@dal.ca',
       faculty: 'Computer Science',
@@ -20,16 +21,17 @@ export class ModifymemberService {
       requestType:'Role Change',
       requestDate:'2021-06-06 15:00:00',
       requestStatus:'Role Changed',
-      accessModificationType: '0000-00-00',
+      /*accessModificationType: '0000-00-00',
       accessModificationDate: '2021-06-06 15:05:00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
+      accessStatus: '',*/
+      modificationDate: '0000-00-00',
       mode: 'C'
     }
   ];
 
-  searchPoolMemberData: MemberProfile[] = [
+  searchPoolMemberData: MemberProfileModel[] = [
     {
+      _id: -1,
       name: 'John Doe',
       email: 'jdoe1@dal.ca',
       faculty: 'Computer Science',
@@ -40,13 +42,14 @@ export class ModifymemberService {
       requestType:'Role Change',
       requestDate:'2021-06-06 15:00:00',
       requestStatus:'Pending',
-      accessModificationType: '0000-00-00',
+      /*accessModificationType: '0000-00-00',
       accessModificationDate: '0000-00-00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
+      accessStatus: '',*/
+      modificationDate: '0000-00-00',
       mode: 'C'
     },
     {
+      _id: -1,
       name: 'John Doe',
       email: 'jdoe2@dal.ca',
       faculty: 'Computer Science',
@@ -57,10 +60,10 @@ export class ModifymemberService {
       requestType:'Role Change',
       requestDate:'2021-06-06 15:00:00',
       requestStatus:'Pending',
-      accessModificationType: '0000-00-00',
+      /*accessModificationType: '0000-00-00',
       accessModificationDate: '0000-00-00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
+      accessStatus: '',*/
+      modificationDate: '0000-00-00',
       mode: 'C'
     }
   ];
@@ -70,6 +73,7 @@ export class ModifymemberService {
   openDialog(index: number, searchEmail: string) {
     const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
       data: {
+        _id: -1,
         name: this.searchPoolMemberData[index].name,
         email: this.searchPoolMemberData[index].email,
         faculty: this.searchPoolMemberData[index].faculty,
@@ -80,10 +84,10 @@ export class ModifymemberService {
         requestType: this.searchPoolMemberData[index].requestType,
         requestDate: this.searchPoolMemberData[index].requestDate,
         requestStatus: this.searchPoolMemberData[index].requestStatus,
-        accessModificationType: this.searchPoolMemberData[index].accessModificationType,
+        /*accessModificationType: this.searchPoolMemberData[index].accessModificationType,
         accessModificationDate: this.searchPoolMemberData[index].accessModificationDate,
-        accessStatus: this.searchPoolMemberData[index].accessStatus,
-        roleModificationDate: this.searchPoolMemberData[index].roleModificationDate,
+        accessStatus: this.searchPoolMemberData[index].accessStatus,*/
+        modificationDate: this.searchPoolMemberData[index].modificationDate,
         mode: this.searchPoolMemberData[index].mode
       }, width: '400px'
     });
@@ -97,6 +101,7 @@ export class ModifymemberService {
           this.searchPoolMemberData[index].requestStatus = "Member Removed";
 
         this.memberData.push({
+          _id: -1,
           name: 'John Doe',
           email: searchEmail,
           faculty: 'Computer Science',
@@ -107,10 +112,10 @@ export class ModifymemberService {
           requestType: result.requestType,
           requestDate: '2021-06-06 15:00:00',
           requestStatus: this.searchPoolMemberData[index].requestStatus,
-          accessModificationType: '0000-00-00',
+          /*accessModificationType: '0000-00-00',
           accessModificationDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
-          accessStatus: '',
-          roleModificationDate: '0000-00-00',
+          accessStatus: '',*/
+          modificationDate: '0000-00-00',
           mode: 'C'
         });
       }
