@@ -5,8 +5,8 @@ import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UtilityService } from '../../services/utilityservice.service';
 import { RequesterDetailsModalComponent } from '../request-list/requester-details-modal/requester-details-modal.component';
-import { MemberProfile } from 'src/app/models/member-profile';
 import { ModifymemberService } from '../../services/modifymember.service';
+import { MemberProfileModel } from 'src/app/models/member-profile.model';
 
 @Component({
   selector: 'app-modifymember',
@@ -17,7 +17,7 @@ export class ModifymemberComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'email', 'requestStatus', 'date'];
 
-  dataSource = new MatTableDataSource<MemberProfile>(this.dataservice.memberData);
+  dataSource = new MatTableDataSource<MemberProfileModel>(this.dataservice.memberData);
   email = new FormControl('', Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)'));
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -98,6 +98,6 @@ export class ModifymemberComponent implements OnInit {
 
   openDialog(){
     this.dataservice.openDialog(this.index, this.searchEmail);
-    this.dataSource = new MatTableDataSource<MemberProfile>(this.dataservice.memberData);
+    this.dataSource = new MatTableDataSource<MemberProfileModel>(this.dataservice.memberData);
   }
 }

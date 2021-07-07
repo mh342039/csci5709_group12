@@ -5,7 +5,7 @@ import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { RequesterDetailsModalComponent } from './requester-details-modal/requester-details-modal.component';
 import { UtilityService } from 'src/app/services/utilityservice.service';
-import { MemberProfile } from 'src/app/models/member-profile';
+import { MemberProfileModel } from 'src/app/models/member-profile.model';
 
 @Component({
   selector: 'app-request-list',
@@ -18,8 +18,9 @@ export class RequestListComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['requesterName', 'requestType', 'requestModificationDate', 'requestStatus'];
 
-  requestData: MemberProfile[] = [
+  requestData: MemberProfileModel[] = [
     {
+      _id: -1,
       name: 'John Doe',
       email: 'jdoe@dal.ca',
       faculty: 'Computer Science',
@@ -30,13 +31,14 @@ export class RequestListComponent implements OnInit, AfterViewInit {
       requestType:'Role Change',
       requestDate:'2021-06-06 15:00:00',
       requestStatus:'Pending',
-      accessModificationType: '0000-00-00',
+      /*accessModificationType: '0000-00-00',
       accessModificationDate: '0000-00-00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
+      accessStatus: '',*/
+      modificationDate: '0000-00-00',
       mode: 'V'
     },
     {
+      _id: -1,
       name: 'John Doe',
       email: 'jdoe1@dal.ca',
       faculty: 'Computer Science',
@@ -47,15 +49,15 @@ export class RequestListComponent implements OnInit, AfterViewInit {
       requestType:'Role Change',
       requestDate:'2021-06-06 15:00:00',
       requestStatus:'Pending',
-      accessModificationType: '0000-00-00',
+      /*accessModificationType: '0000-00-00',
       accessModificationDate: '0000-00-00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
+      accessStatus: '',*/
+      modificationDate: '0000-00-00',
       mode: 'V'
     }
   ];
 
-  dataSource = new MatTableDataSource<MemberProfile>(this.requestData);
+  dataSource = new MatTableDataSource<MemberProfileModel>(this.requestData);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -72,6 +74,7 @@ export class RequestListComponent implements OnInit, AfterViewInit {
   openDialog(index: number) {
     const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
       data: {
+        _id: -1,
         name: this.requestData[index].name,
         email: this.requestData[index].email,
         faculty: this.requestData[index].faculty,
@@ -82,10 +85,10 @@ export class RequestListComponent implements OnInit, AfterViewInit {
         requestType: this.requestData[index].requestType,
         requestDate: this.requestData[index].requestDate,
         requestStatus: this.requestData[index].requestStatus,
-        accessModificationType: this.requestData[index].accessModificationType,
+        /*accessModificationType: this.requestData[index].accessModificationType,
         accessModificationDate: this.requestData[index].accessModificationDate,
-        accessStatus: this.requestData[index].accessStatus,
-        roleModificationDate: this.requestData[index].roleModificationDate,
+        accessStatus: this.requestData[index].accessStatus,*/
+        modificationDate: this.requestData[index].modificationDate,
         mode: this.requestData[index].mode,
       }, width: '400px'
     });
