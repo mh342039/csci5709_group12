@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MessageComponent } from '../components/message/message.component';
 import {Announcement} from '../models/announcements.model';
+import { HttpService } from './httpservice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,30 +11,9 @@ import {Announcement} from '../models/announcements.model';
 
 export class AnnouncementService {
   announcement:any;
-  allAnnouncements: Announcement[];
+  allAnnouncements: Announcement[] =[];
 
-  constructor(private dialog: MatDialog, private router: Router) { 
-
-  this.allAnnouncements=[
-    {
-      id:1,
-      title:"Consectetur Adipiscing Elit.....",
-      createdBy: "Ipsum Dolor",
-      createdOn: "June 7, 2021" ,
-      category:"Recreational",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      LastModifiedOn: "June 9, 2021"
-    },
-    {
-      id:2,
-      title:"Tempor Incididunt Ut Labore Et",
-      createdBy: "Duis Aute",
-      createdOn: "June 8, 2021" ,
-      category:"Educational",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      LastModifiedOn: "June 11, 2021"
-    }
-  ];
+  constructor(private httpservice: HttpService, private dialog: MatDialog, private router: Router) { 
   }
 
 getAnnouncements(){
@@ -46,6 +26,10 @@ getAnnouncement(){
 
 setAnnouncement(announcement:any){
 this.announcement=announcement;
+}
+
+setAllAnnouncements(announcements:Announcement[]){
+  this.allAnnouncements = announcements;
 }
 
 addAnnouncement(announcement:any){
@@ -72,7 +56,7 @@ this.dialog.open(MessageComponent, {
 });
 }
 
-deleteAnnouncement(index:any){
+deleteAnnouncement(id:any){
   const dialogRef= this.dialog.open(MessageComponent, {
     data: {
       type: 'W',
@@ -84,22 +68,49 @@ deleteAnnouncement(index:any){
 
 dialogRef.afterClosed().subscribe(result => {
   if(result.data == "Y"){
-    this.allAnnouncements.splice(index,1);
-    this.router.navigate(['/main/announcement']);
+    this.httpservice.deleteServiceCall('/announcements/' + id, {})
+        .subscribe( (result:any)=>{
+          console.log(result)
+          if(result.status){
+            let index = this.allAnnouncements.findIndex(o=>{ return o._id = id})
+              this.allAnnouncements.splice(id,1);
+              this.router.navigate(['/main/announcement']);
+              this.dialog.open(MessageComponent, {
+                data: {
+                  type: 'C',
+                  title:'Deleted',
+                  message: 'Announcement deleted successfully.',
+                  duration:2000
+                }
+              });
+            }
+      else{
+          this.dialog.open(MessageComponent, {
+            data: {
+              type: 'E',
+              title:'System Error',
+              message: result.message,
+            }
+          });
+        }
+      },
+      (error:any)=>{
         this.dialog.open(MessageComponent, {
           data: {
-            type: 'C',
-            title:'Deleted',
-            message: 'Announcement deleted successfully.',
-            duration:2000
+            type: 'E',
+            title:'System Error',
+            message: 'Something Went Wrong. Kindly Refresh the Page.',
           }
         });
-  }
-});
+  
+      })
+      
+    }
+  });
 }
 
-getAnnouncementIndex(_id:any){
-  return this.allAnnouncements.map(o => o.id).indexOf(_id);
+getAnnouncementIndex(id:number){
+  return this.allAnnouncements.map(o => o._id).indexOf(id);
 }
 
 }
