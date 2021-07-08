@@ -102,7 +102,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
 
   openDialog() {
     if(this.registerUser._id == -1){
-      // this.saveUser(this.registerUser);
+      this.saveUser();
     }
     else{}
   }
