@@ -25,6 +25,7 @@ interface Category {
 
 export class AnnouncementDetailsComponent implements OnInit {
   announcement: Announcement= new Announcement();
+  isVisible : boolean=false; 
   addAnnouncementForm: FormGroup;
   alphanumericPattern = "([a-zA-Z0-9 ]+)";
   TitleFormControl= new FormControl('',[
@@ -37,8 +38,8 @@ export class AnnouncementDetailsComponent implements OnInit {
   Validators.required
    );
 
-   CategoryFormControl= new FormControl(
-    //  ['']
+   CategoryFormControl= new FormControl('',
+    Validators.required
    );
 
   hide = true;
@@ -59,14 +60,14 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.getAnnouncement();
     this.cdr.detectChanges();
     this.utilityService.sectionTitle="Announcements";
-   // this.createForm();
+    // this.createForm();
   }
 
   getAnnouncement(){
     let temp= this.announcementService.getAnnouncement();
     if(temp){
       this.announcement=temp;
-      this.isCreate = true;
+      this.isVisible = true;
     }
     else
     this.announcement= new Announcement(); 
@@ -90,11 +91,6 @@ export class AnnouncementDetailsComponent implements OnInit {
     Description: ['', Validators.required],
    });
   }
-
-openSnackBar() {
-  this.message="Announcement has been created succcessfully and sent for review";
-  this._snackBar.open(this.message,'Dismiss', { duration: 3000 });
-}
 
 onSaveAnnouncement(){
   if (this.announcement._id == -1) {
@@ -186,7 +182,7 @@ putAnnouncement(){
 onDeleteAnnouncement(){
   let index= this.announcementService.getAnnouncementIndex(this.announcement._id);
   if(index > -1){
-  this.announcementService.deleteAnnouncement(index);
+  this.announcementService.deleteAnnouncement(this.announcement._id);
   }
   }
 

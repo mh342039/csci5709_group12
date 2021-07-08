@@ -3,8 +3,8 @@
       <button mat-button [routerLink]="['/main/announcement']"><mat-icon>chevron_left</mat-icon> Back to Announcement</button>
   </section>
   <section class="col-md-8" style="text-align: end;" > 
-      <button mat-button (click)="onSaveAnnouncement()" ><mat-icon>check</mat-icon> Save </button> 
-      <button mat-button  (click)="onDeleteAnnouncement()"><mat-icon>delete_outline</mat-icon> Delete</button>
+      <button mat-button (click)="onSaveAnnouncement()" ><mat-icon>check</mat-icon> Save </button> <span *ngIf="isVisible">|</span>
+      <button mat-button  (click)="onDeleteAnnouncement()" *ngIf="isVisible"><mat-icon>delete_outline</mat-icon> Delete</button>
   </section>
 </section>
 
@@ -28,7 +28,7 @@
           {{category.viewValue}}
         </mat-option>
       </mat-select>
-    <mat-error *ngIf="addAnnouncementForm?.controls['Category']?.errors?.required">Please choose a category</mat-error> 
+    <mat-error *ngIf="CategoryFormControl?.errors?.required">Please choose a category</mat-error> 
     </mat-form-field>
 
     <mat-form-field class="form-field">
