@@ -67,7 +67,7 @@ export class AnnouncementComponent implements OnInit {
       this.router.navigate(["/main/announcementdetails"])
   } 
 
-  showText() {
+  showText(id:any) {
     this.isReadMore = !this.isReadMore
  }
 

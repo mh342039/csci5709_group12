@@ -5,7 +5,7 @@
 
   <mat-form-field class="form-field">
     <mat-label>How often do you use this application?</mat-label>
-    <mat-select name="UsageFrequency" formControlName="UsageFrequency" placeholder="Select your usage frequency">
+    <mat-select name="UsageFrequency" formControlName="UsageFrequency" [(ngModel)]="appForm.usageFrequency" placeholder="Select your usage frequency">
       <mat-option *ngFor="let usageFreq of usageFreqs" [value]="usageFreq.viewValue">
         {{usageFreq.viewValue}}
       </mat-option>
@@ -15,7 +15,7 @@
 
   <mat-form-field class="form-field">
     <mat-label>What did you like the most in the application?</mat-label>
-    <mat-select name="LikedFeature" formControlName="LikedFeature" placeholder="LikedFeature" multiple>
+    <mat-select name="LikedFeature" formControlName="LikedFeature" [(ngModel)]="appForm.mostLikedFeature" placeholder="LikedFeature" multiple>
       <mat-option *ngFor="let likedFeature of likedFeatures" [value]="likedFeature.viewValue">
         {{likedFeature.viewValue}}
       </mat-option>
@@ -25,7 +25,7 @@
 
   <mat-form-field class="form-field">
     <mat-label>How much rating would you provide to this application</mat-label>
-    <mat-select name="Rating" formControlName="Rating" placeholder="Rating">
+    <mat-select name="Rating" formControlName="Rating" [(ngModel)]="appForm.rating" placeholder="Rating">
       <mat-option *ngFor="let rating of ratings" [value]="rating.viewValue">
         {{rating.viewValue}}
       </mat-option>
@@ -35,7 +35,7 @@
 
   <mat-form-field class="form-field">
       <mat-label>How would you describe your experience of using this application?</mat-label>
-      <textarea matInput #feedback formControlName="Feedback" placeholder="Feedback" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
+      <textarea matInput #feedback formControlName="Feedback" placeholder="Feedback" [(ngModel)]="appForm.feedbackDescription" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
       <mat-hint align="end">{{feedback.value.length}} characters</mat-hint>
       <mat-error *ngIf="websiteFeedbackForm?.controls['Feedback']?.errors?.required">Feedback is required</mat-error>
     <!-- <mat-error *ngIf="websiteFeedbackForm?.controls['Feedback']?.errors?.pattern">Feedback should be Alpha-numeric</mat-error> -->
