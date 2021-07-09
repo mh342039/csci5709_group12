@@ -5,8 +5,9 @@ export class PeerMentorshipRegistrationModel {
   role: string;
   faculty: string;
   program: string;
-  startDate: string;
-  endDate: string;
+  startDate: any;
+  endDate: any;
   location: string;
   preference: string;
+  campusLocation: string;
 }
