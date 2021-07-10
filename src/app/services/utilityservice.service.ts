@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class UtilityService {
 
   constructor() { }
-  sectionTitle:any;
+  sectionTitle:string = "";
   modalTitle:any;
   accordionDetails : any ={};
   opened :boolean = false;
