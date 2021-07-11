@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, DoCheck } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -7,28 +7,31 @@ import { UtilityService } from '../../services/utilityservice.service';
 import { RequesterDetailsModalComponent } from '../request-list/requester-details-modal/requester-details-modal.component';
 import { ModifymemberService } from '../../services/modifymember.service';
 import { MemberProfileModel } from 'src/app/models/member-profile.model';
+import { PeerMentorshipRegistrationModel } from 'src/app/models/peer-mentorship-registration.model';
+import { MessageComponent } from '../message/message.component';
+import { HttpService } from 'src/app/services/httpservice.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modifymember',
   templateUrl: './modifymember.component.html',
   styleUrls: ['./modifymember.component.css']
 })
-export class ModifymemberComponent implements OnInit {
+export class ModifymemberComponent implements OnInit, DoCheck {
 
-  displayedColumns: string[] = ['name', 'email', 'requestStatus', 'date'];
+  displayedColumns: string[] = ['name', 'email', 'requestType', 'requestStatus', 'date'];
 
-  dataSource = new MatTableDataSource<MemberProfileModel>(this.dataservice.memberData);
-  email = new FormControl('', Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)'));
+  memberData: PeerMentorshipRegistrationModel[];
+
+  dataSource: MatTableDataSource<PeerMentorshipRegistrationModel>;
+
+  //email = new FormControl('', Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)'));
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  disableAccountForm: any;
+  modifyMemberForm: any;
 
   isSubmitted: boolean = false;
 
@@ -38,66 +41,99 @@ export class ModifymemberComponent implements OnInit {
 
   index: number;
 
-  searchEmail: string;
+  @Input() isRecordFound: boolean = false;
 
-  constructor(private fb: FormBuilder, public util: UtilityService, private dataservice: ModifymemberService){
-    this.disableAccountForm = this.fb.group({
+  noRecordsFound: boolean = true;
+
+  constructor(private fb: FormBuilder, public util: UtilityService, private dataservice: ModifymemberService,
+    private httpservice: HttpService, private dialog: MatDialog){
+    this.modifyMemberForm = this.fb.group({
       email: ["", [Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)')]]
     });
   }
 
   ngOnInit(){
     this.util.sectionTitle="Modify Access";
+    this.getRequestList();
   }
 
-  search(searchValue: any) {
-    console.log(searchValue);
-    const result = this.dataservice.searchPoolMemberData.filter(elem => elem.email === searchValue);
-      if(result.length == 0){
-        this.disableAccountForm.controls.email.setErrors({invalid: true});
+  getRequestList(){
+    this.httpservice.getServiceCall('/modify-member/')
+    .subscribe((result:any)=>{
+      if(result.status){
+        this.noRecordsFound = false;
+        this.memberData = result.data;
+        this.setDataSource();
       }
-      else{
-        const DupResult = this.dataservice.memberData.filter(elem => elem.email === searchValue);
-        if(DupResult.length > 0){
-          this.disableAccountForm.controls.email.setErrors({duplicate: true});
+    });/*,
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+        }
+      });
+    });*/
+  }
+
+  setDataSource(){
+    this.dataSource = new MatTableDataSource<PeerMentorshipRegistrationModel>(this.memberData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    if(this.dataSource.data.length === 0){
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          message: 'No Records Found.',
+          duration: 1000
+        }
+      });
+    }
+  }
+
+  getUser(email: string){
+    this.httpservice.getServiceCall('/request-list/'+email)
+    .subscribe((result:any)=>{
+      if(result.status){
+        if(result.data.isRegistered){
+          this.memberData = result.data;
+          const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
+            data: this.memberData,
+            width: '400px'
+          });
+          this.dataservice.isRecordUpdated = false;
         }
         else{
-          this.disableAccountForm.controls.email.setErrors(null);
-          this.success = true;
-          for(let i = 0; i < this.dataservice.searchPoolMemberData.length; i++){
-            if(this.dataservice.searchPoolMemberData[i].email === searchValue){
-              console.log(i);
-              this.index = i;
-              break;
+          this.dialog.open(MessageComponent, {
+            data: {
+              type: 'E',
+              title:'System Error',
+              message: 'The user is not registered with the Peer Mentorship Program.',
+              duration:3000
             }
-          }
-          this.searchEmail = searchValue;
+          });
         }
       }
+    });
   }
 
   validate(){
     if(!this.isSubmitted){
-       if (this.disableAccountForm.controls.email.hasError('pattern')){
+       if (this.modifyMemberForm.controls.email.hasError('pattern')){
          return 'Invalid email format';
        }
     }
-    else{
-      if (this.disableAccountForm.controls.email.hasError('invalid')){
-        this.isSubmitted = false;
-        this.success = false;
-        return 'User not found';
-      }
-      if (this.disableAccountForm.controls.email.hasError('duplicate')){
-        this.isSubmitted = false;
-        this.success = false;
-        return 'Account already deactivated';
-      }
-    }
   }
 
-  openDialog(){
-    this.dataservice.openDialog(this.index, this.searchEmail);
-    this.dataSource = new MatTableDataSource<MemberProfileModel>(this.dataservice.memberData);
+  openDialog(email: string){
+    this.getUser(email);
+  }
+
+  ngDoCheck(){
+    if(this.dataservice.isRecordUpdated){
+      this.getRequestList();
+      this.dataservice.isRecordUpdated = false;
+    }
   }
 }

@@ -1,105 +1,74 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Inject, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { RequesterDetailsModalComponent } from './requester-details-modal/requester-details-modal.component';
 import { UtilityService } from 'src/app/services/utilityservice.service';
-import { MemberProfileModel } from 'src/app/models/member-profile.model';
+import { PeerMentorshipRegistrationModel } from 'src/app/models/peer-mentorship-registration.model';
+import { MessageComponent } from '../message/message.component';
+import { HttpService } from 'src/app/services/httpservice.service';
 
 @Component({
   selector: 'app-request-list',
   templateUrl: './request-list.component.html',
   styleUrls: ['./request-list.component.css']
 })
-export class RequestListComponent implements OnInit, AfterViewInit {
+export class RequestListComponent implements OnInit {
 
   dialogValue: boolean;
 
   displayedColumns: string[] = ['requesterName', 'requestType', 'requestModificationDate', 'requestStatus'];
 
-  requestData: MemberProfileModel[] = [
-    {
-      _id: -1,
-      name: 'John Doe',
-      email: 'jdoe@dal.ca',
-      faculty: 'Computer Science',
-      program: 'MACS',
-      programStartDate: 'Winter 21',
-      programEndDate: 'Summer 22',
-      role: 'Mentee',
-      requestType:'Role Change',
-      requestDate:'2021-06-06 15:00:00',
-      requestStatus:'Pending',
-      /*accessModificationType: '0000-00-00',
-      accessModificationDate: '0000-00-00',
-      accessStatus: '',*/
-      modificationDate: '0000-00-00',
-      mode: 'V'
-    },
-    {
-      _id: -1,
-      name: 'John Doe',
-      email: 'jdoe1@dal.ca',
-      faculty: 'Computer Science',
-      program: 'MACS',
-      programStartDate: 'Winter 21',
-      programEndDate: 'Summer 22',
-      role: 'Mentee',
-      requestType:'Role Change',
-      requestDate:'2021-06-06 15:00:00',
-      requestStatus:'Pending',
-      /*accessModificationType: '0000-00-00',
-      accessModificationDate: '0000-00-00',
-      accessStatus: '',*/
-      modificationDate: '0000-00-00',
-      mode: 'V'
-    }
-  ];
+  registerUser: PeerMentorshipRegistrationModel[];
 
-  dataSource = new MatTableDataSource<MemberProfileModel>(this.requestData);
+  dataSource: MatTableDataSource<PeerMentorshipRegistrationModel>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  constructor(public dialog: MatDialog, public util: UtilityService, private httpservice: HttpService) {
+    this.getRequestList();
   }
 
-  constructor(public dialog: MatDialog, public util: UtilityService) {
+  getRequestList(){
+    this.httpservice.getServiceCall('/peer-mentorship-registration')
+    .subscribe((result:any)=>{
+      if(result.status){
+        this.registerUser = result.data;
+        this.setDataSource();
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+        }
+      });
+    });
   }
 
   openDialog(index: number) {
+    this.registerUser[index+this.paginator.pageSize].mode = 'V';
     const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
-      data: {
-        _id: -1,
-        name: this.requestData[index].name,
-        email: this.requestData[index].email,
-        faculty: this.requestData[index].faculty,
-        program: this.requestData[index].program,
-        programStartDate: this.requestData[index].programStartDate,
-        programEndDate: this.requestData[index].programEndDate,
-        role: this.requestData[index].role,
-        requestType: this.requestData[index].requestType,
-        requestDate: this.requestData[index].requestDate,
-        requestStatus: this.requestData[index].requestStatus,
-        /*accessModificationType: this.requestData[index].accessModificationType,
-        accessModificationDate: this.requestData[index].accessModificationDate,
-        accessStatus: this.requestData[index].accessStatus,*/
-        modificationDate: this.requestData[index].modificationDate,
-        mode: this.requestData[index].mode,
-      }, width: '400px'
+      data: this.registerUser[index+this.paginator.pageSize],
+      width: '400px'
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result.accepted !== undefined){
-        this.requestData[index].requestStatus = result.accepted ? "Accepted" : "Rejected";
-      }
+    dialogRef.afterClosed().subscribe(() => {
+      this.getRequestList();
     });
   }
 
   ngOnInit(){
     this.util.sectionTitle="Requests";
+  }
+
+  setDataSource(){
+    this.dataSource = new MatTableDataSource<PeerMentorshipRegistrationModel>(this.registerUser);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }
