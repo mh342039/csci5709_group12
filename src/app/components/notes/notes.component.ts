@@ -22,7 +22,6 @@ export class NotesComponent implements OnInit {
   ngOnInit(): void {
     this.getNotes();
     this.utilityService.sectionTitle = "Notes"
-    
   }
 
   openCard(index: any){

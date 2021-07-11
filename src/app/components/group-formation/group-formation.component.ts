@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { HttpService } from 'src/app/services/httpservice.service';
+import { CreateGroupComponent } from '../create-group/create-group.component';
 
 @Component({
   selector: 'app-group-formation',
@@ -9,40 +12,61 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class GroupFormationComponent implements OnInit {
   searchKeyword:any;
-  displayedColumns: string[] = ['GroupName', 'Stream', 'location', 'mentor'];
+  displayedColumns: string[] = ['groupName', 'faculty', 'location'];
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(private httpservice: HttpService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    var temp = new MatTableDataSource(this.getGroupData());
-    this.dataSource = temp;
+    this.getGroups()
   }
 
+  getGroups(){
+    this.httpservice.getServiceCall("/group-management/groups")
+    .subscribe((result: any)=>{
+      if (result.status){
+        console.log(result)
+        var temp = new MatTableDataSource(result.data);
+        this.dataSource = temp;
+    
+      }
+      else{
+        console.log(result)
+      }
+    }, (error: any)=>{
+      console.log(error)
+    })
+  }
   ngAfterViewInit() {
+    if(this.dataSource){
     this.dataSource.paginator = this.paginator;
+    }
   }
 
-  openGroupDetail(){
+  createGroup(){
+    const dialogRef = this.dialog.open(CreateGroupComponent, {
+      width: '60%',
+      height:"90%",
+      data: {isEdit: false}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.getGroups();
+    });
+  }
+  
+
+  openGroupDetail(group: any){
+    const dialogRef = this.dialog.open(CreateGroupComponent, {
+      width: '60%',
+      height:"80%",
+      data: {isEdit: true, groupData: group }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     this.getGroups()
+    });
   }
 
-  getGroupData(){
-    return [
-      {GroupName: 'Group1', Stream: "Science", location: 'Halifax', mentor: 'Manish'},
-      {GroupName: 'Group2', Stream: "Science", location: 'Halifax', mentor: 'Hamza'},
-      {GroupName: 'Group3', Stream: "Science", location: 'Halifax', mentor: 'Misbah'},
-      {GroupName: 'Group4', Stream: "Science", location: 'Halifax', mentor: 'Gurleen'},
-      {GroupName: 'Group5', Stream: "Science", location: 'Halifax', mentor: 'Mansi'},
-      {GroupName: 'Group6', Stream: "Science", location: 'Halifax', mentor: 'Divyansh'},
-      {GroupName: 'Group7', Stream: "Science", location: 'Halifax', mentor: 'Manish'},
-      {GroupName: 'Group8', Stream: "Science", location: 'Halifax', mentor: 'Hamza'},
-      {GroupName: 'Group9', Stream: "Science", location: 'Halifax', mentor: 'Misbah'},
-      {GroupName: 'Group10', Stream: "Science", location: 'Halifax', mentor: 'Gurleen'},
-      {GroupName: 'Group11', Stream: "Science", location: 'Halifax', mentor: 'Mansi'},
-      {GroupName: 'Group12', Stream: "Science", location: 'Halifax', mentor: 'Divyansh'},
- 
-    ];
-  }
 }

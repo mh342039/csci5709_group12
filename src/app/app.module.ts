@@ -65,6 +65,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateGroupComponent } from './components/create-group/create-group.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,8 @@ import { HttpClientModule } from '@angular/common/http';
     AddmemberComponent,
     ModifymemberComponent,
     GroupManagementComponent,
-    AssignMentorComponent
+    AssignMentorComponent,
+    CreateGroupComponent
   ],
   imports: [
     BrowserModule,
@@ -142,7 +145,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatRadioModule,
     MatDatepickerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,8 +10,9 @@ export class HttpService {
   isPROD :boolean = true;
   URL:string 
   constructor(private http: HttpClient) { 
-    console.log(window.location.hostname)
+    
     this.URL = window.location.hostname == 'localhost'?this.localURL:this.ProdURL
+    console.log(this.URL)
   }
 
   getServiceCall(path: string){
