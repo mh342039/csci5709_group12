@@ -67,6 +67,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateGroupComponent } from './components/create-group/create-group.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ManageRegistrationComponent } from './components/manage-registration/manage-registration.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -105,7 +108,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ModifymemberComponent,
     GroupManagementComponent,
     AssignMentorComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    ManageRegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -146,7 +150,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatRadioModule,
     MatDatepickerModule,
     HttpClientModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatNativeDateModule,
+    MatMomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
