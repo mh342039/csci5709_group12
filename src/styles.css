@@ -44,10 +44,6 @@ main {
 .mat-sidenav-container{
   margin-left: 0px !important;
 }
-<<<<<<< HEAD
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-=======
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
   border-color:#00008B;
@@ -65,4 +61,3 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-expansion-panel-body {
   padding: 0 23px 16px !important;
 }
->>>>>>> 3c41b3810db9149fd07eae99992a4c1b2f7079af
