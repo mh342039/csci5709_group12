@@ -1,4 +1,5 @@
 <section class="search-section">
+  <button mat-raised-button color="primary" style="margin: 15px 30px;" (click)="createGroup()">Create Group</button>
     <mat-form-field class="search-mat-form-field">
         <mat-label id="search-label">Search</mat-label>
         <mat-icon matPrefix class="serach-icon">search</mat-icon>
@@ -11,14 +12,14 @@
 <section>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 group-table">
 
-        <ng-container matColumnDef="GroupName">
+        <ng-container matColumnDef="groupName">
           <th mat-header-cell *matHeaderCellDef > Group Name </th>
-          <td mat-cell *matCellDef="let element" class="groupName-link" (click)="openGroupDetail()"> {{element.GroupName}} </td>
+          <td mat-cell *matCellDef="let element" class="groupName-link" (click)="openGroupDetail(element)"> {{element.groupName}} </td>
         </ng-container>
             
-        <ng-container matColumnDef="Stream">
+        <ng-container matColumnDef="faculty">
           <th mat-header-cell *matHeaderCellDef> Stream </th>
-          <td mat-cell *matCellDef="let element"> {{element.Stream}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.faculty}} </td>
         </ng-container>
       
         <ng-container matColumnDef="location">
@@ -26,10 +27,10 @@
             <td mat-cell *matCellDef="let element"> {{element.location}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="mentor">
+          <!-- <ng-container matColumnDef="mentor">
             <th mat-header-cell *matHeaderCellDef> Mentor </th>
             <td mat-cell *matCellDef="let element"> {{element.mentor}} </td>
-          </ng-container>
+          </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

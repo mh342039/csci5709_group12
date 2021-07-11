@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatFormFieldModule} from '@angular/material/form-field';import { RateMentorserviceService } from 'src/app/services/rate-mentorservice.service';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { RateMentorserviceService } from 'src/app/services/rate-mentorservice.service';
 import { UtilityService } from 'src/app/services/utilityservice.service';
-;
+import {MentorFeedbackModel} from '../../models/mentorFeedback.model';
+import { MessageComponent } from '../message/message.component';
+import { MatDialog } from '@angular/material/dialog';
+import { HttpService } from 'src/app/services/httpservice.service';
 
 interface Mentor {
   value: string;
@@ -22,11 +26,12 @@ interface Rating {
   styleUrls: ['./rate-mentor.component.css']
 })
 export class RateMentorComponent implements OnInit {
+  mentorForm: MentorFeedbackModel = new MentorFeedbackModel();
   feedbackForMentorForm: FormGroup;
   alphanumericPattern = "([a-zA-Z0-9 ]+)";
   message: string;
 
-  constructor(private utilityService: UtilityService, private rateMentorService: RateMentorserviceService, private formBuilder: FormBuilder, private router: Router,private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog,private httpservice: HttpService, private utilityService: UtilityService, private rateMentorService: RateMentorserviceService, private formBuilder: FormBuilder, private router: Router,private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.utilityService.sectionTitle="Mentor Feedback";
@@ -57,8 +62,46 @@ export class RateMentorComponent implements OnInit {
 
   onSubmit(){
   if(this.feedbackForMentorForm.valid){
-    this.rateMentorService.submitMentorFeedback();
+    this.httpservice.postServiceCall('/feedback/mentor', this.mentorForm)
+    .subscribe((result:any)=>{
+      if(result.status){
+         this.disableForm();
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title:'Mentor Feedback Submitted Successful',
+            message: 'Your feedback has been submitted. Thank you for your time!',
+            duration:3000
+          }
+        });
+        // this.router.navigate(['/main/rate-mentor']);
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Please Try Again.',
+        }
+      });
+    });
   }
+  }
+
+  disableForm(){
+    this.feedbackForMentorForm.get('Mentor').disable();
+    this.feedbackForMentorForm.get('Rating').disable();
+    this.feedbackForMentorForm.get('Feedback').disable();
   }
 
 }

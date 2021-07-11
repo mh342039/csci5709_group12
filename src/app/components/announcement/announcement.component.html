@@ -25,7 +25,7 @@
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
-        <button mat-menu-item (click)="announcementService.deleteAnnouncement(i); $event.stopPropagation();">
+        <button mat-menu-item (click)="announcementService.deleteAnnouncement(announcement._id); $event.stopPropagation();">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </button>
@@ -36,7 +36,7 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <a (click)="showText()">{{ isReadMore ? 'See More': 'See Less' }}</a>
+      <a (click)="showText(announcement._id); $event.stopPropagation();">{{ isReadMore ? 'See More': 'See Less' }}</a>
     </mat-card-actions>
   </mat-card>
 

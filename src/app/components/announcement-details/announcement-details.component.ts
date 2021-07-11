@@ -8,6 +8,9 @@ import {take} from 'rxjs/operators';
 import {AnnouncementService} from 'src/app/services/announcement.service';
 import { Announcement } from 'src/app/models/announcements.model';
 import { UtilityService } from 'src/app/services/utilityservice.service';
+import { HttpService } from 'src/app/services/httpservice.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageComponent } from '../message/message.component';
 
 interface Category {
   value: string;
@@ -22,6 +25,7 @@ interface Category {
 
 export class AnnouncementDetailsComponent implements OnInit {
   announcement: Announcement= new Announcement();
+  isVisible : boolean=false; 
   addAnnouncementForm: FormGroup;
   alphanumericPattern = "([a-zA-Z0-9 ]+)";
   TitleFormControl= new FormControl('',[
@@ -34,11 +38,9 @@ export class AnnouncementDetailsComponent implements OnInit {
   Validators.required
    );
 
-   CategoryFormControl= new FormControl(
-    //  ['']
+   CategoryFormControl= new FormControl('',
+    Validators.required
    );
-
-
 
   hide = true;
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -48,8 +50,9 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   message: string;
   private _ngZone: any;
+  isCreate: boolean;
 
-  constructor(private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -57,13 +60,14 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.getAnnouncement();
     this.cdr.detectChanges();
     this.utilityService.sectionTitle="Announcements";
-   // this.createForm();
+    // this.createForm();
   }
 
   getAnnouncement(){
     let temp= this.announcementService.getAnnouncement();
     if(temp){
       this.announcement=temp;
+      this.isVisible = true;
     }
     else
     this.announcement= new Announcement(); 
@@ -88,27 +92,97 @@ export class AnnouncementDetailsComponent implements OnInit {
    });
   }
 
-openSnackBar() {
-  this.message="Announcement has been created succcessfully and sent for review";
-  this._snackBar.open(this.message,'Dismiss', { duration: 3000 });
+onSaveAnnouncement(){
+  if (this.announcement._id == -1) {
+    this.postAnnouncement()
+  }
+  else {
+    this.putAnnouncement()
+  }
 }
 
-onSaveAnnouncement(){
-if(this.announcement.id == -1){
-  this.announcement.id = Math.floor(Math.random() * 10000);
-  this.announcementService.addAnnouncement(this.announcement);
-  this.router.navigate(['main/announcement']);
+postAnnouncement(){
+  this.httpservice.postServiceCall('/announcements', this.announcement)
+  .subscribe( (result:any)=>{
+    console.log(result)
+    if(result.status){
+      this.router.navigate(['/main/announcement']);
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'C',
+          title:'Announcement Added',
+          message: result.message,
+          duration:2000
+        }
+      });    
+    }
+    else{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: result.message,
+        }
+      });
+
+    }
+  },
+  (error:any)=>{
+    this.dialog.open(MessageComponent, {
+      data: {
+        type: 'E',
+        title:'System Error',
+        message: 'Something Went Wrong. Please Try Again.',
+      }
+    });
+
+  })
+
 }
-else{
-  let index= this.announcementService.getAnnouncementIndex(this.announcement.id);
-  this.announcementService.saveAnnouncement(index,this.announcement);
-}
+
+
+putAnnouncement(){
+  this.httpservice.putServiceCall('/announcements/'+ this.announcement._id, this.announcement)
+  .subscribe( (result:any)=>{
+    console.log(result)
+    if(result.status){
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'C',
+          title:'Announcement Updated',
+          message: result.message,
+          duration:2000
+        }
+      });    
+    }
+    else{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: result.message,
+        }
+      });
+
+    }
+  },
+  (error:any)=>{
+    this.dialog.open(MessageComponent, {
+      data: {
+        type: 'E',
+        title:'System Error',
+        message: 'Something Went Wrong. Kindly Refresh the Page.',
+      }
+    });
+
+  })
+
 }
 
 onDeleteAnnouncement(){
-  let index= this.announcementService.getAnnouncementIndex(this.announcement.id);
+  let index= this.announcementService.getAnnouncementIndex(this.announcement._id);
   if(index > -1){
-  this.announcementService.deleteAnnouncement(index);
+  this.announcementService.deleteAnnouncement(this.announcement._id);
   }
   }
 

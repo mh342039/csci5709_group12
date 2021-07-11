@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppFeedbackModel } from 'src/app/models/appFeedback.model';
+import { HttpService } from 'src/app/services/httpservice.service';
 import { UtilityService } from 'src/app/services/utilityservice.service';
 import { MessageComponent } from '../message/message.component';
 
@@ -27,12 +29,12 @@ interface LikedFeature{
   styleUrls: ['./rate-application.component.css']
 })
 export class RateApplicationComponent implements OnInit {
-
+  appForm: AppFeedbackModel = new AppFeedbackModel();
   websiteFeedbackForm: FormGroup;
   alphanumericPattern = "([a-zA-Z0-9 ]+)";
   message: string;
 
-  constructor(private utilityService: UtilityService, private dialog: MatDialog, private formBuilder: FormBuilder, private router: Router,private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
+  constructor(private utilityService: UtilityService, private httpservice: HttpService,private dialog: MatDialog, private formBuilder: FormBuilder, private router: Router,private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.utilityService.sectionTitle="Application Feedback";
@@ -73,16 +75,48 @@ export class RateApplicationComponent implements OnInit {
 
   onSubmit() {
     if(this.websiteFeedbackForm.valid){
+      this.httpservice.postServiceCall('/feedback/application', this.appForm)
+    .subscribe((result:any)=>{
+      if(result.status){
+        this.disableForm();
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title:'Application Feedback Submitted Successful',
+            message: 'Your feedback has been submitted. Thank you for your time!',
+            duration:3000
+          }
+        });
+        // this.router.navigate(['/main/rate-application']);
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+      }
+    },
+    (error:any)=>{
       this.dialog.open(MessageComponent, {
         data: {
-          type: 'C',
-          title:'Submitted',
-          message: 'Application Feedback submitted successfully.',
-          duration:2000
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Please Try Again.',
         }
       });
-      this.router.navigate(['/main/rate-mentor']);
-    }
-    }
+    });
+  }
+  }
+
+  disableForm(){
+    this.websiteFeedbackForm.get('UsageFrequency').disable();
+    this.websiteFeedbackForm.get('LikedFeature').disable();
+    this.websiteFeedbackForm.get('Rating').disable();
+    this.websiteFeedbackForm.get('Feedback').disable();
+  }
+
 }
 

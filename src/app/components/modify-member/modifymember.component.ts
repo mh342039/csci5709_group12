@@ -5,8 +5,8 @@ import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UtilityService } from '../../services/utilityservice.service';
 import { RequesterDetailsModalComponent } from '../request-list/requester-details-modal/requester-details-modal.component';
-import { MemberProfile } from 'src/app/models/member-profile';
-import { MatDialog } from '@angular/material/dialog';
+import { ModifymemberService } from '../../services/modifymember.service';
+import { MemberProfileModel } from 'src/app/models/member-profile.model';
 
 @Component({
   selector: 'app-modifymember',
@@ -17,64 +17,7 @@ export class ModifymemberComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'email', 'requestStatus', 'date'];
 
-  memberData: MemberProfile[] = [
-    {
-      name: 'John Doe',
-      email: 'jdoe@dal.ca',
-      faculty: 'Computer Science',
-      program: 'MACS',
-      programStartDate: 'Winter 21',
-      programEndDate: 'Summer 22',
-      role: 'Mentee',
-      requestType:'Role Change',
-      requestDate:'2021-06-06 15:00:00',
-      requestStatus:'Role Changed',
-      accessModificationType: '0000-00-00',
-      accessModificationDate: '2021-06-06 15:05:00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
-      mode: 'C'
-    }
-  ];
-
-  searchPoolMemberData: MemberProfile[] = [
-    {
-      name: 'John Doe',
-      email: 'jdoe1@dal.ca',
-      faculty: 'Computer Science',
-      program: 'MACS',
-      programStartDate: 'Winter 21',
-      programEndDate: 'Summer 22',
-      role: 'Mentee',
-      requestType:'Role Change',
-      requestDate:'2021-06-06 15:00:00',
-      requestStatus:'Pending',
-      accessModificationType: '0000-00-00',
-      accessModificationDate: '0000-00-00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
-      mode: 'C'
-    },
-    {
-      name: 'John Doe',
-      email: 'jdoe2@dal.ca',
-      faculty: 'Computer Science',
-      program: 'MACS',
-      programStartDate: 'Winter 21',
-      programEndDate: 'Summer 22',
-      role: 'Mentee',
-      requestType:'Role Change',
-      requestDate:'2021-06-06 15:00:00',
-      requestStatus:'Pending',
-      accessModificationType: '0000-00-00',
-      accessModificationDate: '0000-00-00',
-      accessStatus: '',
-      roleModificationDate: '0000-00-00',
-      mode: 'C'
-    }
-  ];
-
-  dataSource = new MatTableDataSource<MemberProfile>(this.memberData);
+  dataSource = new MatTableDataSource<MemberProfileModel>(this.dataservice.memberData);
   email = new FormControl('', Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)'));
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -97,7 +40,7 @@ export class ModifymemberComponent implements OnInit {
 
   searchEmail: string;
 
-  constructor(private fb: FormBuilder, public util: UtilityService, public dialog: MatDialog){
+  constructor(private fb: FormBuilder, public util: UtilityService, private dataservice: ModifymemberService){
     this.disableAccountForm = this.fb.group({
       email: ["", [Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)')]]
     });
@@ -109,19 +52,25 @@ export class ModifymemberComponent implements OnInit {
 
   search(searchValue: any) {
     console.log(searchValue);
-    const result = this.searchPoolMemberData.filter(elem => elem.email === searchValue);
+    const result = this.dataservice.searchPoolMemberData.filter(elem => elem.email === searchValue);
       if(result.length == 0){
         this.disableAccountForm.controls.email.setErrors({invalid: true});
       }
       else{
-        const DupResult = this.memberData.filter(elem => elem.email === searchValue);
+        const DupResult = this.dataservice.memberData.filter(elem => elem.email === searchValue);
         if(DupResult.length > 0){
           this.disableAccountForm.controls.email.setErrors({duplicate: true});
         }
         else{
           this.disableAccountForm.controls.email.setErrors(null);
           this.success = true;
-          this.index = this.memberData.indexOf(searchValue)+1;
+          for(let i = 0; i < this.dataservice.searchPoolMemberData.length; i++){
+            if(this.dataservice.searchPoolMemberData[i].email === searchValue){
+              console.log(i);
+              this.index = i;
+              break;
+            }
+          }
           this.searchEmail = searchValue;
         }
       }
@@ -147,54 +96,8 @@ export class ModifymemberComponent implements OnInit {
     }
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
-      data: {
-        name: this.searchPoolMemberData[this.index].name,
-        email: this.searchPoolMemberData[this.index].email,
-        faculty: this.searchPoolMemberData[this.index].faculty,
-        program: this.searchPoolMemberData[this.index].program,
-        programStartDate: this.searchPoolMemberData[this.index].programStartDate,
-        programEndDate: this.searchPoolMemberData[this.index].programEndDate,
-        role: this.searchPoolMemberData[this.index].role,
-        requestType: this.searchPoolMemberData[this.index].requestType,
-        requestDate: this.searchPoolMemberData[this.index].requestDate,
-        requestStatus: this.searchPoolMemberData[this.index].requestStatus,
-        accessModificationType: this.searchPoolMemberData[this.index].accessModificationType,
-        accessModificationDate: this.searchPoolMemberData[this.index].accessModificationDate,
-        accessStatus: this.searchPoolMemberData[this.index].accessStatus,
-        roleModificationDate: this.searchPoolMemberData[this.index].roleModificationDate,
-        mode: this.searchPoolMemberData[this.index].mode
-      }, width: '400px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result.confirmed !== undefined && result.confirmed){
-        if(result.requestType == 'Role Change')
-          this.searchPoolMemberData[this.index].requestStatus = "Role Changed";
-        else if(result.requestType == 'Deactivate Account')
-          this.searchPoolMemberData[this.index].requestStatus = "Account Deactivated";
-        else if(result.requestType == 'Remove Member')
-          this.searchPoolMemberData[this.index].requestStatus = "Member Removed";
-
-          this.memberData.push({
-            name: 'John Doe',
-            email: this.searchEmail,
-            faculty: 'Computer Science',
-            program: 'MACS',
-            programStartDate: 'Winter 21',
-            programEndDate: 'Summer 22',
-            role: 'Mentee',
-            requestType: result.requestType,
-            requestDate: '2021-06-06 15:00:00',
-            requestStatus: this.searchPoolMemberData[this.index].requestStatus,
-            accessModificationType: '0000-00-00',
-            accessModificationDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
-            accessStatus: '',
-            roleModificationDate: '0000-00-00',
-            mode: 'C'
-          });
-          this.dataSource.data = this.memberData;
-      }
-    });
+  openDialog(){
+    this.dataservice.openDialog(this.index, this.searchEmail);
+    this.dataSource = new MatTableDataSource<MemberProfileModel>(this.dataservice.memberData);
   }
 }
