@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'src/app/services/httpservice.service';
-import { resourceLimits } from 'worker_threads';
+//import { resourceLimits } from 'worker_threads';
 
 @Component({
   selector: 'app-assign-mentor',
@@ -39,9 +39,9 @@ export class AssignMentorComponent implements OnInit {
           }
 
         },(error: any)=>{
-          
+
         })
-  
+
       }
       else{
         console.log(result)
@@ -85,7 +85,7 @@ export class AssignMentorComponent implements OnInit {
         },(error: any)=>{
           console.log(error)
         })
-    
+
       }
       else{
         console.log(result)
@@ -111,7 +111,7 @@ export class AssignMentorComponent implements OnInit {
       {GroupName: 'Group3',oldMentorValue: 'Group3', Stream: "Science", location: 'Halifax', name: 'Misbah', edit: false},
       {GroupName: 'Group4',oldMentorValue: 'Group4', Stream: "Science", location: 'Halifax', name: 'Gurleen', edit: false},
       {GroupName: 'Group5',oldMentorValue: 'Group5', Stream: "Science", location: 'Halifax', name: 'Mansi', edit: false},
-      {GroupName: 'Un-assigned',oldMentorValue: 'Un-assigned', Stream: "Science", location: 'Halifax', name: 'Divyansh', edit: false} 
+      {GroupName: 'Un-assigned',oldMentorValue: 'Un-assigned', Stream: "Science", location: 'Halifax', name: 'Divyansh', edit: false}
     ];
   }
 
