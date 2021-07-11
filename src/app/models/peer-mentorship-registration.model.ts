@@ -10,4 +10,10 @@ export class PeerMentorshipRegistrationModel {
   location: string;
   preference: string;
   campusLocation: string;
+  requestType: string;
+  requestDate: any;
+  requestStatus: string;
+  modificationDate: any;
+  mode: string;
+  isRegistered: boolean;
 }

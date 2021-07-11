@@ -1,13 +1,13 @@
 <div class="parentDiv">
 <form>
   <div>
-    <form [formGroup]="disableAccountForm" class="disableAccount">
+    <form [formGroup]="modifyMemberForm" class="modifyMember">
       <mat-form-field appearance="outline" style="top: 5px !important; bottom: -5px !important;">
         <mat-label> Email </mat-label>
         <input matInput formControlName="email" #email (focus)="success = false;">
-        <mat-error *ngIf="disableAccountForm.controls['email'].errors">{{validate()}}</mat-error>
+        <mat-error *ngIf="modifyMemberForm.controls['email'].errors">{{validate()}}</mat-error>
       </mat-form-field>
-      <button mat-raised-button [disabled]="(!disableAccountForm.valid || (disableAccountForm.controls['email'].value.length == 0))" (click)="search(email.value); isSubmitted=true; disableAccountForm.valid ? openDialog() : null;">Search</button>
+      <button mat-raised-button [disabled]="(!modifyMemberForm.valid || (modifyMemberForm.controls['email'].value.length == 0))" (click)="openDialog(email.value);isSubmitted=true;">Search</button>
     </form>
   </div>
 </form>
@@ -26,18 +26,22 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header><h4 class="tableHeader"> Email Address </h4></th>
       <td mat-cell *matCellDef="let element"> {{element.email}} </td>
     </ng-container>
+    <ng-container matColumnDef="requestType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><h4 class="tableHeader"> Request Type </h4></th>
+      <td mat-cell *matCellDef="let element"> {{element.requestType}} </td>
+    </ng-container>
     <ng-container matColumnDef="requestStatus">
       <th mat-header-cell *matHeaderCellDef mat-sort-header><h4 class="tableHeader"> Status </h4></th>
       <td mat-cell *matCellDef="let element"> {{element.requestStatus}} </td>
     </ng-container>
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header><h4 class="tableHeader"> Modification Date </h4></th>
-      <td mat-cell *matCellDef="let element"> {{element.accessModificationDate}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.modificationDate}} </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
+<!--<div *ngIf="dataSource.data.length == 0">No Records Found</div>-->
 <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
 </div>
 </div>

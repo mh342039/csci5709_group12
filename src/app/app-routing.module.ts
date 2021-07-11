@@ -26,6 +26,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { AddmemberComponent } from './components/add-member/addmember.component';
 import { ModifymemberComponent } from './components/modify-member/modifymember.component';
 import { GroupManagementComponent } from './components/group-management/group-management.component';
+import { ManageRegistrationComponent } from './components/manage-registration/manage-registration.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -54,7 +55,8 @@ const routes: Routes = [
     { path: 'group-management', component: GroupManagementComponent },
     { path: 'mentorchat', component: MentorChatComponent },
     { path: 'addmember', component: AddmemberComponent },
-    { path: 'modifymember', component: ModifymemberComponent }
+    { path: 'modifymember', component: ModifymemberComponent },
+    { path: 'manageregistration', component: ManageRegistrationComponent}
   ] },
 ];
 
