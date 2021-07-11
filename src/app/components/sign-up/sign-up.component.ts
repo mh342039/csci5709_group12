@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/services/httpservice.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,7 +21,7 @@ export class SignUpComponent implements OnInit {
 
   firstCtrl: "";
   secondCtrl: "";
-  constructor(private _formBuilder: FormBuilder, private router: Router) {}
+  constructor(private httpservice: HttpService, private _formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit() {
 
