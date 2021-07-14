@@ -95,7 +95,7 @@ export class SignUpComponent implements OnInit {
               }
             });
             dialogRef.afterClosed().subscribe(result => {
-            this.router.navigate(['/signup']);
+            this.router.navigate(['/signin']);
           })
           }
           else {
