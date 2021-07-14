@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'src/app/services/httpservice.service';
-import { resourceLimits } from 'worker_threads';
 
 @Component({
   selector: 'app-assign-mentor',
