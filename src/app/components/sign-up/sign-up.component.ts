@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
 
       LastName: ['', [Validators.required, Validators.pattern("([a-zA-Z0-9 ]+)")]],
 
-      Email: ['', [Validators.required, Validators.pattern("([a-zA-Z0-9-_.]+[@]+[a-zA-Z0-9-_.]+[.]+[a-zA-Z0-9]+[a-zA-Z0-9]+)")]],
+      Email: ['', [Validators.required, Validators.pattern("([a-zA-Z0-9-_.]+@dal.ca)")]],
 
       Password: ['', [Validators.required, Validators.minLength(8)]],
 
@@ -72,8 +72,7 @@ export class SignUpComponent implements OnInit {
     this.router.navigate(['/securityQuestions']);
   }
 
-  gotoSignin() {
-    //this.router.navigate(['/signin'])
+  Signup() {
     if (this.ProfileFormGroup.valid && this.SecurityQFormGroup.valid) {
       this.httpservice.postServiceCall('/signup', this.signup)
         .subscribe((result: any) => {

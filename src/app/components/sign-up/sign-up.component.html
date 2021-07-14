@@ -103,7 +103,7 @@
                         <form [formGroup]="SecurityQFormGroup">
                             
                                 <ng-template matStepLabel>Security Questions</ng-template>
-                                <mat-form-field>
+                                <mat-form-field style="margin-right: 15px;">
                                     <mat-label>Your Best-Friend's Name</mat-label>
                                     <input matInput placeholder="Best Friend Name" formControlName="firstCtrl" required>
                                 </mat-form-field>
@@ -127,7 +127,7 @@
                             <p>You are now done.</p>
                             <div>
                                 <button mat-button matStepperPrevious>Back</button>
-                                <button mat-button (click)="gotoSignin()">Sign-In</button>
+                                <button mat-button (click)="Signup()">Sign-Up</button>
                             </div>
                         </mat-step>
                     </mat-vertical-stepper>
