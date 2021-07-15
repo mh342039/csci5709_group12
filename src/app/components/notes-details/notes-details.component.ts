@@ -8,6 +8,7 @@ import { NotesService } from 'src/app/services/notesdata.service';
 import { MessageComponent } from '../message/message.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { DataService } from 'src/app/services/dataservice.service';
 
 @Component({
   selector: 'app-notes-details',
@@ -23,7 +24,7 @@ export class NotesDetailsComponent implements OnInit {
   isCreate : boolean=false; 
   @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private httpservice: HttpService, private dialog: MatDialog, private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
+  constructor(private userdataservice: DataService, private httpservice: HttpService, private dialog: MatDialog, private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -40,6 +41,8 @@ export class NotesDetailsComponent implements OnInit {
     }
     else {
       this.note = new NoteModel();
+      console.log(this.userdataservice.loggedInUser.data._id)
+      this.note.createdByID = this.userdataservice.loggedInUser.data._id
     }
   }
 

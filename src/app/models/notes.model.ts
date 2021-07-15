@@ -3,4 +3,5 @@ export class NoteModel {
     public title: string = "";
     public tags: string[] = [];
     public content: string = "";
+    public createdByID: string = "";
 }
