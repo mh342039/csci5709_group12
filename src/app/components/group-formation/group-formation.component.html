@@ -1,13 +1,14 @@
+<!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 <section class="search-section">
   <button mat-raised-button color="primary" style="margin: 15px 30px;" (click)="createGroup()">Create Group</button>
-    <mat-form-field class="search-mat-form-field">
+    <!-- <mat-form-field class="search-mat-form-field">
         <mat-label id="search-label">Search</mat-label>
         <mat-icon matPrefix class="serach-icon">search</mat-icon>
         <input matInput placeholder="Search Group Name" [(ngModel)]="searchKeyword" class="input-search">
         <button *ngIf="searchKeyword" matSuffix mat-icon-button (click)="searchKeyword=''">
             <mat-icon>close</mat-icon>
           </button>
-      </mat-form-field>
+      </mat-form-field> -->
 </section>
 <section>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 group-table">

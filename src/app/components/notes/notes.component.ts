@@ -1,3 +1,4 @@
+// <!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
