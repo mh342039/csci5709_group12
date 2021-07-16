@@ -10,7 +10,7 @@ export class UtilityService {
   modalTitle:any;
   accordionDetails : any ={};
   opened :boolean = false;
-
+  userRole: string = "Admin"
   isViewMyAnnouncementControlsVisible: boolean= false;
 
   getaccordionDetails(){
