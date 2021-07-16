@@ -6,7 +6,7 @@
   <p class="alert alert-danger" *ngIf="failure && !reopenRegistration">
     <strong>Alas! Your request has been declined.</strong>
   </p>
-  <p class="alert alert-info" *ngIf="!success && !failure && !reopenRegistration">
+  <p class="alert alert-info" *ngIf="!success && !failure && !reopenRegistration && !freshRegistration">
     <strong>Your request has been submitted. Please check back later.</strong>
   </p>
   <div class="registrationForm">
@@ -20,7 +20,10 @@
       <p>
       <mat-form-field appearance="outline" class="formFields">
         <mat-label>Email Address</mat-label>
-        <input matInput id="email" name="email" formControlName="email" [(ngModel)]="registerUser.email">
+        <input matInput id="email" name="email" formControlName="email" [(ngModel)]="registerUser.email" required>
+        <mat-icon matSuffix (click)="checkIfUserExists()" style="cursor: pointer;" *ngIf="dataservice.isAdmin">search</mat-icon>
+        <mat-error *ngIf="registrationForm.controls['email'].errors?.pattern">Invalid email format</mat-error>
+        <mat-error *ngIf="registrationForm.controls['email'].errors?.notRegistered">User not registered with Student Handbook application</mat-error>
       </mat-form-field>
       </p>
       <p>
@@ -57,7 +60,7 @@
                         (monthSelected)="chosenStartMonthHandler($event, startDatePicker)">
         </mat-datepicker>
         <mat-error *ngIf="registrationForm.controls['startDate'].errors?.match">Start Date and End Date cannot be same</mat-error>
-        <mat-error *ngIf="util.userRole!=='Admin' && registrationForm.controls['startDate'].errors?.invalidDiff">You cannot apply to be a mentor. The difference between current date and start date is less than 8 months</mat-error>
+        <mat-error *ngIf="dataservice.isAdmin && registrationForm.controls['startDate'].errors?.invalidDiff">You cannot apply to be a mentor. The difference between current date and start date is less than 8 months</mat-error>
       </mat-form-field>
       </p>
       <p>
@@ -98,7 +101,7 @@
           </mat-select>
         </mat-form-field>
       </p>
-      <p class="alert alert-warning" *ngIf="util.userRole==='Admin' && registrationForm.controls['startDate'].errors?.invalidDiff">
+      <p class="alert alert-warning" *ngIf="dataservice.isAdmin && registrationForm.controls['startDate'].errors?.invalidDiff">
         You cannot apply to be a mentor. The difference between current date and start date is less than 8 months
       </p>
       <p>

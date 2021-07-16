@@ -36,19 +36,25 @@ export class ManageRegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.util.sectionTitle = "Manage Registration";
-    this.getDates();
+    this.setForm(false);
   }
 
-  getDates(){
+  setForm(reset: boolean){
     this.httpservice.getServiceCall('/manage-registration')
     .subscribe((result:any)=>{
       if(result.status && result.data){
-        this.manageRegistration._id = result.data._id;
-        this.manageRegistration.startDate = new Date(result.data.startDate);
-        this.manageRegistration.endDate = new Date(result.data.endDate);
-        this.enableRegistrationForm.get('startDate').disable();
-        this.enableRegistrationForm.get('endDate').disable();
-        this.hideWindowBtn = false;
+        if(new Date(result.data.endDate) < new Date())
+          this.resetForm();
+        else{
+          this.manageRegistration._id = result.data._id;
+          this.manageRegistration.startDate = new Date(result.data.startDate);
+          this.manageRegistration.endDate = new Date(result.data.endDate);
+          this.enableRegistrationForm.get('startDate').disable();
+          this.enableRegistrationForm.get('endDate').disable();
+          this.hideWindowBtn = false;
+        }
+        if(reset)
+          this.resetForm();
       }
     });
   }
@@ -121,7 +127,7 @@ function validateDates(startDate: any, endDate: any){
         }
         else if(formGroup.controls[startDate].value._d.getFullYear() == currentDate.getFullYear()
           && formGroup.controls[startDate].value._d.getMonth() == currentDate.getMonth()
-          && formGroup.controls[startDate].value._d.getDay() < currentDate.getDay()){
+          && formGroup.controls[startDate].value._d.getDate() < currentDate.getDate()){
             formGroup.controls[startDate].setErrors({invalid: true});
             return;
         }
@@ -141,7 +147,9 @@ function validateDates(startDate: any, endDate: any){
         }
         else if(formGroup.controls[endDate].value._d.getFullYear() == currentDate.getFullYear()
           && formGroup.controls[endDate].value._d.getMonth() == currentDate.getMonth()
-          && formGroup.controls[endDate].value._d.getDay() < currentDate.getDay()){
+          && formGroup.controls[endDate].value._d.getDate() < currentDate.getDate()){
+            console.log(formGroup.controls[endDate].value._d.getDay());
+            console.log(currentDate.getDay());
             formGroup.controls[endDate].setErrors({invalid: true});
             return;
         }

@@ -6,5 +6,5 @@ public email: string = "";
 public password: string = "";
 public friend: string = "";
 public pet: string = "";
-
+public role: string = "";
 }

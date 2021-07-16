@@ -9,6 +9,7 @@ import { HttpService } from 'src/app/services/httpservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MessageComponent } from '../message/message.component';
+import { DataService } from '../../services/dataservice.service';
 
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
@@ -52,7 +53,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   map: Map<string, string[]>;
   faculties: string[] = [];
   programs: string[] = [];
-  isUserRegistered = false;
+  freshRegistration = false;
   formattedStartDate: any;
   formattedEndDate: any;
   success: boolean = false;
@@ -62,11 +63,12 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   registrationStartDate: any;
   reopenRegistration = false;
 
-  constructor(public util: UtilityService, private fb: FormBuilder, private httpservice: HttpService, private dialog: MatDialog, private router: Router) {
+  constructor(public util: UtilityService, private fb: FormBuilder, private httpservice: HttpService, private dialog: MatDialog,
+    private router: Router, public dataservice: DataService) {
     this.generateProgramMap();
     this.registrationForm = this.fb.group({
       role:[''],
-      email:[''],
+      email:['', {validators: [Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)')], updateOn: 'blur'}],
       name:['', [Validators.pattern('^[A-Za-z0-9 ]+$')]],
       faculty:[''],
       program:[''],
@@ -78,10 +80,16 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     },
     {validators: [validateProgram("faculty", "program", this.map),
       validateDates("startDate", "endDate", "role")]});
-      this.checkIfRegistrationOpen();
-    if(util.userRole !== 'Admin'){
-      this.registerUser.email = "gsaluja@dal.ca";
+    if(!dataservice.isAdmin){
+      this.registerUser.email = this.dataservice.loggedInUser.data.email;
       this.registrationForm.get('email').disable();
+      this.registerUser.name = this.dataservice.loggedInUser.data.firstName+" "+this.dataservice.loggedInUser.data.lastName;
+      this.registrationForm.get('name').disable();
+      this.checkIfRegistrationOpen();
+    }
+    else{
+      this.disableForm();
+      this.isRegistrationOpen = true;
     }
   }
 
@@ -99,14 +107,15 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
         this.isRegistrationOpen = false;
       }
     });
+    this.checkRegistration();
   }
 
   ngOnInit(): void {
     this.util.sectionTitle = "Peer Mentorship Registration";
-    this.checkRegistration();
-    if(!this.isUserRegistered){
+    if(!this.registerUser.isRegistered){
       this.registerUser.role = "Mentee";
       this.registerUser.preference = this.preferences[2];
+      this.freshRegistration = true;
     }
   }
 
@@ -180,15 +189,17 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   }
 
   openDialog() {
-    this.setStaticData();
-    if(this.registerUser._id == -1){
-      this.saveUser();
-    }
-    else{
-      this.updateUser();
-    }
-    this.registerUser.startDate = this.formattedStartDate;
-    this.registerUser.endDate = this.formattedEndDate;
+    //if(this.checkIfUserExists()){
+      this.setStaticData();
+      if(this.registerUser._id == -1){
+        this.saveUser();
+      }
+      else{
+        this.updateUser();
+      }
+      this.registerUser.startDate = this.formattedStartDate;
+      this.registerUser.endDate = this.formattedEndDate;
+    //}
   }
 
   setStaticData(){
@@ -241,7 +252,6 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
 
   disableForm(){
     this.registrationForm.get('role').disable();
-    this.registrationForm.get('name').disable();
     this.registrationForm.get('faculty').disable();
     this.registrationForm.get('program').disable();
     this.registrationForm.get('startDate').disable();
@@ -253,7 +263,6 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
 
   enableForm(){
     this.registrationForm.get('role').enable();
-    this.registrationForm.get('name').enable();
     this.registrationForm.get('faculty').enable();
     this.registrationForm.get('program').enable();
     this.registrationForm.get('startDate').enable();
@@ -282,26 +291,26 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   }
 
   checkRegistration(){
-    this.httpservice.getServiceCall('/peer-mentorship-registration/'+this.registerUser.email)
-    .subscribe((result:any)=>{
-      if(result.status && result.data){
-        this.setResponse(result);
-        if(!this.reopenRegistration)
-          this.disableForm();
-      }
-    },
-    (error:any)=>{
-      this.dialog.open(MessageComponent, {
-        data: {
-          type: 'E',
-          title:'System Error',
-          message: 'Something Went Wrong. Kindly Refresh the Page.',
-          duration:3000
+    if(this.registerUser.email !== undefined){
+      this.httpservice.getServiceCall('/peer-mentorship-registration/'+this.registerUser.email)
+      .subscribe((result:any)=>{
+        if(result.status && result.data){
+          this.setResponse(result);
+          if(!this.reopenRegistration)
+            this.disableForm();
         }
+      },
+      (error:any)=>{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: 'Something Went Wrong. Kindly Refresh the Page.',
+            duration:3000
+          }
+        });
       });
-    });
-    if(this.registerUser.role)
-      this.isUserRegistered = true;
+    }
   }
 
   setResponse(result: any){
@@ -320,9 +329,6 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     this.registerUser.requestType = result.data.requestType;
     this.registerUser.requestStatus = result.data.requestStatus;
     this.registerUser.requestDate = moment(result.data.requestDate);
-    console.log(moment(this.registrationStartDate));
-    console.log(this.registerUser.requestDate);
-    console.log(moment(this.registrationStartDate).isAfter(this.registerUser.requestDate));
     if(this.registerUser.isRegistered !== undefined && this.registerUser.isRegistered)
       this.success = true;
     else if(this.registerUser.requestType === 'Registration' && this.registerUser.requestStatus === 'Declined' && moment(this.registrationStartDate).isAfter(this.registerUser.requestDate)){
@@ -332,9 +338,26 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     else if(this.registerUser.isRegistered !== undefined && !this.registerUser.isRegistered && this.registerUser.requestStatus === 'Declined'){
       this.failure = true;
     }
-    console.log(this.reopenRegistration);
-    console.log(this.success);
-    console.log(this.failure);
+  }
+
+  checkIfUserExists(){
+    if(this.dataservice.isAdmin){
+      if(this.registrationForm.controls["email"].value !== undefined && this.registrationForm.controls["email"].value !== ""){
+        this.httpservice.getServiceCall('/registration/'+this.registrationForm.controls["email"].value)
+        .subscribe((result:any)=>{
+          if(result.status && result.data){
+            this.registrationForm.controls["email"].setErrors(null);
+            this.registrationForm.controls["name"].setValue(result.data.firstName+" "+result.data.lastName);
+            this.registrationForm.controls["email"].disable();
+            this.registrationForm.controls["name"].disable();
+            this.enableForm();
+          }
+          else{
+            this.registrationForm.controls["email"].setErrors({notRegistered: true});
+          }
+        });
+      }
+    }
   }
 }
 
