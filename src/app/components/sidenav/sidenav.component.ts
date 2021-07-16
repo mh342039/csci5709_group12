@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilityService } from '../../services/utilityservice.service';
 import { MatAccordion } from '@angular/material/expansion';
-import { DataService } from 'src/app/services/dataservice.service';
+import { DataService } from '../../services/dataservice.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,11 +10,9 @@ import { DataService } from 'src/app/services/dataservice.service';
 })
 export class SidenavComponent implements OnInit {
   isAdmin: boolean = false
-  constructor(public util: UtilityService, private dataservice: DataService) { }
+  constructor(public util: UtilityService, public dataservice: DataService) { }
 
-  ngOnInit(): void {
-    this.isAdmin = (this.dataservice.loggedInUser.data.role == "ADMIN")
-  }
+  ngOnInit(): void { }
 
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
