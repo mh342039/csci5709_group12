@@ -78,14 +78,14 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ul style="list-style-type:none;">
-        <li class="innerNav"><a [routerLink]="'/main/peermentorshipregistration'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" *ngIf="util.userRole!=='Admin'">Registration</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/manageregistration'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" *ngIf="util.userRole==='Admin'">Manage Registration</a></li>
-        <li class="innerNav"><a [routerLink]="'/main/requestlist'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" *ngIf="util.userRole==='Admin'">View Requests</a></li><!--modify later with actual user-->
-        <li class="innerNav"><a [routerLink]="'/main/group-management'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" *ngIf="util.userRole==='Admin'">Manage Groups</a></li>
+        <li *ngIf="!isAdmin" class="innerNav"><a [routerLink]="'/main/peermentorshipregistration'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" >Registration</a></li>
+        <li *ngIf="isAdmin" class="innerNav"><a [routerLink]="'/main/manageregistration'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" >Manage Registration</a></li>
+        <li *ngIf="isAdmin" class="innerNav"><a [routerLink]="'/main/requestlist'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" >View Requests</a></li><!--modify later with actual user-->
+        <li *ngIf="isAdmin" class="innerNav"><a [routerLink]="'/main/group-management'" class="sideNavItemComponent" (click)="mep5.expanded = !mep5.expanded" >Manage Groups</a></li>
       </ul>
     </mat-expansion-panel>
   </mat-accordion>
-  <mat-accordion *ngIf="util.userRole==='Admin'">
+  <mat-accordion *ngIf="isAdmin">
     <mat-expansion-panel hideToggle #mep6="matExpansionPanel" (mouseleave)="!util.opened ? mep6.expanded=false : null">
       <mat-expansion-panel-header (click)="!util.opened ? util.open():null">
         <mat-panel-title>

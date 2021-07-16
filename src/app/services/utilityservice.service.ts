@@ -10,7 +10,6 @@ export class UtilityService {
   modalTitle:any;
   accordionDetails : any ={};
   opened :boolean = false;
-  userRole = 'Admin'; //to be removed later just for testing
 
   isViewMyAnnouncementControlsVisible: boolean= false;
 
