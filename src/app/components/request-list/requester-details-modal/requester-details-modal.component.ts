@@ -68,12 +68,13 @@ export class RequesterDetailsModalComponent implements OnInit {
       this.isRoleChangeRequest = false;
     }
     else{
-      if(typeValue === typeValue && this.originalRoleValue != roleValue){
+      if(this.originalRequestTypeValue === typeValue && this.originalRoleValue != roleValue){
         this.enableConfirmBtn = true;
         this.checkDiff();
+        this.isRoleChangeRequest = true;
       }
       else{
-        this.enableConfirmBtn = false;
+        this.isRoleChangeRequest = true;
       }
     }
   }
@@ -139,8 +140,6 @@ export class RequesterDetailsModalComponent implements OnInit {
   }
 
   checkDiff(){
-    console.log(moment(moment.now()));
-    console.log(moment(this.data.startDate, "MM/YYYY"));
     if(moment(moment.now()).diff(moment(this.data.startDate, "MM/YYYY"), 'months') <= 8
       && this.selectedType ==='Role Change' && this.selectedRole === 'Mentor'){
       this.isDiffLess = true;

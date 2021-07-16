@@ -93,7 +93,7 @@ export class ModifymemberComponent implements OnInit, DoCheck {
   }
 
   getUser(email: string){
-    this.httpservice.getServiceCall('/request-list/'+email)
+    this.httpservice.getServiceCall('/peer-mentorship-registration/'+email)
     .subscribe((result:any)=>{
       if(result.status){
         if(result.data.isRegistered){
