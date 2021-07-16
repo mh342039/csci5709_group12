@@ -52,9 +52,9 @@ export class RequestListComponent implements OnInit {
   }
 
   openDialog(index: number) {
-    this.registerUser[index+this.paginator.pageSize].mode = 'V';
+    this.registerUser[index+(this.paginator.pageIndex*this.paginator.pageSize)].mode = 'V';
     const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
-      data: this.registerUser[index+this.paginator.pageSize],
+      data: this.registerUser[index+(this.paginator.pageIndex*this.paginator.pageSize)],
       width: '400px'
     });
     dialogRef.afterClosed().subscribe(() => {
