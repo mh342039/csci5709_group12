@@ -11,4 +11,17 @@ export class Mentee {
     public name: string = "";
     public program: string= "";
     public checked: boolean ;
+    public campusLocation: string
+    public email: string
+    public endDate: string
+    public faculty: string
+    public group: any
+    public location: string
+    public modificationDate: string
+    public preference: string
+    public requestDate: string
+    public requestStatus: string
+    public requestType: string
+    public role: string
+    public startDate: string
 }
