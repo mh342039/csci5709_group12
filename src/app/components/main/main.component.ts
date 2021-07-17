@@ -25,7 +25,8 @@ export class MainComponent implements OnInit {
     if(result.status){
       console.log(result);
       this.dataservice.peerMentorshipDetails= result.data;
-      this.dataservice.loggedInUser.role= this.dataservice.peerMentorshipDetails.role
+      this.dataservice.loggedInUser.data.role= this.dataservice.peerMentorshipDetails.role;
+      console.log("User role is",this.dataservice.loggedInUser.role);
     }
   })
   }

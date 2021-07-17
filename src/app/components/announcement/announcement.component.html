@@ -1,7 +1,7 @@
 <div class="example-container">
   
 <div class="addAnnButtonDiv">
-<button mat-raised-button class="addAnnButton" *ngIf="utilityService.isViewMyAnnouncementControlsVisible || userdataservice.isAdmin || (userdataservice.loggedInUser.data.role == 'Mentor')" color="primary" (click)="onOpenAnnouncement(-1)">
+<button mat-raised-button class="addAnnButton" *ngIf=" userdataservice.isAdmin || (userdataservice.loggedInUser.data.role == 'Mentor')" color="primary" (click)="onOpenAnnouncement(-1)">
     <mat-icon>add</mat-icon>
     <span>Add Announcement</span>
 </button> 
@@ -13,9 +13,8 @@
       <mat-icon mat-card-avatar>account_circle</mat-icon>
       <mat-card-title>{{announcement?.title}}</mat-card-title>
       <mat-card-subtitle>
-        <span>Posted By </span>{{announcement?.createdByName}}<span> on </span>{{announcement?.createdOn | date:"MM/dd/yyyy 'at' h:mma"}}
+        <span>Posted By </span>{{announcement?.createdByName}}<span> on </span>{{announcement?.createdOn | date:"mediumDate" }}
       </mat-card-subtitle>
-
       <span class="example-spacer" ></span>
       <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="userdataservice.isAdmin || (userdataservice.loggedInUser.data._id == announcement.createdById)" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
@@ -25,7 +24,7 @@
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
-        <button mat-menu-item (click)="announcementService.deleteAnnouncement(announcement._id); $event.stopPropagation();">
+        <button mat-menu-item (click)="announcementService.deleteAnnouncement(announcement._id);">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </button>
@@ -36,7 +35,6 @@
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <!-- <a (click)="showText(announcement._id); $event.stopPropagation();">{{ isReadMore ? 'See More': 'See Less' }}</a> -->
       <a (click)="announcement.isReadMore = !announcement.isReadMore">{{ !announcement.isReadMore ? 'See More': 'See Less'}}</a>
     </mat-card-actions>
   </mat-card>
