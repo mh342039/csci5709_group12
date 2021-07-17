@@ -57,9 +57,6 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.createForm();
   }
 
-
-  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
-
   ngOnInit(): void {
     this.getAnnouncement();
     this.cdr.detectChanges();
@@ -79,12 +76,6 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.announcement.createdByName= this.userdataservice.loggedInUser.data.firstName + " " + this.userdataservice.loggedInUser.data.lastName
     this.announcement.createdOn = new Date();
   }
-
-  // triggerResize() {
-  //   // Wait for changes to be applied, then trigger textarea resize.
-  //   this._ngZone.onStable.pipe(take(1))
-  //       .subscribe(() => this.autosize.resizeToFitContent(true));
-  // }
 
   categories: Category[] = [
     {value: 'cat-0', viewValue: 'Educational'},
@@ -122,8 +113,7 @@ postAnnouncement(){
           duration:2000
         }
       });    
-    }
-    else{
+    }else{
       this.dialog.open(MessageComponent, {
         data: {
           type: 'E',
@@ -131,21 +121,18 @@ postAnnouncement(){
           message: result.message,
         }
       });
-
     }
   },
-  (error:any)=>{
-    this.dialog.open(MessageComponent, {
-      data: {
-        type: 'E',
-        title:'System Error',
-        message: 'Something Went Wrong. Please Try Again.',
-      }
-    });
-
-  })
-
-}
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+        }
+      });
+    })
+  }
 
 
 putAnnouncement(){

@@ -40,7 +40,13 @@ export class RateMentorComponent implements OnInit {
 
   mentors: Mentor[] = [
     {value: 'v1', viewValue: 'Nikunj Goenka'},
-    {value: 'v2', viewValue: 'Shehzeen Huda'}
+    {value: 'v2', viewValue: 'Hari Arunachalam'},
+    {value: 'v3', viewValue: 'Shehzeen Huda'},
+    {value: 'v4', viewValue: 'Yash Jaiswal'},
+    {value: 'v5', viewValue: 'Bala Sundeep Krishna Dasari'},
+    {value: 'v6', viewValue: 'Neharika Sehgal'},
+    {value: 'v7', viewValue: 'Aadesh Shah'},
+    {value: 'v8', viewValue: 'Suman Singh'}
   ];
 
   ratings: Rating[] = [
@@ -51,8 +57,8 @@ export class RateMentorComponent implements OnInit {
     {value: 'v2', viewValue: '5'}
   ];
 
+  //for creating a form for mentor feedback
   createFeedbackForm(){
-
     this.feedbackForMentorForm = this.formBuilder.group({
     Mentor: ['',Validators.required],
     Feedback: ['', Validators.required],
@@ -60,6 +66,7 @@ export class RateMentorComponent implements OnInit {
    });
   }
 
+  //for submitting mentor feedback
   onSubmit(){
   if(this.feedbackForMentorForm.valid){
     this.httpservice.postServiceCall('/feedback/mentor', this.mentorForm)
@@ -74,7 +81,6 @@ export class RateMentorComponent implements OnInit {
             duration:3000
           }
         });
-        // this.router.navigate(['/main/rate-mentor']);
       }
       else{
         this.dialog.open(MessageComponent, {
@@ -98,6 +104,7 @@ export class RateMentorComponent implements OnInit {
   }
   }
 
+  //for disabling feedback form after submitting it
   disableForm(){
     this.feedbackForMentorForm.get('Mentor').disable();
     this.feedbackForMentorForm.get('Rating').disable();

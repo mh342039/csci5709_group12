@@ -18,7 +18,7 @@
       <mat-label>Title</mat-label>
       <input matInput formControlName="Title" [(ngModel)]="announcement.title" placeholder="Title" type="text">
       <mat-error *ngIf="addAnnouncementForm?.controls['Title']?.errors?.required">Title is required </mat-error>
-      <mat-error *ngIf="addAnnouncementForm?.controls['Title']?.errors?.maxlength">Title should be maximum 20 characters </mat-error>
+      <mat-error *ngIf="addAnnouncementForm?.controls['Title']?.errors?.maxlength">Title should be maximum 30 characters </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field">
@@ -40,7 +40,6 @@
 
   <section>
     <button mat-button type="submit" [disabled]="!addAnnouncementForm?.valid"><mat-icon>check</mat-icon>Save</button>
-    <!-- <button mat-button  (click)="onDeleteAnnouncement()" *ngIf="isVisible"><mat-icon>delete_outline</mat-icon> Delete</button> -->
   </section>
  </form> 
 </div>

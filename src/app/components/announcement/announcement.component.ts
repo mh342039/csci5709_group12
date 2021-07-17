@@ -30,48 +30,6 @@ export class AnnouncementComponent implements OnInit {
     this.utilityService.sectionTitle="Announcements";
   }
 
-  // getAnnouncements(){
-  //   this.httpservice.getServiceCall('/announcements')
-  //   .subscribe( (result:any)=>{
-  //     if(result.status){
-  //       this.Announcements = result.data;
-  //       if(this.utilityService.isViewMyAnnouncementControlsVisible){
-          
-  //         this.Announcements = this.Announcements.filter((announcement: any) => {
-  //           return announcement.createdBy == this.userdataservice.loggedInUser.data._id;
-  //       });
-  //     }
-  //       this.announcementService.setAllAnnouncements(this.Announcements)
-  //       // } else { 
-  //     // this.Announcements = result.data;
-  //     // this.announcementService.setAllAnnouncements(this.Announcements)
-  //     // }
-  //   }
-  //     else{
-  //       this.dialog.open(MessageComponent, {
-  //         data: {
-  //           type: 'E',
-  //           title:'System Error',
-  //           message: result.message,
-  //         }
-  //       });
-  
-  //     }
-  //   },
-  //   (error:any)=>{
-  //     this.dialog.open(MessageComponent, {
-  //       data: {
-  //         type: 'E',
-  //         title:'System Error',
-  //         message: 'Something Went Wrong. Kindly Refresh the Page.',
-          
-  //       }
-  //     });
-
-  //   })
-    
-  // }
-
   onOpenAnnouncement(index:any){
     if(index != -1){
       this.announcementService.setAnnouncement(this.announcementService.allAnnouncements[index]);
@@ -81,10 +39,6 @@ export class AnnouncementComponent implements OnInit {
       }
       this.router.navigate(["/main/announcementdetails"])
   } 
-
-//   showText(id:any) {
-//     this.isReadMore = !this.isReadMore
-//  }
 
 }
 

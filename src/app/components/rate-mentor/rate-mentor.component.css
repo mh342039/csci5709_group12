@@ -9,7 +9,6 @@
   
 .add-container{
     width: 90%;
-    /* height: 500px; */
     margin: auto;
     border: 1px;
 }
@@ -21,7 +20,6 @@
 .mat-form-field {
   padding:1px;
   width: 100% !important;
-  color: navy;
 }
 
 .FeedbackHeader{
