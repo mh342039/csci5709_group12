@@ -1,7 +1,7 @@
 <div class="example-container">
   
 <div class="addAnnButtonDiv">
-<button mat-raised-button class="addAnnButton" color="primary" (click)="onOpenAnnouncement(-1)">
+<button mat-raised-button class="addAnnButton" *ngIf="utilityService.isViewMyAnnouncementControlsVisible || userdataservice.isAdmin || (userdataservice.loggedInUser.data.role == 'Mentor')" color="primary" (click)="onOpenAnnouncement(-1)">
     <mat-icon>add</mat-icon>
     <span>Add Announcement</span>
 </button> 

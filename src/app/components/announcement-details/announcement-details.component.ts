@@ -53,7 +53,10 @@ export class AnnouncementDetailsComponent implements OnInit {
   private _ngZone: any;
   isCreate: boolean;
 
-  constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { 
+    this.createForm();
+  }
+
 
   // @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -61,7 +64,6 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.getAnnouncement();
     this.cdr.detectChanges();
     this.utilityService.sectionTitle="Announcements";
-    // this.createForm();
   }
 
   getAnnouncement(){
@@ -91,7 +93,7 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   createForm(){
     this.addAnnouncementForm = this.formBuilder.group({
-    Title: ['',[Validators.required,Validators.maxLength(20)]],
+    Title: ['',[Validators.required,Validators.maxLength(30)]],
     Category: ['', Validators.required],
     Description: ['', Validators.required],
    });
