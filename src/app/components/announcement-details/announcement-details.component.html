@@ -33,7 +33,7 @@
 
     <mat-form-field class="form-field">
         <mat-label>Description</mat-label>
-        <textarea matInput #message [formControl]="DescriptionFormControl" [(ngModel)]="announcement.description" placeholder="Description" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
+        <textarea class="content-textarea" matInput #message [formControl]="DescriptionFormControl" [(ngModel)]="announcement.description" placeholder="Description" type="text"></textarea>
         <mat-hint align="end">{{message.value.length}} characters</mat-hint>
         <mat-error *ngIf="DescriptionFormControl?.errors?.required">Description is required</mat-error>
     </mat-form-field>

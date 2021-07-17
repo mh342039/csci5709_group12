@@ -5,6 +5,8 @@ export class Announcement{
     title:string="";
     category:string="";
     description: string="";
-    createdBy: string="";
-    createdOn: string="";
+    createdByName: string="";
+    createdById: string="";
+    createdOn: Date;
+    isReadMore: boolean=false;
 }
