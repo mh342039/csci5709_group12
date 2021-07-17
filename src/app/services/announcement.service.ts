@@ -3,7 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MessageComponent } from '../components/message/message.component';
 import {Announcement} from '../models/announcements.model';
+import { DataService } from './dataservice.service';
 import { HttpService } from './httpservice.service';
+import { UtilityService } from './utilityservice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,12 @@ export class AnnouncementService {
   announcement:any;
   allAnnouncements: Announcement[] =[];
 
-  constructor(private httpservice: HttpService, private dialog: MatDialog, private router: Router) { 
+  constructor(public userdataservice: DataService, public utilityservice: UtilityService, private httpservice: HttpService, private dialog: MatDialog, private router: Router) { 
   }
 
-getAnnouncements(){
-  return this.allAnnouncements;
-}
+// getAnnouncements(){
+//   return this.allAnnouncements;
+// }
 
 getAnnouncement(){
   return this.announcement ;
@@ -112,5 +114,44 @@ dialogRef.afterClosed().subscribe(result => {
 getAnnouncementIndex(id:number){
   return this.allAnnouncements.map(o => o._id).indexOf(id);
 }
+
+
+getAnnouncements(){
+  this.httpservice.getServiceCall('/announcements')
+  .subscribe( (result:any)=>{
+    if(result.status){
+      this.allAnnouncements = result.data;
+      if(this.utilityservice && this.utilityservice.isViewMyAnnouncementControlsVisible){
+        
+        this.allAnnouncements = this.allAnnouncements.filter((announcement: any) => {
+          return announcement.createdBy == this.userdataservice.loggedInUser.data._id;
+      });
+    }
+  }
+    else{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: result.message,
+        }
+      });
+
+    }
+  },
+  (error:any)=>{
+    this.dialog.open(MessageComponent, {
+      data: {
+        type: 'E',
+        title:'System Error',
+        message: 'Something Went Wrong. Kindly Refresh the Page.',
+        
+      }
+    });
+
+  })
+  
+}
+
 
 }

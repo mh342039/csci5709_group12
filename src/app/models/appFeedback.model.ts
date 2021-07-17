@@ -4,5 +4,5 @@ export class AppFeedbackModel {
     public rating: string = "";
     public feedbackDescription: string = "";
     public submittedBy: string = "";
-    public submittedOn: string = "";
+    public submittedOn: any;
 }

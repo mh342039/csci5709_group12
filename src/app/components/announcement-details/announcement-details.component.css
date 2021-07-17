@@ -39,3 +39,8 @@
   text-align: center;
   color: brown;
 }
+
+.content-textarea{
+  height: 29vh;
+  max-height: 29vh;
+}

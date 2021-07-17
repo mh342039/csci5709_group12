@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+// import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {take} from 'rxjs/operators';
 import {AnnouncementService} from 'src/app/services/announcement.service';
 import { Announcement } from 'src/app/models/announcements.model';
@@ -11,6 +11,7 @@ import { UtilityService } from 'src/app/services/utilityservice.service';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../message/message.component';
+import { DataService } from 'src/app/services/dataservice.service';
 
 interface Category {
   value: string;
@@ -52,9 +53,9 @@ export class AnnouncementDetailsComponent implements OnInit {
   private _ngZone: any;
   isCreate: boolean;
 
-  constructor(private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   ngOnInit(): void {
     this.getAnnouncement();
@@ -71,13 +72,17 @@ export class AnnouncementDetailsComponent implements OnInit {
     }
     else
     this.announcement= new Announcement(); 
+    console.log(this.userdataservice.loggedInUser.data._id)
+    this.announcement.createdById = this.userdataservice.loggedInUser.data._id
+    this.announcement.createdByName= this.userdataservice.loggedInUser.data.firstName + " " + this.userdataservice.loggedInUser.data.lastName
+    this.announcement.createdOn = new Date();
   }
 
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1))
-        .subscribe(() => this.autosize.resizeToFitContent(true));
-  }
+  // triggerResize() {
+  //   // Wait for changes to be applied, then trigger textarea resize.
+  //   this._ngZone.onStable.pipe(take(1))
+  //       .subscribe(() => this.autosize.resizeToFitContent(true));
+  // }
 
   categories: Category[] = [
     {value: 'cat-0', viewValue: 'Educational'},
