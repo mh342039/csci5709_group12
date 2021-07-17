@@ -1,3 +1,4 @@
+// <!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GroupFormation, Mentee } from 'src/app/models/groupFormation.model';

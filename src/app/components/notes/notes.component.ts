@@ -39,6 +39,7 @@ export class NotesComponent implements OnInit {
 
   
   getNotes() {
+    // fetch the list of notes from the DB based on logged in user.
     this.httpservice.getServiceCall('/notes/'+this.userdataservice.loggedInUser.data._id)
     .subscribe( (result:any)=>{
       if(result.status){

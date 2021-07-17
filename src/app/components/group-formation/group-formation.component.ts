@@ -24,13 +24,13 @@ export class GroupFormationComponent implements OnInit {
   }
 
   getGroups(){
+    //Get the list of all th e groups
     this.httpservice.getServiceCall("/group-management/groups")
     .subscribe((result: any)=>{
       if (result.status){
         console.log(result)
         var temp = new MatTableDataSource(result.data);
         this.dataSource = temp;
-    
       }
       else{
         console.log(result)
