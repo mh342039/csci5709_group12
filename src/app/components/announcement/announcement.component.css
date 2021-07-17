@@ -5,8 +5,8 @@
 
 .example-card {
   /* height: 25vh; */
-    width: 85vw;
-    margin: 0px 50px 15px 50px;
+    width: 70vw;
+    margin: 0px 30px 15px 30px;
     cursor: pointer;
   }
 
@@ -20,19 +20,19 @@
     }
 
     .addAnnButton{
-      margin-right: 40px;
+      margin-right: 60px;
       float:right;
     }
 
     .addAnnButtonDiv{
     width:100%;
      height:70px; 
-     margin:0px;
+     margin:10px;
     }
 
     .cardDiv{
       margin:0px;
-      padding: 0px;
+      padding: 25px;
     }
 
     .example-spacer {

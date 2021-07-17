@@ -20,12 +20,13 @@ export class MainComponent implements OnInit {
       this.router.navigateByUrl('/signin')
     }
 
-  // this.httpservice.getServiceCall('/peer-mentorship-registration/')
-  // .subscribe( (result:any)=>{
-  //   if(result.status){
-  //     console.log(result);
-  //     this.allUsers= result.data;
-  //   }
-  // })
+  this.httpservice.getServiceCall('/peer-mentorship-registration/getApprovedUser/' + this.dataservice.loggedInUser.data.email)
+  .subscribe( (result:any)=>{
+    if(result.status){
+      console.log(result);
+      this.dataservice.peerMentorshipDetails= result.data;
+      this.dataservice.loggedInUser.role= this.dataservice.peerMentorshipDetails.role
+    }
+  })
   }
 }
