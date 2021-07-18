@@ -102,7 +102,7 @@ validateSecretQuestion(stepper: MatStepper){
 
 save(){
     let req = {
-
+      password: this.ProfileFormGroup.controls["Password"].value,
     }
     this.httpservice.putServiceCall("/updateprofile/resetpassword/" + this.dataservice.loggedInUser.data._id,req)
       .subscribe((result: any)=>{
