@@ -31,7 +31,6 @@ interface LikedFeature{
 export class RateApplicationComponent implements OnInit {
   appForm: AppFeedbackModel = new AppFeedbackModel();
   websiteFeedbackForm: FormGroup;
-  alphanumericPattern = "([a-zA-Z0-9 ]+)";
   message: string;
 
   constructor(private utilityService: UtilityService, private httpservice: HttpService,private dialog: MatDialog, private formBuilder: FormBuilder, private router: Router,private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
@@ -62,17 +61,17 @@ export class RateApplicationComponent implements OnInit {
     {value: 'v2', viewValue: 'Application Functionality: Announcements'},
   ];
 
+  //for creating a form for application feedback
   createAppFeedbackForm(){
-
     this.websiteFeedbackForm = this.formBuilder.group({
     UsageFrequency: ['',Validators.required],
     Feedback: ['', Validators.required],
     Rating: ['', Validators.required],
     LikedFeature: ['', Validators.required]
-    // Location: ['',[Validators.required, Validators.pattern(this.alphanumericPattern), Validators.maxLength(30)]],
    });
   }
 
+  //for submitting application feedback
   onSubmit() {
     if(this.websiteFeedbackForm.valid){
       this.httpservice.postServiceCall('/feedback/application', this.appForm)
@@ -111,6 +110,7 @@ export class RateApplicationComponent implements OnInit {
   }
   }
 
+  //disable feedback form after the feedback has been submitted
   disableForm(){
     this.websiteFeedbackForm.get('UsageFrequency').disable();
     this.websiteFeedbackForm.get('LikedFeature').disable();

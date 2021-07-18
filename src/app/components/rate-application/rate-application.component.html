@@ -38,7 +38,6 @@
       <textarea matInput #feedback formControlName="Feedback" placeholder="Feedback" [(ngModel)]="appForm.feedbackDescription" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
       <mat-hint align="end">{{feedback.value.length}} characters</mat-hint>
       <mat-error *ngIf="websiteFeedbackForm?.controls['Feedback']?.errors?.required">Feedback is required</mat-error>
-    <!-- <mat-error *ngIf="websiteFeedbackForm?.controls['Feedback']?.errors?.pattern">Feedback should be Alpha-numeric</mat-error> -->
   </mat-form-field>
 <br>
   <button mat-raised-button type="submit" [disabled]="!websiteFeedbackForm?.valid" color="primary">Submit</button>

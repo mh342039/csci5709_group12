@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class DataService {
+  peerMentorshipDetails:any;
   role:any
   loggedInUser: any
   isAdmin: boolean= false

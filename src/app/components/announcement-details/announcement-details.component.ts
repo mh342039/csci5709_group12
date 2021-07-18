@@ -53,15 +53,14 @@ export class AnnouncementDetailsComponent implements OnInit {
   private _ngZone: any;
   isCreate: boolean;
 
-  constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
-
-  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { 
+    this.createForm();
+  }
 
   ngOnInit(): void {
     this.getAnnouncement();
     this.cdr.detectChanges();
     this.utilityService.sectionTitle="Announcements";
-    // this.createForm();
   }
 
   getAnnouncement(){
@@ -78,12 +77,6 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.announcement.createdOn = new Date();
   }
 
-  // triggerResize() {
-  //   // Wait for changes to be applied, then trigger textarea resize.
-  //   this._ngZone.onStable.pipe(take(1))
-  //       .subscribe(() => this.autosize.resizeToFitContent(true));
-  // }
-
   categories: Category[] = [
     {value: 'cat-0', viewValue: 'Educational'},
     {value: 'cat-1', viewValue: 'Recreational'}
@@ -91,7 +84,7 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   createForm(){
     this.addAnnouncementForm = this.formBuilder.group({
-    Title: ['',[Validators.required,Validators.maxLength(20)]],
+    Title: ['',[Validators.required,Validators.maxLength(30)]],
     Category: ['', Validators.required],
     Description: ['', Validators.required],
    });
@@ -120,8 +113,7 @@ postAnnouncement(){
           duration:2000
         }
       });    
-    }
-    else{
+    }else{
       this.dialog.open(MessageComponent, {
         data: {
           type: 'E',
@@ -129,21 +121,18 @@ postAnnouncement(){
           message: result.message,
         }
       });
-
     }
   },
-  (error:any)=>{
-    this.dialog.open(MessageComponent, {
-      data: {
-        type: 'E',
-        title:'System Error',
-        message: 'Something Went Wrong. Please Try Again.',
-      }
-    });
-
-  })
-
-}
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+        }
+      });
+    })
+  }
 
 
 putAnnouncement(){

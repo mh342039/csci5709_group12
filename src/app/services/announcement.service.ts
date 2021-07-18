@@ -124,7 +124,7 @@ getAnnouncements(){
       if(this.utilityservice && this.utilityservice.isViewMyAnnouncementControlsVisible){
         
         this.allAnnouncements = this.allAnnouncements.filter((announcement: any) => {
-          return announcement.createdBy == this.userdataservice.loggedInUser.data._id;
+          return announcement.createdById == this.userdataservice.loggedInUser.data._id;
       });
     }
   }
