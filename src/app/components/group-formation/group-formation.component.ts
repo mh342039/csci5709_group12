@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { CreateGroupComponent } from '../create-group/create-group.component';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-group-formation',
@@ -37,6 +38,14 @@ export class GroupFormationComponent implements OnInit {
       }
     }, (error: any)=>{
       console.log(error)
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });
+
     })
   }
   ngAfterViewInit() {
@@ -45,6 +54,7 @@ export class GroupFormationComponent implements OnInit {
     }
   }
 
+  //open create group dialog box
   createGroup(){
     const dialogRef = this.dialog.open(CreateGroupComponent, {
       width: '60%',
@@ -57,7 +67,7 @@ export class GroupFormationComponent implements OnInit {
     });
   }
   
-
+  //open edit group dialog box
   openGroupDetail(group: any){
     const dialogRef = this.dialog.open(CreateGroupComponent, {
       width: '60%',

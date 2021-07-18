@@ -16,6 +16,6 @@ export class GroupManagementComponent implements OnInit {
   }
 
   change(){
-    alert(this.selectedIndex)
+    //alert(this.selectedIndex)
   }
 }

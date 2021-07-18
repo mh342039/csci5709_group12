@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { DataService } from 'src/app/services/dataservice.service';
+import { MessageComponent } from '../message/message.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-in',
@@ -17,7 +19,7 @@ export class SignInComponent implements OnInit {
   Email: string = "";
   Password: string = "";
   invalidUser:boolean= false;
-  constructor(private dataservice: DataService ,private formBuilder: FormBuilder, private router: Router, private httpservice: HttpService) { }
+  constructor(private dataservice: DataService ,private formBuilder: FormBuilder, private dialog: MatDialog, private router: Router, private httpservice: HttpService) { }
 
   ngOnInit(): void {
     this.SigninForm = this.formBuilder.group({
@@ -43,9 +45,27 @@ export class SignInComponent implements OnInit {
         this.dataservice.setLoggedInUser(result)
         this.router.navigate(['/main/announcement'])
       }
-      
+      else {
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'W',
+            title: 'Incorrect Credentials',
+            message: "Incorrect email/password. Please try again!",
+          }
+        });
+
+      }
+
     },(error: any)=>{
       console.log(error)
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'Incorrect Credentials',
+          message: "Incorrect email/password. Please try again!",
+        }
+      });
+
     })
   }
 

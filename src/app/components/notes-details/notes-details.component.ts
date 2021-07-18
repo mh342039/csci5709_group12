@@ -74,10 +74,6 @@ export class NotesDetailsComponent implements OnInit {
     }
     else {
       this.putNote()
-      // let index = this.dataservice.getNoteIndex(this.note._id);
-      // if (index > -1) {
-        
-      // }
     }
   }
 

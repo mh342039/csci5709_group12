@@ -1,9 +1,10 @@
 // <!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GroupFormation, Mentee } from 'src/app/models/groupFormation.model';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-create-group',
@@ -21,8 +22,9 @@ export class CreateGroupComponent implements OnInit {
   criteriaValue: string = ""
   CreateGroupForm!: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef <CreateGroupComponent >, private formBuilder: FormBuilder, private httpservice: HttpService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private dialogRef: MatDialogRef <CreateGroupComponent >, private formBuilder: FormBuilder, private dialog: MatDialog, private httpservice: HttpService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+  //List of mentees will be fecthed if the popup is opend in Edit mode
   ngOnInit(): void {
     this.CreateGroupForm = this.formBuilder.group({
       Faculty: ['', [Validators.required]],
@@ -52,9 +54,23 @@ export class CreateGroupComponent implements OnInit {
         }
         else{
           console.log(result)
+          this.dialog.open(MessageComponent, {
+            data: {
+              type: 'E',
+              title: 'System Error',
+              message: "Something went wrong. Please try again!",
+            }
+          });
         }
       },(error: any)=>{
         console.log(error)
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: "Something went wrong. Please try again!",
+          }
+        });
       })
 
     }
@@ -63,6 +79,7 @@ export class CreateGroupComponent implements OnInit {
     }
   }
 
+  //whenever the criteria value is changed the value is changed
   criteriaValueChanged(criteria: string, value: string){
     this.criteriaValue = value
     if(criteria == this.criteria){
@@ -87,6 +104,7 @@ export class CreateGroupComponent implements OnInit {
     }
   }
 
+  // this method will be used to fetch mentees based on the search criteria
   search(){
     var value;
     if(this.criteria == "faculty"){ value = this.groupData.faculty}
@@ -108,10 +126,23 @@ export class CreateGroupComponent implements OnInit {
         }
       }
       else{
-        console.log(result)
-      }
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'W',
+            title: 'System Message',
+            message: "No un-assigned mentees found.",
+          }
+        });
+        }
     },(error: any)=>{ 
       console.log(error)
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });
     })
   }
 
@@ -150,37 +181,84 @@ export class CreateGroupComponent implements OnInit {
   
   }
 
+  // this method is used to create a new group
   create(){
     this.httpservice.postServiceCall("/group-management/create", this.groupData)
     .subscribe((result: any)=>{
       if(result.status){
         console.log(result)
         this.dialogRef.close()
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title: 'Success!',
+            message: "Group Created Successfully ",
+            duration: 2000
+          }
+        });
       }
-      else{
-        console.log(result)
+      else {
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: "Something went wrong. Please try again!",
+          }
+        });
+
       }
+
     },(error: any)=>{
-      
-    })
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });
+  })
   }
 
+  // this method is used to save the changes to existing group
   edit(){
     this.httpservice.putServiceCall("/group-management/update", this.groupData)
     .subscribe((result: any)=>{
       if(result.status){
         console.log(result)
         this.dialogRef.close()
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title: 'Success!',
+            message: "Group Updated Successfully",
+            duration: 2000
+          }
+        });
       }
-      else{
-        console.log(result)
+      else {
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: "Something went wrong. Please try again!",
+          }
+        });
+
       }
     },(error: any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });
 
     })
 
   }
 
+  // this method is used to delete the group
   delete(){
     console.log(JSON.stringify( this.groupData))
     this.httpservice.deleteServiceCall("/group-management/delete/"+this.groupData._id, {})
@@ -188,12 +266,34 @@ export class CreateGroupComponent implements OnInit {
       if(result.status){
         console.log(result)
         this.dialogRef.close()
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title: 'Success!',
+            message: "Group Deleted Successfully ",
+            duration: 2000
+          }
+        });
       }
-      else{
-        console.log(result)
+      else {
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: "Something went wrong. Please try again!",
+          }
+        });
       }
     },(error: any)=>{
       console.log(error)
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });
+
     })
   }
   
