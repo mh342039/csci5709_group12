@@ -32,6 +32,7 @@ export class NotesDetailsComponent implements OnInit {
     this.ref.detectChanges();
   }
 
+  //get the data for the selected note
   getNote() {
     let temp = this.dataservice.getNote();
     if (temp) {
@@ -77,6 +78,7 @@ export class NotesDetailsComponent implements OnInit {
     }
   }
 
+  // this method is used to save the note in DB
   postNote(){
     this.httpservice.postServiceCall('/notes', this.note)
     .subscribe( (result:any)=>{
@@ -115,6 +117,7 @@ export class NotesDetailsComponent implements OnInit {
     })
   }
 
+  // this method is used to update the note data
   putNote(){
     this.httpservice.putServiceCall('/notes/'+ this.note._id, this.note)
     .subscribe( (result:any)=>{
@@ -152,6 +155,7 @@ export class NotesDetailsComponent implements OnInit {
     })
   }
 
+  // this method is used to delete the note
   deleteNote() {
     let index = this.dataservice.getNoteIndex(this.note._id);
     if (index > -1) {
