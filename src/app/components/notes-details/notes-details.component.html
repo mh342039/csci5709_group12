@@ -14,6 +14,7 @@
           <mat-label>Title</mat-label>
           <input matInput placeholder="Title" [(ngModel)]="note.title"/>
         </mat-form-field>
+        <!-- The below code of chips was created by adapting the code in [Angular Material](https://material.angular.io/components/chips/examples) -->
         <mat-form-field class="form-field tag-chips">
             <mat-label>Tags</mat-label>
             <mat-chip-list #tagList aria-label="Tagging">
