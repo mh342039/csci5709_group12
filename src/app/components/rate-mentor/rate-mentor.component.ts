@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -61,9 +61,15 @@ export class RateMentorComponent implements OnInit {
   createFeedbackForm(){
     this.feedbackForMentorForm = this.formBuilder.group({
     Mentor: ['',Validators.required],
-    Feedback: ['', Validators.required],
+    Feedback: ['', [Validators.required, this.cannotContainSpace]],
     Rating: ['', Validators.required],
    });
+  }
+
+  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { cannotContainSpace: true };
   }
 
   //for submitting mentor feedback

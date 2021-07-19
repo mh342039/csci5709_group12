@@ -29,6 +29,7 @@
       <textarea matInput #feedback formControlName="Feedback" placeholder="Feedback" [(ngModel)]="mentorForm.feedbackDescription" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
       <mat-hint align="end">{{feedback.value.length}} characters</mat-hint>
       <mat-error *ngIf="feedbackForMentorForm?.controls['Feedback']?.errors?.required">Feedback is required</mat-error>
+      <mat-error *ngIf="feedbackForMentorForm?.controls['Feedback']?.errors?.cannotContainSpace">Please enter valid data</mat-error>
   </mat-form-field>
 <br>
 

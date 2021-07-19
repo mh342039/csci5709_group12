@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,6 +40,12 @@ export class RateApplicationComponent implements OnInit {
     this.createAppFeedbackForm();
   }
 
+  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { cannotContainSpace: true };
+  }
+
   usageFreqs: UsageFrequecny[] = [
     {value: 'v1', viewValue: 'I use it everyday'},
     {value: 'v2', viewValue: 'I use it sometimes'},
@@ -65,7 +71,7 @@ export class RateApplicationComponent implements OnInit {
   createAppFeedbackForm(){
     this.websiteFeedbackForm = this.formBuilder.group({
     UsageFrequency: ['',Validators.required],
-    Feedback: ['', Validators.required],
+    Feedback: ['', [Validators.required, this.cannotContainSpace]],
     Rating: ['', Validators.required],
     LikedFeature: ['', Validators.required]
    });
