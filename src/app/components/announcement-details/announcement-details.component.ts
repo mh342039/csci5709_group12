@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -12,6 +12,7 @@ import { HttpService } from 'src/app/services/httpservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../message/message.component';
 import { DataService } from 'src/app/services/dataservice.service';
+import { templateJitUrl } from '@angular/compiler';
 
 interface Category {
   value: string;
@@ -84,10 +85,16 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   createForm(){
     this.addAnnouncementForm = this.formBuilder.group({
-    Title: ['',[Validators.required,Validators.maxLength(30)]],
+    Title: ['',[Validators.required,Validators.maxLength(30), this.cannotContainSpace]],
     Category: ['', Validators.required],
-    Description: ['', Validators.required],
+    Description: ['', [Validators.required, this.cannotContainSpace]],
    });
+  }
+
+  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { cannotContainSpace: true };
   }
 
 onSaveAnnouncement(){
@@ -124,12 +131,20 @@ postAnnouncement(){
     }
   },
     (error:any)=>{
-      this.dialog.open(MessageComponent, {
-        data: {
-          type: 'E',
-          title:'System Error',
-          message: 'Something Went Wrong. Kindly Refresh the Page.',
+      let temp = {
+        type: "E",
+        title: 'System Error',
+        message: "Something went wrong. Please try again!",
+      }
+      if(error.status == 409){
+          temp = {
+          type: "W",
+          title: 'System Message',
+          message: "Announcement with the same title already exists. Please update title!",
         }
+      }
+      this.dialog.open(MessageComponent, {
+        data: temp
       });
     })
   }
