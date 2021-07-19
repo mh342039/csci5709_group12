@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { HttpService } from 'src/app/services/httpservice.service';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -20,7 +23,7 @@ export class ForgotPasswordComponent implements OnInit {
   firstCtrl: "";
   secondCtrl: "";
   
-  constructor(private _formBuilder: FormBuilder, private router: Router) {}
+  constructor(private dialog: MatDialog ,private _formBuilder: FormBuilder, private router: Router, private httpservice: HttpService) {}
 
   ngOnInit() {
 
@@ -57,9 +60,50 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   
-  gotoSignin()
+  resetPassword()
   {
-    this.router.navigate(['/signin'])
+    var request={
+      email: this.Email,
+      friend: this.firstCtrl,
+      pet: this.secondCtrl,
+      password: this.Password
+    }
+    this.httpservice.postServiceCall("/forgotpassword",request)
+    .subscribe((result: any) => {
+      if (result.status) {
+
+        const dialogRef = this.dialog.open(MessageComponent, {
+          data: {
+            type: 'C',
+            title: 'Password Reset Successful!',
+            message: 'Please try signing in again!',
+            duration: 3000
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.router.navigate(['/signin'])
+        })
+      }
+      else {
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: result.message,
+          }
+        });
+      }
+    },
+      (error: any) => {
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: 'Something Went Wrong. Please Try Again.',
+          }
+        });
+      });
+
   }
 
 }

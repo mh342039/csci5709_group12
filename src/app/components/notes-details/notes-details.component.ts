@@ -8,6 +8,7 @@ import { NotesService } from 'src/app/services/notesdata.service';
 import { MessageComponent } from '../message/message.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { DataService } from 'src/app/services/dataservice.service';
 
 @Component({
   selector: 'app-notes-details',
@@ -23,7 +24,7 @@ export class NotesDetailsComponent implements OnInit {
   isCreate : boolean=false; 
   @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private httpservice: HttpService, private dialog: MatDialog, private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
+  constructor(private userdataservice: DataService, private httpservice: HttpService, private dialog: MatDialog, private ref: ChangeDetectorRef, private dataservice: NotesService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -31,6 +32,7 @@ export class NotesDetailsComponent implements OnInit {
     this.ref.detectChanges();
   }
 
+  //get the data for the selected note
   getNote() {
     let temp = this.dataservice.getNote();
     if (temp) {
@@ -40,6 +42,8 @@ export class NotesDetailsComponent implements OnInit {
     }
     else {
       this.note = new NoteModel();
+      console.log(this.userdataservice.loggedInUser.data._id)
+      this.note.createdByID = this.userdataservice.loggedInUser.data._id
     }
   }
 
@@ -71,13 +75,10 @@ export class NotesDetailsComponent implements OnInit {
     }
     else {
       this.putNote()
-      // let index = this.dataservice.getNoteIndex(this.note._id);
-      // if (index > -1) {
-        
-      // }
     }
   }
 
+  // this method is used to save the note in DB
   postNote(){
     this.httpservice.postServiceCall('/notes', this.note)
     .subscribe( (result:any)=>{
@@ -116,6 +117,7 @@ export class NotesDetailsComponent implements OnInit {
     })
   }
 
+  // this method is used to update the note data
   putNote(){
     this.httpservice.putServiceCall('/notes/'+ this.note._id, this.note)
     .subscribe( (result:any)=>{
@@ -153,6 +155,7 @@ export class NotesDetailsComponent implements OnInit {
     })
   }
 
+  // this method is used to delete the note
   deleteNote() {
     let index = this.dataservice.getNoteIndex(this.note._id);
     if (index > -1) {

@@ -28,22 +28,17 @@
   
 .add-container{
     width: 90%;
-    /* height: 500px; */
-    /* background-color:lightsteelblue; */
     margin: auto;
     border: 1px;
 }
 
 .form-field{
   width: 100%;
-  /* margin-left: 10px; */
 }
 
 .mat-form-field {
-  /* margin: 10px; */
   padding:1px;
   width: 100% !important;
-  color: navy;
 }
 
 .mat-toolbar-single-row {
@@ -53,25 +48,6 @@
 
 .mat-toolbar-single-row button {
   width: 200px;
-}
-
-/* .mat-form-field {
-  width: 100%;
-} */
-
-#uploadFile {
-  top: 0px;
-  left: 0px;
-  width: 100%;    
-  z-index: 9;
-  opacity: 0;
-  height: 100%;
-  cursor: pointer;
-  position: absolute;
-}
-
-.file-input {
-  display: none;
 }
 
 .FeedbackHeader{

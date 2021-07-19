@@ -1,3 +1,4 @@
+// <!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 import { Component, OnInit } from '@angular/core';
 import { UtilityService } from 'src/app/services/utilityservice.service';
 
@@ -15,6 +16,6 @@ export class GroupManagementComponent implements OnInit {
   }
 
   change(){
-    alert(this.selectedIndex)
+    //alert(this.selectedIndex)
   }
 }

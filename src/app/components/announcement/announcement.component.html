@@ -1,23 +1,22 @@
 <div class="example-container">
   
 <div class="addAnnButtonDiv">
-<button mat-raised-button class="addAnnButton" color="primary" *ngIf="utilityService.isViewMyAnnouncementControlsVisible" (click)="onOpenAnnouncement(-1)">
+<button mat-raised-button class="addAnnButton" *ngIf=" userdataservice.isAdmin || (userdataservice.loggedInUser.data.role == 'Mentor')" color="primary" (click)="onOpenAnnouncement(-1)">
     <mat-icon>add</mat-icon>
     <span>Add Announcement</span>
 </button> 
 </div>
 
 <div class="cardDiv">
-<mat-card class="example-card" *ngFor="let announcement of Announcements; let i=index">
+<mat-card class="example-card" *ngFor="let announcement of announcementService.allAnnouncements; let i=index">
     <mat-card-header>
       <mat-icon mat-card-avatar>account_circle</mat-icon>
       <mat-card-title>{{announcement?.title}}</mat-card-title>
       <mat-card-subtitle>
-        <span>Posted By </span>{{announcement?.createdBy}}<span> on </span>{{announcement?.createdOn}}
+        <span>Posted By </span>{{announcement?.createdByName}}<span> on </span>{{announcement?.createdOn | date:"mediumDate" }}
       </mat-card-subtitle>
-
-      <span class="example-spacer"></span>
-      <button mat-icon-button [matMenuTriggerFor]="menu"  *ngIf="utilityService.isViewMyAnnouncementControlsVisible" aria-label="Example icon-button with a menu">
+      <span class="example-spacer" ></span>
+      <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="userdataservice.isAdmin || (userdataservice.loggedInUser.data._id == announcement.createdById)" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
@@ -32,11 +31,11 @@
       </mat-menu>
     </mat-card-header>
     <mat-card-content>
-      <p [ngClass]="{'limitTextHeight': isReadMore}">{{announcement?.description}}
+      <p [ngClass]="{'limitTextHeight': !announcement.isReadMore}">{{announcement?.description}}
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <a (click)="showText(announcement._id); $event.stopPropagation();">{{ isReadMore ? 'See More': 'See Less' }}</a>
+      <a (click)="announcement.isReadMore = !announcement.isReadMore">{{ !announcement.isReadMore ? 'See More': 'See Less'}}</a>
     </mat-card-actions>
   </mat-card>
 

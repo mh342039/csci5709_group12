@@ -74,11 +74,19 @@ export class SignUpComponent implements OnInit {
 
   Signup() {
     if (this.ProfileFormGroup.valid && this.SecurityQFormGroup.valid) {
-      this.httpservice.postServiceCall('/signup', this.signup)
+      this.signup.firstName = this.FirstName
+      this.signup.lastName = this.LastName
+      this.signup.email = this.Email
+      this.signup.password = this.Password
+      this.signup.friend = this.firstCtrl
+      this.signup.pet = this.secondCtrl
+
+
+      this.httpservice.postServiceCall('/registration/signup', this.signup)
         .subscribe((result: any) => {
           if (result.status) {
 
-            this.dialog.open(MessageComponent, {
+            const dialogRef = this.dialog.open(MessageComponent, {
               data: {
                 type: 'C',
                 title: 'Registration Successful!',
@@ -86,7 +94,9 @@ export class SignUpComponent implements OnInit {
                 duration: 3000
               }
             });
-            // this.router.navigate(['/main/rate-mentor']);
+            dialogRef.afterClosed().subscribe(result => {
+            this.router.navigate(['/signin']);
+          })
           }
           else {
             this.dialog.open(MessageComponent, {

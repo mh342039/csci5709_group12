@@ -78,9 +78,9 @@
   </p>
 </div>
 <div mat-dialog-actions *ngIf="data.mode == 'V'">
-  <button mat-raised-button color="primary" mat-dialog-close *ngIf="data.mode == 'V'" (click)="modifyUserRequest('Approved');">Approve</button>
-  <button mat-raised-button color="warn" mat-dialog-close *ngIf="data.mode == 'V'" (click)="modifyUserRequest('Declined');">Decline</button>
+  <button mat-raised-button color="primary" mat-dialog-close *ngIf="data.requestStatus === 'Pending'" (click)="modifyUserRequest('Approved');">Approve</button>
+  <button mat-raised-button color="warn" mat-dialog-close *ngIf="data.requestStatus === 'Pending'" (click)="modifyUserRequest('Declined');">Decline</button>
 </div>
 <div mat-dialog-actions *ngIf="data.mode == 'C'">
-  <button mat-raised-button color="primary" mat-dialog-close *ngIf="data.mode == 'C'" (click)="modifyUser('Confirmed');" [disabled]="!enableConfirmBtn">Confirm</button>
+  <button mat-raised-button color="primary" mat-dialog-close *ngIf="data.requestType !== selectedType || data.role !== selectedRole" (click)="modifyUser('Confirmed');" [disabled]="!enableConfirmBtn">Confirm</button>
 </div>

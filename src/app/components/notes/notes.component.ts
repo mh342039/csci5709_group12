@@ -1,6 +1,8 @@
+// <!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/dataservice.service';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { NotesService } from 'src/app/services/notesdata.service';
 import { UtilityService } from 'src/app/services/utilityservice.service';
@@ -17,7 +19,7 @@ export class NotesComponent implements OnInit {
   Notes: NoteModel[];
   test: any = "test";
 
-  constructor(private dialog: MatDialog, private httpservice: HttpService,public dataservice: NotesService, private utilityService:  UtilityService, private router: Router) { }
+  constructor(private userdataservice: DataService, private dialog: MatDialog, private httpservice: HttpService,public dataservice: NotesService, private utilityService:  UtilityService, private router: Router) { }
 
   ngOnInit(): void {
     this.getNotes();
@@ -37,7 +39,8 @@ export class NotesComponent implements OnInit {
 
   
   getNotes() {
-    this.httpservice.getServiceCall('/notes')
+    // fetch the list of notes from the DB based on logged in user.
+    this.httpservice.getServiceCall('/notes/'+this.userdataservice.loggedInUser.data._id)
     .subscribe( (result:any)=>{
       if(result.status){
       this.Notes = result.data;

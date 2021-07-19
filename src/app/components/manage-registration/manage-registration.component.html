@@ -12,6 +12,6 @@
       <mat-error *ngIf="enableRegistrationForm.controls['endDate'].errors?.invalid">End date cannot be less than today</mat-error>
     </mat-form-field>
     <button mat-raised-button [disabled]="(!enableRegistrationForm.valid)" (click)="submitForm()">Submit</button>
-    <button mat-raised-button *ngIf="!hideWindowBtn" (click)="resetForm()">Close Registration Window</button>
+    <button mat-raised-button *ngIf="!hideWindowBtn" (click)="setForm(true)">Close Registration Window</button>
   </form>
 </div>

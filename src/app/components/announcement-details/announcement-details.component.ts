@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+// import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {take} from 'rxjs/operators';
 import {AnnouncementService} from 'src/app/services/announcement.service';
 import { Announcement } from 'src/app/models/announcements.model';
@@ -11,6 +11,8 @@ import { UtilityService } from 'src/app/services/utilityservice.service';
 import { HttpService } from 'src/app/services/httpservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../message/message.component';
+import { DataService } from 'src/app/services/dataservice.service';
+import { templateJitUrl } from '@angular/compiler';
 
 interface Category {
   value: string;
@@ -52,15 +54,14 @@ export class AnnouncementDetailsComponent implements OnInit {
   private _ngZone: any;
   isCreate: boolean;
 
-  constructor(private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { }
-
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { 
+    this.createForm();
+  }
 
   ngOnInit(): void {
     this.getAnnouncement();
     this.cdr.detectChanges();
     this.utilityService.sectionTitle="Announcements";
-    // this.createForm();
   }
 
   getAnnouncement(){
@@ -71,12 +72,10 @@ export class AnnouncementDetailsComponent implements OnInit {
     }
     else
     this.announcement= new Announcement(); 
-  }
-
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1))
-        .subscribe(() => this.autosize.resizeToFitContent(true));
+    console.log(this.userdataservice.loggedInUser.data._id)
+    this.announcement.createdById = this.userdataservice.loggedInUser.data._id
+    this.announcement.createdByName= this.userdataservice.loggedInUser.data.firstName + " " + this.userdataservice.loggedInUser.data.lastName
+    this.announcement.createdOn = new Date();
   }
 
   categories: Category[] = [
@@ -86,10 +85,16 @@ export class AnnouncementDetailsComponent implements OnInit {
 
   createForm(){
     this.addAnnouncementForm = this.formBuilder.group({
-    Title: ['',[Validators.required,Validators.maxLength(20)]],
+    Title: ['',[Validators.required,Validators.maxLength(30), this.cannotContainSpace]],
     Category: ['', Validators.required],
-    Description: ['', Validators.required],
+    Description: ['', [Validators.required, this.cannotContainSpace]],
    });
+  }
+
+  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
+    const isWhitespace = (control.value || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    return isValid ? null : { cannotContainSpace: true };
   }
 
 onSaveAnnouncement(){
@@ -115,8 +120,7 @@ postAnnouncement(){
           duration:2000
         }
       });    
-    }
-    else{
+    }else{
       this.dialog.open(MessageComponent, {
         data: {
           type: 'E',
@@ -124,21 +128,26 @@ postAnnouncement(){
           message: result.message,
         }
       });
-
     }
   },
-  (error:any)=>{
-    this.dialog.open(MessageComponent, {
-      data: {
-        type: 'E',
-        title:'System Error',
-        message: 'Something Went Wrong. Please Try Again.',
+    (error:any)=>{
+      let temp = {
+        type: "E",
+        title: 'System Error',
+        message: "Something went wrong. Please try again!",
       }
-    });
-
-  })
-
-}
+      if(error.status == 409){
+          temp = {
+          type: "W",
+          title: 'System Message',
+          message: "Announcement with the same title already exists. Please update title!",
+        }
+      }
+      this.dialog.open(MessageComponent, {
+        data: temp
+      });
+    })
+  }
 
 
 putAnnouncement(){

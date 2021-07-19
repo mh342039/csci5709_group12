@@ -1,7 +1,10 @@
+// <!-- Mohammed Hamza Jasnak mh342039@dal.ca -->
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-assign-mentor',
@@ -17,9 +20,10 @@ export class AssignMentorComponent implements OnInit {
 
 
   mentorList: any[] = []
-  constructor(private httpservice: HttpService) { }
+  constructor(private dialog: MatDialog, private httpservice: HttpService) { }
 
   ngOnInit(): void {
+    //get the groups data
     this.httpservice.getServiceCall("/group-management/groups")
     .subscribe((result: any)=>{
       if(result.status){
@@ -27,6 +31,7 @@ export class AssignMentorComponent implements OnInit {
         var temp = new MatTableDataSource(result.data);
         this.dataSource = temp;
 
+        // get the list of mentors for the dropdown
         this.httpservice.getServiceCall("/group-management/mentors")
         .subscribe((result: any)=>{
           if(result.status){
@@ -35,18 +40,50 @@ export class AssignMentorComponent implements OnInit {
           }
           else{
             console.log(result)
+            this.dialog.open(MessageComponent, {
+              data: {
+                type: 'E',
+                title: 'System Error',
+                message: "Something went wrong. Please try again!",
+              }
+            });  
+    
           }
 
         },(error: any)=>{
-          
+          console.log(error)
+          this.dialog.open(MessageComponent, {
+            data: {
+              type: 'E',
+              title: 'System Error',
+              message: "Something went wrong. Please try again!",
+            }
+          });  
+  
         })
   
       }
       else{
         console.log(result)
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: "Something went wrong. Please try again!",
+          }
+        });  
+
       }
     },(error: any)=>{
       console.log(error)
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });  
+
     })
 
 
@@ -64,33 +101,72 @@ export class AssignMentorComponent implements OnInit {
   }
 
   save(obj:any){
-    //save http call
+    //Save call for assign mentor
     this.httpservice.postServiceCall("/group-management/assign-mentor", obj)
     .subscribe((result: any)=>{
       console.log(result)
 
       if(result.status){
-        console.log(result)
+        // fetch the groups list to fetch new groups and reflect the latest canges in the grid.
         this.httpservice.getServiceCall("/group-management/groups")
         .subscribe((result: any)=>{
           if(result.status){
             console.log(result)
             var temp = new MatTableDataSource(result.data);
             this.dataSource = temp;
+            this.dialog.open(MessageComponent, {
+              data: {
+                type: 'C',
+                title: 'Success',
+                message: "Mentor Successfully Assigned",
+                duration: 2000
+              }
+            });  
+    
               }
           else{
             console.log(result)
+            this.dialog.open(MessageComponent, {
+              data: {
+                type: 'E',
+                title: 'System Error',
+                message: "Something went wrong. Please try again!",
+              }
+            });  
+    
           }
         },(error: any)=>{
           console.log(error)
+          this.dialog.open(MessageComponent, {
+            data: {
+              type: 'E',
+              title: 'System Error',
+              message: "Something went wrong. Please try again!",
+            }
+          });  
+  
         })
     
       }
       else{
-        console.log(result)
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title: 'System Error',
+            message: "Something went wrong. Please try again!",
+          }
+        });  
       }
     },(error: any)=>{
       console.log(error)
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title: 'System Error',
+          message: "Something went wrong. Please try again!",
+        }
+      });  
+
     })
   }
 
@@ -103,15 +179,4 @@ export class AssignMentorComponent implements OnInit {
       return this.mentorList[index].name
     }
   }
-  getGroupData(){
-    return [
-      {GroupName: 'Group1',oldMentorValue: 'Group1', Stream: "Science", location: 'Halifax', name: 'Manish', edit: false},
-      {GroupName: 'Group2',oldMentorValue: 'Group2', Stream: "Science", location: 'Halifax', name: 'Hamza', edit: false},
-      {GroupName: 'Group3',oldMentorValue: 'Group3', Stream: "Science", location: 'Halifax', name: 'Misbah', edit: false},
-      {GroupName: 'Group4',oldMentorValue: 'Group4', Stream: "Science", location: 'Halifax', name: 'Gurleen', edit: false},
-      {GroupName: 'Group5',oldMentorValue: 'Group5', Stream: "Science", location: 'Halifax', name: 'Mansi', edit: false},
-      {GroupName: 'Un-assigned',oldMentorValue: 'Un-assigned', Stream: "Science", location: 'Halifax', name: 'Divyansh', edit: false} 
-    ];
-  }
-
 }
