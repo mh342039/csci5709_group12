@@ -48,12 +48,18 @@ deleteAnnouncement(id:any){
   });
 
 dialogRef.afterClosed().subscribe(result => {
+  let index: number;
   if(result.data == "Y"){
     this.httpservice.deleteServiceCall('/announcements/' + id, {})
         .subscribe( (result:any)=>{
           console.log(result)
           if(result.status){
-            let index = this.allAnnouncements.findIndex(o=>{ return o._id = id})
+            for (let i = 0; i < this.allAnnouncements.length; i++) {
+              if(this.allAnnouncements[i]._id == id){
+                 index = i;
+                }
+               }
+            // let index = this.allAnnouncements.findIndex(o=>{ return o._id = id})
               this.allAnnouncements.splice(index,1);
               this.router.navigate(['/main/announcement']);
               this.dialog.open(MessageComponent, {
