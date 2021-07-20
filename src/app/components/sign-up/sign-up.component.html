@@ -31,12 +31,7 @@
                     </section>
     
             <section class="col-md-8 col-xs-8">
-    
-                <!-- Right Side -->
-    
-        <!--        <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-                    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-                </button> -->
+
                 <mat-vertical-stepper [linear]="isLinear" #stepper>
                     <mat-step [stepControl]="ProfileFormGroup">
                         <form [formGroup]="ProfileFormGroup">
