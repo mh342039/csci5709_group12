@@ -1,3 +1,8 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -57,22 +62,17 @@ export class RateMentorComponent implements OnInit {
     {value: 'v2', viewValue: '5'}
   ];
 
-  //for creating a form for mentor feedback
+  //this method is used for creating a form for mentor feedback
   createFeedbackForm(){
     this.feedbackForMentorForm = this.formBuilder.group({
     Mentor: ['',Validators.required],
-    Feedback: ['', [Validators.required, this.cannotContainSpace]],
+    Feedback: ['', [Validators.required, this.utilityService.cannotContainSpace]],
     Rating: ['', Validators.required],
    });
   }
 
-  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { cannotContainSpace: true };
-  }
-
-  //for submitting mentor feedback
+  //this method is used for submitting mentor feedback
+  //feedback details such as mentor name, rating, feedback description, and timestamp needs to be passed as a request body
   onSubmit(){
   if(this.feedbackForMentorForm.valid){
     this.httpservice.postServiceCall('/feedback/mentor', this.mentorForm)
@@ -110,7 +110,7 @@ export class RateMentorComponent implements OnInit {
   }
   }
 
-  //for disabling feedback form after submitting it
+  //this method is used for disabling feedback form after submitting it
   disableForm(){
     this.feedbackForMentorForm.get('Mentor').disable();
     this.feedbackForMentorForm.get('Rating').disable();

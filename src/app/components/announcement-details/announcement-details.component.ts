@@ -1,3 +1,8 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,32 +32,8 @@ interface Category {
 
 export class AnnouncementDetailsComponent implements OnInit {
   announcement: Announcement= new Announcement();
-  isVisible : boolean=false; 
   addAnnouncementForm: FormGroup;
-  alphanumericPattern = "([a-zA-Z0-9 ]+)";
-  TitleFormControl= new FormControl('',[
-    Validators.required,
-    Validators.maxLength(20)
-  ]
-  );
-
-  DescriptionFormControl= new FormControl('', 
-  Validators.required
-   );
-
-   CategoryFormControl= new FormControl('',
-    Validators.required
-   );
-
-  hide = true;
-  @ViewChild('fileInput') fileInput: ElementRef;
-  fileAttr = 'Choose File';
-  @Input()
-    requiredFileType:string;
-
   message: string;
-  private _ngZone: any;
-  isCreate: boolean;
 
   constructor(private userdataservice: DataService , private httpservice: HttpService, private dialog: MatDialog,private announcementService: AnnouncementService, public utilityService: UtilityService, private formBuilder: FormBuilder, private cdr: ChangeDetectorRef, private router: Router, private _snackBar: MatSnackBar) { 
     this.createForm();
@@ -64,11 +45,11 @@ export class AnnouncementDetailsComponent implements OnInit {
     this.utilityService.sectionTitle="Announcements";
   }
 
+// this method fetches a specific announcement from the DB 
   getAnnouncement(){
     let temp= this.announcementService.getAnnouncement();
     if(temp){
       this.announcement=temp;
-      this.isVisible = true;
     }
     else
     this.announcement= new Announcement(); 
@@ -83,20 +64,17 @@ export class AnnouncementDetailsComponent implements OnInit {
     {value: 'cat-1', viewValue: 'Recreational'}
   ];
 
+
+// this method is used to create a new form for announcement
   createForm(){
     this.addAnnouncementForm = this.formBuilder.group({
-    Title: ['',[Validators.required,Validators.maxLength(30), this.cannotContainSpace]],
+    Title: ['',[Validators.required,Validators.maxLength(30), this.utilityService.cannotContainSpace]],
     Category: ['', Validators.required],
-    Description: ['', [Validators.required, this.cannotContainSpace]],
+    Description: ['', [Validators.required, this.utilityService.cannotContainSpace]],
    });
   }
 
-  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { cannotContainSpace: true };
-  }
-
+// this method validates whether an announcement is to be added or updated when the "Save" button is clicked
 onSaveAnnouncement(){
   if (this.announcement._id == -1) {
     this.postAnnouncement()
@@ -106,12 +84,13 @@ onSaveAnnouncement(){
   }
 }
 
+// this method creates a new announcement in the DB
+// announcement details such as title, category, description, createdByName, createdById needs to be passed in the request body
 postAnnouncement(){
   this.httpservice.postServiceCall('/announcements', this.announcement)
   .subscribe( (result:any)=>{
     console.log(result)
     if(result.status){
-      this.router.navigate(['/main/announcement']);
       this.dialog.open(MessageComponent, {
         data: {
           type: 'C',
@@ -120,6 +99,8 @@ postAnnouncement(){
           duration:2000
         }
       });    
+      this.utilityService.isViewMyAnnouncementControlsVisible=false;
+      this.router.navigate(['/main/announcement']);
     }else{
       this.dialog.open(MessageComponent, {
         data: {
@@ -136,6 +117,7 @@ postAnnouncement(){
         title: 'System Error',
         message: "Something went wrong. Please try again!",
       }
+      // if the error status is 409, a message is dsiplayed on the screen that the announcement already exists with the same title
       if(error.status == 409){
           temp = {
           type: "W",
@@ -149,7 +131,8 @@ postAnnouncement(){
     })
   }
 
-
+// this method updates a specific announcement in the DB
+// announcement id and announcement details which are to be upadted, needs to be passed in the request body
 putAnnouncement(){
   this.httpservice.putServiceCall('/announcements/'+ this.announcement._id, this.announcement)
   .subscribe( (result:any)=>{
@@ -163,6 +146,8 @@ putAnnouncement(){
           duration:2000
         }
       });    
+      this.utilityService.isViewMyAnnouncementControlsVisible=false;
+      this.router.navigate(['/main/announcement']);
     }
     else{
       this.dialog.open(MessageComponent, {
@@ -188,6 +173,8 @@ putAnnouncement(){
 
 }
 
+// this method deletes a specific announcement from the DB
+// announcement id is passed in the request body
 onDeleteAnnouncement(){
   let index= this.announcementService.getAnnouncementIndex(this.announcement._id);
   if(index > -1){

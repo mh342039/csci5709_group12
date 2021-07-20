@@ -1,32 +1,13 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 .example-container .mat-form-field + .mat-form-field {
     margin-left: 50px;
   }
   
-  .example-right-align {
-    text-align: right;
-  }
-  
-  input.example-right-align::-webkit-outer-spin-button,
-  input.example-right-align::-webkit-inner-spin-button {
-    display: none;
-  }
-  
-  input.example-right-align {
-    -moz-appearance: textfield;
-  }
-
-  
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-  
-.add-container{
+.applicationFeedbackContainer{
     width: 90%;
     margin: auto;
     border: 1px;
@@ -41,16 +22,7 @@
   width: 100% !important;
 }
 
-.mat-toolbar-single-row {
-  height: auto !important;
-  background: transparent;
-}
-
-.mat-toolbar-single-row button {
-  width: 200px;
-}
-
-.FeedbackHeader{
+.applicationFeedbackHeader{
   text-align: center;
   color: brown;
 }
