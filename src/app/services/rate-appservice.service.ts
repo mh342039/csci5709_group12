@@ -1,3 +1,8 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,9 +10,6 @@ import { Injectable } from '@angular/core';
 })
 export class RateAppserviceService {
 
-  constructor() {
-
-
-    
-   }
+  constructor() {}
+  
 }

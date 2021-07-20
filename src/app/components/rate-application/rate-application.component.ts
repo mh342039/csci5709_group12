@@ -1,3 +1,8 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +34,7 @@ interface LikedFeature{
   styleUrls: ['./rate-application.component.css']
 })
 export class RateApplicationComponent implements OnInit {
-  appForm: AppFeedbackModel = new AppFeedbackModel();
+  applicationFeedbackForm: AppFeedbackModel = new AppFeedbackModel();
   websiteFeedbackForm: FormGroup;
   message: string;
 
@@ -38,12 +43,6 @@ export class RateApplicationComponent implements OnInit {
   ngOnInit(): void {
     this.utilityService.sectionTitle="Application Feedback";
     this.createAppFeedbackForm();
-  }
-
-  cannotContainSpace(control: AbstractControl) : ValidationErrors | null {
-    const isWhitespace = (control.value || '').trim().length === 0;
-    const isValid = !isWhitespace;
-    return isValid ? null : { cannotContainSpace: true };
   }
 
   usageFreqs: UsageFrequecny[] = [
@@ -64,23 +63,26 @@ export class RateApplicationComponent implements OnInit {
     {value: 'v1', viewValue: 'Application UI'},
     {value: 'v2', viewValue: 'Application Functionality: Notes'},
     {value: 'v3', viewValue: 'Application Functionality: Scheduler'},
-    {value: 'v2', viewValue: 'Application Functionality: Announcements'},
+    {value: 'v4', viewValue: 'Application Functionality: Announcements'},
+    {value: 'v5', viewValue: 'Application Functionality: Peer Mentorship Program'},
+    {value: 'v6', viewValue: 'Application Functionality: Student Wall'}
   ];
 
-  //for creating a form for application feedback
+  // this method is used for creating a form for application feedback
   createAppFeedbackForm(){
     this.websiteFeedbackForm = this.formBuilder.group({
     UsageFrequency: ['',Validators.required],
-    Feedback: ['', [Validators.required, this.cannotContainSpace]],
+    Feedback: ['', [Validators.required, this.utilityService.cannotContainSpace]],
     Rating: ['', Validators.required],
     LikedFeature: ['', Validators.required]
    });
   }
 
-  //for submitting application feedback
+  // this method is used for submitting application feedback
+  // feedback details such as application usage frequency, most liked features, rating, feedback description, and timestamp needs to be passed as a request body
   onSubmit() {
     if(this.websiteFeedbackForm.valid){
-      this.httpservice.postServiceCall('/feedback/application', this.appForm)
+    this.httpservice.postServiceCall('/feedback/application', this.applicationFeedbackForm)
     .subscribe((result:any)=>{
       if(result.status){
         this.disableForm();
@@ -92,7 +94,6 @@ export class RateApplicationComponent implements OnInit {
             duration:3000
           }
         });
-        // this.router.navigate(['/main/rate-application']);
       }
       else{
         this.dialog.open(MessageComponent, {
@@ -116,7 +117,7 @@ export class RateApplicationComponent implements OnInit {
   }
   }
 
-  //disable feedback form after the feedback has been submitted
+  //this method is used for disabling feedback form after the feedback has been submitted
   disableForm(){
     this.websiteFeedbackForm.get('UsageFrequency').disable();
     this.websiteFeedbackForm.get('LikedFeature').disable();

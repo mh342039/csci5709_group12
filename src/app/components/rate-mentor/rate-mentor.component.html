@@ -1,7 +1,9 @@
-
+<!-- Author: Mansi Singh 
+      Email id: mn518448@dal.ca -->
+      
 <section>
-<h2 class="FeedbackHeader">Welcome to this page! You can provide rating and feedback for your mentor here..</h2>
-<div class="add-container">
+<h2 class="mentorFeedbackHeader">Welcome to this page! You can provide rating and feedback for your mentor here..</h2>
+<div class="mentorFeedbackContainer">
 <form [formGroup]="feedbackForMentorForm" (ngSubmit)="onSubmit()">
 
   <mat-form-field class="form-field">
@@ -28,8 +30,7 @@
       <mat-label>Your comments </mat-label>
       <textarea matInput #feedback formControlName="Feedback" placeholder="Feedback" [(ngModel)]="mentorForm.feedbackDescription" type="text" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="8"></textarea>
       <mat-hint align="end">{{feedback.value.length}} characters</mat-hint>
-      <mat-error *ngIf="feedbackForMentorForm?.controls['Feedback']?.errors?.required">Feedback is required</mat-error>
-      <mat-error *ngIf="feedbackForMentorForm?.controls['Feedback']?.errors?.cannotContainSpace">Please enter valid data</mat-error>
+      <mat-error *ngIf="feedbackForMentorForm?.controls['Feedback']?.errors?.required || feedbackForMentorForm?.controls['Feedback']?.errors?.cannotContainSpace">Feedback is required</mat-error>
   </mat-form-field>
 <br>
 

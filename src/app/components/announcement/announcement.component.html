@@ -1,21 +1,26 @@
-<div class="example-container">
-  
-<div class="addAnnButtonDiv">
-<button mat-raised-button class="addAnnButton" *ngIf=" userdataservice.isAdmin || (userdataservice.loggedInUser.data.role == 'Mentor')" color="primary" (click)="onOpenAnnouncement(-1)">
+ <!-- Author: Mansi Singh 
+      Email id: mn518448@dal.ca -->
+
+<div class="announcementContainer">
+  <!-- Add Announcement Button-->
+<div class="addAnnouncementBtnDiv">
+<button mat-raised-button class="addAnnouncementBtn" *ngIf="utilityService.isViewMyAnnouncementControlsVisible && (userdataservice.isAdmin || (userdataservice.loggedInUser.data.role == 'Mentor'))" color="primary" (click)="onOpenAnnouncement(-1)">
     <mat-icon>add</mat-icon>
     <span>Add Announcement</span>
 </button> 
 </div>
 
-<div class="cardDiv">
-<mat-card class="example-card" *ngFor="let announcement of announcementService.allAnnouncements; let i=index">
+<!-- Announcement detail -->
+<div class="announcementCardDiv">
+<mat-card class="announcementCard" *ngFor="let announcement of announcementService.allAnnouncements; let i=index">
     <mat-card-header>
       <mat-icon mat-card-avatar>account_circle</mat-icon>
       <mat-card-title>{{announcement?.title}}</mat-card-title>
       <mat-card-subtitle>
         <span>Posted By </span>{{announcement?.createdByName}}<span> on </span>{{announcement?.createdOn | date:"mediumDate" }}
       </mat-card-subtitle>
-      <span class="example-spacer" ></span>
+      <!-- Menu for Edit and Delete of Announcement-->
+      <span class="announcementHeadingSpacer"></span>
       <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="userdataservice.isAdmin || (userdataservice.loggedInUser.data._id == announcement.createdById)" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -30,8 +35,10 @@
         </button>
       </mat-menu>
     </mat-card-header>
+    <!-- Expand and Collapse of Announcement Description -->
+    <!-- The below code has been written by referencing https://www.cloudhadoop.com/angular-dynamically-shorten-long-text/ -->
     <mat-card-content>
-      <p [ngClass]="{'limitTextHeight': !announcement.isReadMore}">{{announcement?.description}}
+      <p [ngClass]="{'limitAnnouncementDescriptionHeight': !announcement.isReadMore}">{{announcement?.description}}
       </p>
     </mat-card-content>
     <mat-card-actions>
@@ -40,4 +47,4 @@
   </mat-card>
 
 </div>
-  </div>
+</div>

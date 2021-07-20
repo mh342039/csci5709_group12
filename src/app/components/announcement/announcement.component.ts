@@ -1,3 +1,8 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -23,13 +28,25 @@ export class AnnouncementComponent implements OnInit {
   constructor(public userdataservice: DataService, private dialog: MatDialog, private httpservice: HttpService,private router: Router, public utilityService: UtilityService ,public announcementService: AnnouncementService) { }
 
   ngOnInit(): void {
+    // this menthod fetches the list of announcements from the DB based on logged in user
     this.announcementService.getAnnouncements();
+    if(!this.announcementService.allAnnouncements){
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: "There are no announcements!",
+        }
+      });
+    }
 
     this.user=this.userdataservice.loggedInUser.data._id
     
     this.utilityService.sectionTitle="Announcements";
   }
 
+  // this method opens a specific announcement when Edit button is clicked from the Menu
+  // announcement id is being passed as an input
   onOpenAnnouncement(index:any){
     if(index != -1){
       this.announcementService.setAnnouncement(this.announcementService.allAnnouncements[index]);

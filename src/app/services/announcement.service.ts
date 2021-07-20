@@ -1,3 +1,8 @@
+/* 
+ * Author: Mansi Singh 
+ * Email id: mn518448@dal.ca
+*/
+
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -15,12 +20,8 @@ export class AnnouncementService {
   announcement:any;
   allAnnouncements: Announcement[] =[];
 
-  constructor(public userdataservice: DataService, public utilityservice: UtilityService, private httpservice: HttpService, private dialog: MatDialog, private router: Router) { 
-  }
-
-// getAnnouncements(){
-//   return this.allAnnouncements;
-// }
+constructor(public userdataservice: DataService, public utilityservice: UtilityService, private httpservice: HttpService, private dialog: MatDialog, private router: Router) { 
+}
 
 getAnnouncement(){
   return this.announcement ;
@@ -34,30 +35,8 @@ setAllAnnouncements(announcements:Announcement[]){
   this.allAnnouncements = announcements;
 }
 
-addAnnouncement(announcement:any){
-this.allAnnouncements.push(announcement);
-this.dialog.open(MessageComponent, {
-  data: {
-    type: 'C',
-    title:'Added',
-    message: 'New announcement added successfully and sent for review to Admin.',
-    duration:2000
-  }
-});
-}
-
-saveAnnouncement(index:any, objRequest:any){
-this.allAnnouncements[index]= objRequest;
-this.dialog.open(MessageComponent, {
-  data:{
-    type: 'C',
-    title: 'Saved',
-    message:'Your changes for the announcement has been saved and sent for review to Admin.',
-    duration:2000
-  }
-});
-}
-
+// this method is used to delete a specific announcement from the DB
+// announcement id is passed in the url parameter
 deleteAnnouncement(id:any){
   const dialogRef= this.dialog.open(MessageComponent, {
     data: {
@@ -75,7 +54,7 @@ dialogRef.afterClosed().subscribe(result => {
           console.log(result)
           if(result.status){
             let index = this.allAnnouncements.findIndex(o=>{ return o._id = id})
-              this.allAnnouncements.splice(id,1);
+              this.allAnnouncements.splice(index,1);
               this.router.navigate(['/main/announcement']);
               this.dialog.open(MessageComponent, {
                 data: {
@@ -111,22 +90,34 @@ dialogRef.afterClosed().subscribe(result => {
   });
 }
 
+// this method is used to fetch a specific announcement from the DB based on the announcement selected from the UI
 getAnnouncementIndex(id:number){
   return this.allAnnouncements.map(o => o._id).indexOf(id);
 }
 
-
+// this method is used to fetch a specific announcement from the DB
 getAnnouncements(){
   this.httpservice.getServiceCall('/announcements')
   .subscribe( (result:any)=>{
     if(result.status){
       this.allAnnouncements = result.data;
+
+      // fetch the announcements created by the logged in user from the DB on clicking "View my announcements"
       if(this.utilityservice && this.utilityservice.isViewMyAnnouncementControlsVisible){
-        
         this.allAnnouncements = this.allAnnouncements.filter((announcement: any) => {
           return announcement.createdById == this.userdataservice.loggedInUser.data._id;
       });
-    }
+      }
+    // in case no announcements are there, a warning message will be displayed on the screen
+      if(this.allAnnouncements.length == 0){
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'W',
+            title:'Warning',
+            message: "There are no announcements. Please create announcements in order to view them here!",
+          }
+        });
+      }
   }
     else{
       this.dialog.open(MessageComponent, {
@@ -150,8 +141,5 @@ getAnnouncements(){
     });
 
   })
-  
 }
-
-
 }
