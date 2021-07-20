@@ -1,3 +1,9 @@
+/*
+ * Author: Misbah Pathan 
+ * Email id: ms358232@dal.ca
+ * 
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';

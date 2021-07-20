@@ -1,3 +1,8 @@
+/*
+ * Author: Misbah Pathan 
+ * Email id: ms358232@dal.ca 
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

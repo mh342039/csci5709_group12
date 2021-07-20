@@ -1,3 +1,7 @@
+/**
+ * Author: Misbah Pathan 
+ * Email id: ms358232@dal.ca
+ */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,17 +21,6 @@ export class ResetPasswordComponent implements OnInit {
   ProfileFormGroup!: FormGroup;
   SecurityQFormGroup!: FormGroup;
   EmailFormGroup!: FormGroup;
-
-  // @ViewChild('EmailStepper') EmailStepper: MatStepper;
-  // @ViewChild('SecurityStepper') SecurityStepper: MatStepper;
-  // @ViewChild('EmailStepper') EmailStepper: MatStepper;
-
-  // Email: "";
-  // Password: "";
-  // ConfirmPassword: "";
-
-  // firstCtrl: "";
-  // secondCtrl: "";
 
   constructor(private httpservice: HttpService, private _formBuilder: FormBuilder, private dialog: MatDialog, private router: Router, private dataservice: DataService) { }
 
