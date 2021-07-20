@@ -1,4 +1,4 @@
-export class Mentor {
+export class mentorModel {
   public mentorName : string = "";
   public email : string = "";
   public Faculty : string = "";
