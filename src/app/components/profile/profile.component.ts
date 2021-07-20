@@ -1,7 +1,6 @@
 /*
  * Author: Misbah Pathan 
  * Email id: ms358232@dal.ca
- * 
  */
 
 import { Component, OnInit } from '@angular/core';
