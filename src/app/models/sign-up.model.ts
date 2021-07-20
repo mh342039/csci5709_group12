@@ -1,3 +1,8 @@
+/* 
+ * Author: Misbah Pathan
+ * Email id: ms358232@dal.ca
+*/
+
 export class SignUp {
 
 public firstName: string = "";
