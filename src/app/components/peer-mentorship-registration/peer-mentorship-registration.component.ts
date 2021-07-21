@@ -1,3 +1,6 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+*/
 import { Component, OnInit, Inject } from '@angular/core';
 import { UtilityService } from '../../services/utilityservice.service';
 import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -11,6 +14,7 @@ import { Router } from '@angular/router';
 import { MessageComponent } from '../message/message.component';
 import { DataService } from '../../services/dataservice.service';
 
+/* Moment code adapted from angular.io. */
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
 
@@ -93,6 +97,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Checks if peer mentorship program registrations are open. */
   checkIfRegistrationOpen(){
     this.httpservice.getServiceCall('/manage-registration')
     .subscribe((result:any)=>{
@@ -110,6 +115,10 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     this.checkRegistration();
   }
 
+  /*
+    Sets section title.
+    For a new user sets default role and preference.
+  */
   ngOnInit(): void {
     this.util.sectionTitle = "Peer Mentorship Registration";
     if(!this.registerUser.isRegistered){
@@ -119,6 +128,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Generates a map of program and faculty. */
   generateProgramMap(){
     this.map = new Map([
       ['Faculty of Computer Science', ['Bachelor of Computer Science', 'Master of Applied Computer Science']],
@@ -134,6 +144,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Binds the year selected in start date with model. */
   chosenStartYearHandler(normalizedYear: Moment) {
     if(this.registrationForm.value.startDate != undefined){
       const ctrlValue = this.registrationForm.value.startDate;
@@ -147,6 +158,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Binds the month selected in start date with model. */
   chosenStartMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     if(this.registrationForm.value.startDate != undefined){
       const ctrlValue = this.registrationForm.value.startDate;
@@ -161,6 +173,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     datepicker.close();
   }
 
+  /* Binds the year selected in end date with model. */
   chosenEndYearHandler(normalizedYear: Moment) {
     if(this.registrationForm.value.endDate != undefined){
       const ctrlValue = this.registrationForm.value.endDate;
@@ -174,6 +187,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Binds the month selected in start date with model. */
   chosenEndMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     if(this.registrationForm.value.endDate != undefined){
       const ctrlValue = this.registrationForm.value.endDate;
@@ -188,20 +202,20 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     datepicker.close();
   }
 
+  /* Saves or updates user data and opens dialog for confirmation or failure. */
   openDialog() {
-    //if(this.checkIfUserExists()){
-      this.setStaticData();
-      if(this.registerUser._id == -1){
-        this.saveUser();
-      }
-      else{
-        this.updateUser();
-      }
-      this.registerUser.startDate = this.formattedStartDate;
-      this.registerUser.endDate = this.formattedEndDate;
-    //}
+    this.setStaticData();
+    if(this.registerUser._id == -1){
+      this.saveUser();
+    }
+    else{
+      this.updateUser();
+    }
+    this.registerUser.startDate = this.formattedStartDate;
+    this.registerUser.endDate = this.formattedEndDate;
   }
 
+  /* Sets model for PUT call. */
   setStaticData(){
     this.registerUser.requestType = "Registration";
     this.registerUser.requestDate = this.currentDate;
@@ -213,6 +227,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     this.registerUser.endDate = this.registerUser.endDate._i;
   }
 
+  /* Makes POST request call to the server. */
   saveUser(){
     this.httpservice.postServiceCall('/peer-mentorship-registration', this.registerUser)
     .subscribe((result:any)=>{
@@ -250,6 +265,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     });
   }
 
+  /* Disbales all form fields. */
   disableForm(){
     this.registrationForm.get('role').disable();
     this.registrationForm.get('faculty').disable();
@@ -261,6 +277,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     this.registrationForm.get('campusLocation').disable();
   }
 
+  /* Enables all form fields. */
   enableForm(){
     this.registrationForm.get('role').enable();
     this.registrationForm.get('faculty').enable();
@@ -272,6 +289,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     this.registrationForm.get('campusLocation').enable();
   }
 
+  /* Updates user details. */
   updateUser(){
     this.registerUser.requestStatus = 'Pending';
     this.registerUser.requestDate = moment(this.currentDate);
@@ -290,6 +308,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     });
   }
 
+  /* Checks if a user has registered with the Peer Mentorship Program. */
   checkRegistration(){
     if(this.registerUser.email !== undefined){
       this.httpservice.getServiceCall('/peer-mentorship-registration/'+this.registerUser.email)
@@ -313,6 +332,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Sets response objects to model. */
   setResponse(result: any){
     this.registerUser._id = result.data._id;
     this.registerUser.email = result.data.email;
@@ -340,6 +360,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
     }
   }
 
+  /* Checks if user is registered with the application. */
   checkIfUserExists(){
     if(this.dataservice.isAdmin){
       if(this.registrationForm.controls["email"].value !== undefined && this.registrationForm.controls["email"].value !== ""){
@@ -361,6 +382,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   }
 }
 
+/* Validates and matches faculties and programs. */
 function validateProgram(faculty: any, program: any, map: Map<string, string[]>){
   return (formGroup: FormGroup) => {
     if(map != undefined && formGroup.controls[faculty].value != undefined && map.has(formGroup.controls[faculty].value)){
@@ -376,15 +398,16 @@ function validateProgram(faculty: any, program: any, map: Map<string, string[]>)
   }
 }
 
+/* Validates start and end dates.
+    1. Checks if start date and end date is equal.
+    2. Checks if end date is less than current date.
+    3. Checks if selected role is Mentor and less than 8 months have
+       passed then disallows user to register as a Mentor.
+*/
 function validateDates(startDate: any, endDate: any, role: string) {
   return (formGroup: FormGroup) => {
     if(formGroup.controls[startDate].value != undefined && formGroup.controls[startDate].value._d != undefined
       && formGroup.controls[endDate].value != undefined && formGroup.controls[endDate].value._d != undefined){
-      /*if ((formGroup.controls[startDate]?.errors && !formGroup.controls[startDate].errors?.match)
-            || (formGroup.controls[endDate]?.errors && !formGroup.controls[endDate].errors?.match)
-            || (formGroup.controls[endDate]?.invalid && !formGroup.controls[endDate].errors?.invalid)) {
-        return;
-      }*/
       if(formGroup.controls[startDate].value._d.getFullYear() == formGroup.controls[endDate].value._d.getFullYear() && formGroup.controls[startDate].value._d.getMonth() == formGroup.controls[endDate].value._d.getMonth()){
         formGroup.controls[startDate].setErrors({match: true});
         formGroup.controls[endDate].setErrors({match: true});
@@ -401,8 +424,7 @@ function validateDates(startDate: any, endDate: any, role: string) {
       else{
         formGroup.controls[endDate].setErrors(null);
       }
-      if(moment(moment.now())
-        .diff(moment(formGroup.controls[startDate].value._d), 'months') <= 8
+      if(moment(moment.now()).diff(moment(formGroup.controls[startDate].value._d), 'months') <= 8
         && formGroup.controls[role].value === 'Mentor'){
         formGroup.controls[startDate].setErrors({invalidDiff: true});
         return;

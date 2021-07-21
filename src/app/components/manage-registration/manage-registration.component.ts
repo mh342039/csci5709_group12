@@ -1,3 +1,6 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+*/
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -34,15 +37,21 @@ export class ManageRegistrationComponent implements OnInit {
     });
   }
 
+  /* Sets section title. */
   ngOnInit(): void {
     this.util.sectionTitle = "Manage Registration";
     this.setForm(false);
   }
 
+  /*
+    Fetches data from database and if the date in database is less than current date
+    then, resets the form otherwise, disables the form and enables a close window button.
+  */
   setForm(reset: boolean){
     this.httpservice.getServiceCall('/manage-registration')
     .subscribe((result:any)=>{
       if(result.status && result.data){
+        this.manageRegistration._id = result.data._id;
         if(new Date(result.data.endDate) < new Date())
           this.resetForm();
         else{
@@ -59,6 +68,7 @@ export class ManageRegistrationComponent implements OnInit {
     });
   }
 
+  /* Writes the data into the database. */
   submitForm(){
     this.httpservice.postServiceCall('/manage-registration', this.manageRegistration)
     .subscribe((result:any)=>{
@@ -98,6 +108,7 @@ export class ManageRegistrationComponent implements OnInit {
     });
   }
 
+  /* Deletes the data from the database. */
   resetForm(){
     this.httpservice.deleteServiceCall('/manage-registration/'+this.manageRegistration._id, this.manageRegistration).subscribe((result:any)=>{
       if(result.status){
@@ -111,11 +122,14 @@ export class ManageRegistrationComponent implements OnInit {
   }
 }
 
+/* Validates start and end dates.
+    1. Checks if start date and end date is equal.
+    2. Checks if end date is less than current date.
+*/
 function validateDates(startDate: any, endDate: any){
   var currentDate = new Date();
   return (formGroup: FormGroup) => {
     if(formGroup.controls[startDate].value != undefined && formGroup.controls[startDate].value._d != undefined){
-      console.log(formGroup.controls[startDate].value._d.getMonth(), currentDate.getMonth());
         if(formGroup.controls[startDate].value._d.getFullYear() < currentDate.getFullYear()){
           formGroup.controls[startDate].setErrors({invalid: true});
           return;
@@ -148,13 +162,22 @@ function validateDates(startDate: any, endDate: any){
         else if(formGroup.controls[endDate].value._d.getFullYear() == currentDate.getFullYear()
           && formGroup.controls[endDate].value._d.getMonth() == currentDate.getMonth()
           && formGroup.controls[endDate].value._d.getDate() < currentDate.getDate()){
-            console.log(formGroup.controls[endDate].value._d.getDay());
-            console.log(currentDate.getDay());
             formGroup.controls[endDate].setErrors({invalid: true});
             return;
         }
         else{
-          formGroup.controls[startDate].setErrors(null);
+          formGroup.controls[endDate].setErrors(null);
+        }
+      }
+      if(formGroup.controls[startDate].value != undefined && formGroup.controls[startDate].value._d != undefined
+        && formGroup.controls[endDate].value != undefined && formGroup.controls[endDate].value._d != undefined) {
+        if(Math.floor((Date.UTC(formGroup.controls[endDate].value._d.getFullYear(), formGroup.controls[endDate].value._d.getMonth(), formGroup.controls[endDate].value._d.getDate())
+        - Date.UTC(formGroup.controls[startDate].value._d.getFullYear(), formGroup.controls[startDate].value._d.getMonth(), formGroup.controls[startDate].value._d.getDate()) ) /(1000 * 60 * 60 * 24)) < 1){
+          formGroup.controls[endDate].setErrors({minDiff: true});
+          return;
+        }
+        else{
+          formGroup.controls[endDate].setErrors(null);
         }
       }
     }

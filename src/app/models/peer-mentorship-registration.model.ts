@@ -1,3 +1,7 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+* Model for Peer Mentorship Registered Users.
+*/
 export class PeerMentorshipRegistrationModel {
   _id: number = -1;
   email: string;

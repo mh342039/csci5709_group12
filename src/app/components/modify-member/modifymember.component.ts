@@ -1,3 +1,6 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+*/
 import { Component, OnInit, ViewChild, Input, DoCheck } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -6,7 +9,6 @@ import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import { UtilityService } from '../../services/utilityservice.service';
 import { RequesterDetailsModalComponent } from '../request-list/requester-details-modal/requester-details-modal.component';
 import { ModifymemberService } from '../../services/modifymember.service';
-import { MemberProfileModel } from 'src/app/models/member-profile.model';
 import { PeerMentorshipRegistrationModel } from 'src/app/models/peer-mentorship-registration.model';
 import { MessageComponent } from '../message/message.component';
 import { HttpService } from 'src/app/services/httpservice.service';
@@ -24,8 +26,6 @@ export class ModifymemberComponent implements OnInit, DoCheck {
   memberData: PeerMentorshipRegistrationModel[];
 
   dataSource: MatTableDataSource<PeerMentorshipRegistrationModel>;
-
-  //email = new FormControl('', Validators.pattern('[a-z0-9._%+-]+@(dal)+\\.(ca)'));
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -52,11 +52,13 @@ export class ModifymemberComponent implements OnInit, DoCheck {
     });
   }
 
+  /* Sets section title. */
   ngOnInit(){
     this.util.sectionTitle="Modify Access";
     this.getRequestList();
   }
 
+  /* Fetches members whose accounts have been modified in the past. */
   getRequestList(){
     this.httpservice.getServiceCall('/modify-member/')
     .subscribe((result:any)=>{
@@ -65,18 +67,10 @@ export class ModifymemberComponent implements OnInit, DoCheck {
         this.memberData = result.data;
         this.setDataSource();
       }
-    });/*,
-    (error:any)=>{
-      this.dialog.open(MessageComponent, {
-        data: {
-          type: 'E',
-          title:'System Error',
-          message: 'Something Went Wrong. Kindly Refresh the Page.',
-        }
-      });
-    });*/
+    });
   }
 
+  /* Sets data to be rendered in the table component. */
   setDataSource(){
     this.dataSource = new MatTableDataSource<PeerMentorshipRegistrationModel>(this.memberData);
     this.dataSource.paginator = this.paginator;
@@ -92,10 +86,11 @@ export class ModifymemberComponent implements OnInit, DoCheck {
     }
   }
 
+  /* Searches user. If user is found then opens a popup else displays error. */
   getUser(email: string){
     this.httpservice.getServiceCall('/peer-mentorship-registration/'+email)
     .subscribe((result:any)=>{
-      if(result.status){
+      if(result.status && result.data){
         if(result.data.isRegistered){
           this.memberData = result.data;
           const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
@@ -115,9 +110,20 @@ export class ModifymemberComponent implements OnInit, DoCheck {
           });
         }
       }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: 'The user is not registered with the Dal Student Handbook Application.',
+            duration:3000
+          }
+        });
+      }
     });
   }
 
+  /* Checks email format otherwise displays error. */
   validate(){
     if(!this.isSubmitted){
        if (this.modifyMemberForm.controls.email.hasError('pattern')){

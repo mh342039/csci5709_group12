@@ -1,3 +1,6 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+*/
 .registrationForm{
   padding: 10px 10px;
   background-color: #fff;
@@ -6,7 +9,6 @@
 
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
-  /*color: #00008B;*/
 }
 
 .mat-radio-button{

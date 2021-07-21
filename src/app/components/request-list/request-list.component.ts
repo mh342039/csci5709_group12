@@ -1,3 +1,6 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+*/
 import { Component, OnInit, ViewChild, Inject, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -32,6 +35,7 @@ export class RequestListComponent implements OnInit {
     this.getRequestList();
   }
 
+  /* Gets the list of requests for the admin. */
   getRequestList(){
     this.httpservice.getServiceCall('/peer-mentorship-registration')
     .subscribe((result:any)=>{
@@ -51,6 +55,10 @@ export class RequestListComponent implements OnInit {
     });
   }
 
+  /*
+    Opens details of a user in a modal.
+    @params index
+   */
   openDialog(index: number) {
     this.registerUser[index+(this.paginator.pageIndex*this.paginator.pageSize)].mode = 'V';
     const dialogRef = this.dialog.open(RequesterDetailsModalComponent, {
@@ -62,10 +70,12 @@ export class RequestListComponent implements OnInit {
     });
   }
 
+  /* Sets section title. */
   ngOnInit(){
     this.util.sectionTitle="Requests";
   }
 
+  /* Sets data to be rendered in the table component. */
   setDataSource(){
     this.dataSource = new MatTableDataSource<PeerMentorshipRegistrationModel>(this.registerUser);
     this.dataSource.paginator = this.paginator;

@@ -1,3 +1,6 @@
+/**
+* Author: Gurleen Saluja (gr997570@dal.ca)
+*/
 import { Component, OnInit, Output, Inject, EventEmitter, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UtilityService } from '../../../services/utilityservice.service';
@@ -10,6 +13,8 @@ import * as moment from 'moment';
   templateUrl: './requester-details-modal.component.html',
   styleUrls: ['./requester-details-modal.component.css']
 })
+
+/* This component is accessed from View Requests and Modify Memebr Access. */
 export class RequesterDetailsModalComponent implements OnInit {
 
   accepted: boolean;
@@ -32,6 +37,11 @@ export class RequesterDetailsModalComponent implements OnInit {
 
   isDiffLess: boolean;
 
+  /*
+    Checks if the modal is accessed in Create 'C' mode or View 'V' mode.
+    If it is accessed in C mode then sets default request type and role.
+    If it is accessed in V mode then sets the value from parent.
+  */
   ngOnInit(): void {
     if(this.data.mode === 'C'){
       this.selectedType = this.types[0];
@@ -54,6 +64,7 @@ export class RequesterDetailsModalComponent implements OnInit {
         data.mode = 'C';
   }
 
+  /* Closes the dialog and returns data back to the parent. */
   close(): void {
     this.dialogRef.close({event: 'close', data: this.data});
   }
@@ -61,6 +72,12 @@ export class RequesterDetailsModalComponent implements OnInit {
   types = ['Role Change', 'Remove Member'];
   roles = ['Mentee', 'Mentor'];
 
+  /*
+    If request type is Role Change and original role is changed
+    confirm button is enabled.
+    If request type is remove member then confirm button is enabled and role is disabled.
+    If request type is changed back to Role Change after Remove Member, role is enabled.
+  */
   enableConfirm(typeValue: string, roleValue: string){
     if(this.originalRequestTypeValue != typeValue){
       this.enableConfirmBtn = true;
@@ -79,6 +96,7 @@ export class RequesterDetailsModalComponent implements OnInit {
     }
   }
 
+  /* If registration is accepted status is uodated in the database. */
   modifyUserRequest(action: string){
     this.data.requestStatus = action;
     this.data.modificationDate = new Date();
@@ -94,6 +112,7 @@ export class RequesterDetailsModalComponent implements OnInit {
     });
   }
 
+  /* If access is modified action is updated in the database. */
   modifyUser(action: string){
     this.data.requestStatus = action;
     this.data.requestType = this.selectedType;
@@ -139,6 +158,7 @@ export class RequesterDetailsModalComponent implements OnInit {
     });
   }
 
+  /* If role is Mentor and 8 months haven't passed, a warning is displayed. */
   checkDiff(){
     if(moment(moment.now()).diff(moment(this.data.startDate, "MM/YYYY"), 'months') <= 8
       && this.selectedType ==='Role Change' && this.selectedRole === 'Mentor'){
