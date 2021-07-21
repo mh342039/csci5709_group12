@@ -26,8 +26,6 @@ export class ManageRegistrationComponent implements OnInit {
 
   hideWindowBtn = true;
 
-  minDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+1);
-
   constructor(public util: UtilityService, private fb: FormBuilder,
     private httpservice: HttpService, private dialog: MatDialog) {
     this.enableRegistrationForm = this.fb.group({
