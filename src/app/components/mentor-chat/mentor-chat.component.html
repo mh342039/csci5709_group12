@@ -1,1 +1,8 @@
-<p>mentor-chat works!</p>
+<mat-card matRipple class="mentor-card" *ngFor="let mentor of Mentors;">
+  <label>Name : -</label><section class = "mentor-name">
+      {{mentor?.name}}
+  </section>
+<label>Email :- </label><section class="note-card-content">
+  {{mentor?.email}}
+</section>
+</mat-card>
