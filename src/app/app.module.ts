@@ -70,6 +70,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ManageRegistrationComponent } from './components/manage-registration/manage-registration.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
   ],
   imports: [
     BrowserModule,
+    MatProgressSpinnerModule,
     AppRoutingModule,
     MatFormFieldModule,
     MatCardModule,

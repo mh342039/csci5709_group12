@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { UtilityService } from 'src/app/services/utilityservice.service';
 import { CreateGroupComponent } from '../create-group/create-group.component';
 import { MessageComponent } from '../message/message.component';
 
@@ -18,16 +19,19 @@ export class GroupFormationComponent implements OnInit {
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private httpservice: HttpService, private dialog: MatDialog) { }
+  constructor(private util: UtilityService,private httpservice: HttpService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    
     this.getGroups()
   }
 
   getGroups(){
+    this.util.isLoader = true
     //Get the list of all th e groups
     this.httpservice.getServiceCall("/group-management/groups")
     .subscribe((result: any)=>{
+      this.util.isLoader = false
       if (result.status){
         console.log(result)
         var temp = new MatTableDataSource(result.data);
@@ -37,6 +41,7 @@ export class GroupFormationComponent implements OnInit {
         console.log(result)
       }
     }, (error: any)=>{
+      this.util.isLoader = false
       console.log(error)
       this.dialog.open(MessageComponent, {
         data: {

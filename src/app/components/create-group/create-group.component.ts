@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GroupFormation, Mentee } from 'src/app/models/groupFormation.model';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { UtilityService } from 'src/app/services/utilityservice.service';
 import { MessageComponent } from '../message/message.component';
 
 @Component({
@@ -22,10 +23,11 @@ export class CreateGroupComponent implements OnInit {
   criteriaValue: string = ""
   CreateGroupForm!: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef <CreateGroupComponent >, private formBuilder: FormBuilder, private dialog: MatDialog, private httpservice: HttpService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private util: UtilityService, private dialogRef: MatDialogRef <CreateGroupComponent >, private formBuilder: FormBuilder, private dialog: MatDialog, private httpservice: HttpService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   //List of mentees will be fecthed if the popup is opend in Edit mode
   ngOnInit(): void {
+    this.util.isLoader =false
     this.CreateGroupForm = this.formBuilder.group({
       Faculty: ['', [Validators.required]],
       CampusLocation: ['', [Validators.required]],
@@ -33,8 +35,12 @@ export class CreateGroupComponent implements OnInit {
     });
 
     if(this.data.isEdit){
+      this.util.isLoader =true
+
       this.httpservice.getServiceCall("/group-management/mentees/"+this.data.groupData._id)
       .subscribe((result: any)=>{
+        this.util.isLoader =false
+
         if(result.status){
           this.groupData = new GroupFormation()
           this.groupData._id = this.data.groupData._id
@@ -63,6 +69,8 @@ export class CreateGroupComponent implements OnInit {
           });
         }
       },(error: any)=>{
+        this.util.isLoader =false
+
         console.log(error)
         this.dialog.open(MessageComponent, {
           data: {
@@ -109,8 +117,11 @@ export class CreateGroupComponent implements OnInit {
     var value;
     if(this.criteria == "faculty"){ value = this.groupData.faculty}
     else if(this.criteria == "location"){value = this.groupData.location}
+    this.util.isLoader =true
     this.httpservice.getServiceCall("/group-management/mentees/"+this.criteria+"/"+value)
     .subscribe((result:  any)=>{
+      this.util.isLoader =false
+
       if(result.status){
         var temp :any[] = []
         this.menteeList.forEach(o=>{ 
@@ -135,6 +146,8 @@ export class CreateGroupComponent implements OnInit {
         });
         }
     },(error: any)=>{ 
+      this.util.isLoader =false
+
       console.log(error)
       this.dialog.open(MessageComponent, {
         data: {
@@ -183,8 +196,12 @@ export class CreateGroupComponent implements OnInit {
 
   // this method is used to create a new group
   create(){
+    this.util.isLoader =true
+
     this.httpservice.postServiceCall("/group-management/create", this.groupData)
     .subscribe((result: any)=>{
+      this.util.isLoader =false
+
       if(result.status){
         console.log(result)
         this.dialogRef.close()
@@ -209,6 +226,8 @@ export class CreateGroupComponent implements OnInit {
       }
 
     },(error: any)=>{
+      this.util.isLoader =false
+
       this.dialog.open(MessageComponent, {
         data: {
           type: 'E',
@@ -221,8 +240,11 @@ export class CreateGroupComponent implements OnInit {
 
   // this method is used to save the changes to existing group
   edit(){
+    this.util.isLoader =true
     this.httpservice.putServiceCall("/group-management/update", this.groupData)
     .subscribe((result: any)=>{
+      this.util.isLoader =false
+
       if(result.status){
         console.log(result)
         this.dialogRef.close()
@@ -246,6 +268,8 @@ export class CreateGroupComponent implements OnInit {
 
       }
     },(error: any)=>{
+      this.util.isLoader =false
+
       this.dialog.open(MessageComponent, {
         data: {
           type: 'E',
@@ -260,9 +284,13 @@ export class CreateGroupComponent implements OnInit {
 
   // this method is used to delete the group
   delete(){
-    console.log(JSON.stringify( this.groupData))
+
+    this.util.isLoader =true
+
     this.httpservice.deleteServiceCall("/group-management/delete/"+this.groupData._id, {})
     .subscribe((result: any)=>{
+      this.util.isLoader =false
+
       if(result.status){
         console.log(result)
         this.dialogRef.close()
@@ -285,6 +313,8 @@ export class CreateGroupComponent implements OnInit {
         });
       }
     },(error: any)=>{
+      this.util.isLoader =false
+
       console.log(error)
       this.dialog.open(MessageComponent, {
         data: {

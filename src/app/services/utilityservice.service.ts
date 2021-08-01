@@ -12,7 +12,7 @@ export class UtilityService {
   accordionDetails : any ={};
   opened :boolean = false;
   isViewMyAnnouncementControlsVisible: boolean= false;
-
+  isLoader: boolean = false
   getaccordionDetails(){
    return this.accordionDetails;
   }
