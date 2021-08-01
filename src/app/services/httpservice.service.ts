@@ -11,7 +11,8 @@ export class HttpService {
   URL:string
   constructor(private http: HttpClient) {
 
-    this.URL = window.location.hostname == 'localhost'?this.localURL:this.ProdURL
+    //this.URL = window.location.hostname == 'localhost'?this.localURL:this.ProdURL
+    this.URL = this.ProdURL
   }
 
   getServiceCall(path: string){

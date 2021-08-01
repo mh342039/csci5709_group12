@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
 
   this.httpservice.getServiceCall('/peer-mentorship-registration/getApprovedUser/' + this.dataservice.loggedInUser.data.email)
   .subscribe( (result:any)=>{
-    if(result.status){
+    if(result.status && result.data){
       this.dataservice.peerMentorshipDetails= result.data;
       this.dataservice.loggedInUser.data.role= this.dataservice.peerMentorshipDetails.role;
     }

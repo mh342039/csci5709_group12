@@ -159,7 +159,7 @@ export class NotesDetailsComponent implements OnInit {
   deleteNote() {
     let index = this.dataservice.getNoteIndex(this.note._id);
     if (index > -1) {
-      this.dataservice.deleteNote(index);
+      this.dataservice.deleteNote(this.note._id);
 
     }
   }

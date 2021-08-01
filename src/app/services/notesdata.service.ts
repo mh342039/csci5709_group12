@@ -45,10 +45,11 @@ export class NotesService {
       if(result.data == "Y"){
         this.httpservice.deleteServiceCall('/notes/' + id, {})
         .subscribe( (result:any)=>{
-          console.log(result)
           if(result.status){
-            let index = this.allNotes.findIndex(o=>{ return o._id = id})
+            let index = this.getNoteIndex(id)
+            if(index != -1){
             this.allNotes.splice(index,1);
+          }
             this.router.navigate(['/main/notes']);
             this.dialog.open(MessageComponent, {
               data: {
@@ -86,6 +87,7 @@ export class NotesService {
     });
   }
 
+  
   saveNote(index:any, obj:any){
     this.allNotes[index] = obj;
     this.dialog.open(MessageComponent, {

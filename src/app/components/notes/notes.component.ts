@@ -37,6 +37,7 @@ export class NotesComponent implements OnInit {
 
   }
 
+
   
   getNotes() {
     // fetch the list of notes from the DB based on logged in user.
@@ -45,6 +46,7 @@ export class NotesComponent implements OnInit {
       if(result.status){
       this.Notes = result.data;
       this.dataservice.setAllNote(this.Notes)
+
       }
       else{
         this.dialog.open(MessageComponent, {
