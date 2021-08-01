@@ -1,7 +1,7 @@
 <mat-nav-list style="overflow-y: auto; overflow-x: hidden;"><!--"!util.pinned ? util.close() : null" (mouseenter)="!util.pinned ? util.open() : null">-->
   <div>
-    <mat-icon *ngIf="!util.opened" class="sidenav-right" (click)="util.open()" matTooltip="Open" matTooltipPosition="right">arrow_right</mat-icon>
-    <mat-icon *ngIf="util.opened" class="sidenav-left" (click)="util.close()" matTooltip="Close" matTooltipPosition="right">arrow_left</mat-icon>
+    <mat-icon *ngIf="!util.opened" class="sidenav-right" (click)="util.open()" matTooltip="Expand" matTooltipPosition="right">arrow_right</mat-icon>
+    <mat-icon *ngIf="util.opened" class="sidenav-left" (click)="util.close()" matTooltip="Collapse" matTooltipPosition="right">arrow_left</mat-icon>
   </div>
   <div>
     <mat-accordion>
@@ -113,7 +113,7 @@
         <mat-panel-title>
           <mat-icon class="sideNavItemComponent">contact_support</mat-icon>
           <span matline>Support</span>
-          <mat-icon style="margin-left: 75px;">keyboard_arrow_down</mat-icon>
+          <mat-icon style="margin-left: 77px;">keyboard_arrow_down</mat-icon>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <ul style="list-style-type:none;">

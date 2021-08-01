@@ -37,6 +37,7 @@ mat-icon{
 
   section::-webkit-scrollbar{
     width: 5px;
+    height: 5px;
   }
 
   section::-webkit-scrollbar-track {
