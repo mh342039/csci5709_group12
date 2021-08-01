@@ -66,6 +66,7 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
   currentDate = new Date();
   registrationStartDate: any;
   reopenRegistration = false;
+  memberAlreadyExists = false;
 
   constructor(public util: UtilityService, private fb: FormBuilder, private httpservice: HttpService, private dialog: MatDialog,
     private router: Router, public dataservice: DataService) {
@@ -372,6 +373,10 @@ export class PeerMentorshipRegistrationComponent implements OnInit {
             this.registrationForm.controls["email"].disable();
             this.registrationForm.controls["name"].disable();
             this.enableForm();
+            this.checkRegistration();
+            if(this.registerUser.isRegistered){
+              this.memberAlreadyExists = true;
+            }
           }
           else{
             this.registrationForm.controls["email"].setErrors({notRegistered: true});

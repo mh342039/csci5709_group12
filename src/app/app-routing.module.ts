@@ -27,6 +27,8 @@ import { AddmemberComponent } from './components/add-member/addmember.component'
 import { ModifymemberComponent } from './components/modify-member/modifymember.component';
 import { GroupManagementComponent } from './components/group-management/group-management.component';
 import { ManageRegistrationComponent } from './components/manage-registration/manage-registration.component';
+import { StudentWallComponent } from './components/student-wall/student-wall.component';
+import { SchedulerComponent } from './components/scheduler/scheduler.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'signin', pathMatch: 'full' },
@@ -56,7 +58,9 @@ const routes: Routes = [
     { path: 'mentorchat', component: MentorChatComponent },
     { path: 'addmember', component: AddmemberComponent },
     { path: 'modifymember', component: ModifymemberComponent },
-    { path: 'manageregistration', component: ManageRegistrationComponent}
+    { path: 'manageregistration', component: ManageRegistrationComponent},
+    { path: 'studentwall', component: StudentWallComponent},
+    { path: 'scheduler', component: SchedulerComponent}
   ] },
 ];
 

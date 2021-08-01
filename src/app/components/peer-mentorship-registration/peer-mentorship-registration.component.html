@@ -2,12 +2,12 @@
 <div *ngIf="!isRegistrationOpen">Registrations are closed. Please check back later.</div>
 <div *ngIf="isRegistrationOpen">
   <p class="alert alert-success" *ngIf="success && !reopenRegistration">
-    <strong>Congratulations! Your request has been approved.</strong>
+    <strong>This request has been approved.</strong>
   </p>
   <p class="alert alert-danger" *ngIf="failure && !reopenRegistration">
-    <strong>Alas! Your request has been declined.</strong>
+    <strong>This request has been declined.</strong>
   </p>
-  <p class="alert alert-info" *ngIf="!success && !failure && !reopenRegistration && !freshRegistration">
+  <p class="alert alert-info" *ngIf="!success && !failure && !reopenRegistration && !freshRegistration && !memberAlreadyExists">
     <strong>Your request has been submitted. Please check back later.</strong>
   </p>
   <div class="registrationForm">

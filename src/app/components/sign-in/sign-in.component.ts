@@ -1,5 +1,5 @@
 /*
- * Author: Misbah Pathan 
+ * Author: Misbah Pathan
  * Email id: ms358232@dal.ca
 */
 
@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class SignInComponent implements OnInit {
 
- 
+
   SigninForm!: FormGroup;
 
   Email: string = "";
@@ -32,11 +32,11 @@ export class SignInComponent implements OnInit {
       Password: ['', [Validators.required]],
     });
   }
-  
+
   gotoRegister(){
     this.router.navigate(['/signup'])
   }
- 
+
 
   signin(){
     var request ={
@@ -45,7 +45,6 @@ export class SignInComponent implements OnInit {
     }
     this.httpservice.postServiceCall("/registration/login",request)
     .subscribe((result: any)=>{
-      console.log(result)
       if(result.status){
         this.dataservice.setLoggedInUser(result)
         this.router.navigate(['/main/announcement'])
@@ -78,6 +77,6 @@ export class SignInComponent implements OnInit {
   {
     this.router.navigate(['/forgotPassword'])
   }
- 
+
 
 }

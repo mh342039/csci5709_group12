@@ -8,11 +8,10 @@ export class HttpService {
   localURL = "http://localhost:3000/api";
   ProdURL = "https://g12-csci5709-backend.herokuapp.com/api"
   isPROD :boolean = true;
-  URL:string 
-  constructor(private http: HttpClient) { 
-    
+  URL:string
+  constructor(private http: HttpClient) {
+
     this.URL = window.location.hostname == 'localhost'?this.localURL:this.ProdURL
-    console.log(this.URL)
   }
 
   getServiceCall(path: string){
