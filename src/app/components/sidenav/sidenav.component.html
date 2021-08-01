@@ -33,14 +33,14 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <ul style="list-style-type:none;">
-          <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent"
+          <li class="innerNav"><a [routerLink]="'/main/studentwall'" class="sideNavItemComponent"
               (click)="mep2.expanded = !mep2.expanded">View All Feed</a></li>
-          <li class="innerNav"><a [routerLink]="'/main/#'" class="sideNavItemComponent"
+          <li class="innerNav"><a [routerLink]="'/main/studentwall'" class="sideNavItemComponent"
               (click)="mep2.expanded = !mep2.expanded">View My Feed</a></li>
         </ul>
       </mat-expansion-panel>
     </mat-accordion>
-    <mat-accordion [routerLink]="'/main/#'">
+    <mat-accordion [routerLink]="'/main/scheduler'">
       <mat-expansion-panel hideToggle #mep2="matExpansionPanel"
         (mouseleave)="!util.opened ? mep2.expanded=false : null" disabled>
         <mat-expansion-panel-header (click)="!util.opened ? util.open():null">

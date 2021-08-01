@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilityService } from '../../services/utilityservice.service';
 
 @Component({
   selector: 'app-scheduler',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchedulerComponent implements OnInit {
 
-  constructor() { }
+  constructor(public util: UtilityService) { }
 
   ngOnInit(): void {
+    this.util.sectionTitle = "Scheduler";
   }
 
 }

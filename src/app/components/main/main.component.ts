@@ -15,7 +15,6 @@ export class MainComponent implements OnInit {
   constructor(private httpservice: HttpService, public utilityservice: UtilityService, private dataservice: DataService, private router: Router) { }
 
   ngOnInit(): void {
-    
     if(!this.dataservice.loggedInUser || (this.dataservice.loggedInUser && !this.dataservice.loggedInUser.status)){
       this.router.navigateByUrl('/signin')
     }
@@ -23,10 +22,8 @@ export class MainComponent implements OnInit {
   this.httpservice.getServiceCall('/peer-mentorship-registration/getApprovedUser/' + this.dataservice.loggedInUser.data.email)
   .subscribe( (result:any)=>{
     if(result.status){
-      console.log(result);
       this.dataservice.peerMentorshipDetails= result.data;
       this.dataservice.loggedInUser.data.role= this.dataservice.peerMentorshipDetails.role;
-      console.log("User role is",this.dataservice.loggedInUser.role);
     }
   })
   }
