@@ -14,6 +14,7 @@ import {MentorFeedbackModel} from '../../models/mentorFeedback.model';
 import { MessageComponent } from '../message/message.component';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpService } from 'src/app/services/httpservice.service';
+import { mentorModel } from 'src/app/models/mentor.model';
 
 interface Mentor {
   value: string;
@@ -35,12 +36,14 @@ export class RateMentorComponent implements OnInit {
   feedbackForMentorForm: FormGroup;
   alphanumericPattern = "([a-zA-Z0-9 ]+)";
   message: string;
+  Mentors : mentorModel[];
 
   constructor(private dialog: MatDialog,private httpservice: HttpService, private utilityService: UtilityService, private rateMentorService: RateMentorserviceService, private formBuilder: FormBuilder, private router: Router,private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.utilityService.sectionTitle="Mentor Feedback";
     this.createFeedbackForm();
+    this.getMentors();
   }
 
   mentors: Mentor[] = [
@@ -69,6 +72,39 @@ export class RateMentorComponent implements OnInit {
     Feedback: ['', [Validators.required, this.utilityService.cannotContainSpace]],
     Rating: ['', Validators.required],
    });
+  }
+
+  // fetch the list of mentors from the DB based on logged in user.
+  getMentors() {
+    this.httpservice.getServiceCall('/group-management/mentors')
+    .subscribe( (result:any)=>{
+      console.log(result)
+      if(result.status){
+      this.Mentors = result.data;
+      }
+      else{
+        this.dialog.open(MessageComponent, {
+          data: {
+            type: 'E',
+            title:'System Error',
+            message: result.message,
+          }
+        });
+
+      }
+    },
+    (error:any)=>{
+      this.dialog.open(MessageComponent, {
+        data: {
+          type: 'E',
+          title:'System Error',
+          message: 'Something Went Wrong. Kindly Refresh the Page.',
+
+        }
+      });
+
+    })
+
   }
 
   //this method is used for submitting mentor feedback
